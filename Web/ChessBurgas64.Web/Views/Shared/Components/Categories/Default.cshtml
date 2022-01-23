@@ -1,0 +1,8 @@
+﻿@model ChessBurgas64.Web.ViewModels.ViewComponents.CreateAnnouncementInputModel
+
+<div class="form-group">
+    <label asp-for="CategoryId">Категория</label>
+    <select asp-for="CategoryId" . class="form-control" asp-items="@Model.Categories"></select>
+    <span asp-validation-for="CategoryId" class="text-danger"></span>
+</div>
+
