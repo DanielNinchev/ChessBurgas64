@@ -71,5 +71,12 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult ById(int id)
+        {
+            var announcement = this.announcementsService.GetById<SingleAnnouncementViewModel>(id);
+
+            return this.View(announcement);
+        }
     }
 }

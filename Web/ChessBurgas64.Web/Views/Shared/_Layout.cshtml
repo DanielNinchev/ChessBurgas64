@@ -5,63 +5,62 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/animate/animate.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/lightbox/css/lightbox.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="shortcut icon" href="~/burgas64.ico" />
 </head>
-<body>
+<body class="container background-theme">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
                         </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a>
                             </li>
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Trainers" asp-action="Trainers">@GlobalConstants.TrainersNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Trainers" asp-action="Trainers">@GlobalConstants.TrainersNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
+
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>
     </div>
-    
-    <footer class="border-top footer text-muted">
+
+    <footer class="footer text-white">
         <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - @GlobalConstants.ClubName
         </div>
     </footer>
 
@@ -69,6 +68,14 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/wow/wow.min.js" asp-append-version="true"></script>
+    <script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>
+    <script src="~/lib/waypoints/waypoints.min.js" asp-append-version="true"></script>
+    <script src="~/lib/counterup/counterup.min.js" asp-append-version="true"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
+    <script src="~/lib/isotope/isotope.pkgd.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lightbox/js/lightbox.min.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

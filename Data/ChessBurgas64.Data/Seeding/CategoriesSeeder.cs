@@ -16,6 +16,7 @@
                 return;
             }
 
+            await dbContext.Categories.AddAsync(new Category { Name = GlobalConstants.NewsCategory });
             await dbContext.Categories.AddAsync(new Category { Name = GlobalConstants.AnnouncementsCategory });
             await dbContext.Categories.AddAsync(new Category { Name = GlobalConstants.ArticlesCategory });
 

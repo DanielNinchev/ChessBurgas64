@@ -1,0 +1,49 @@
+﻿@using ChessBurgas64.Common
+@model ChessBurgas64.Web.ViewModels.Announcements.SingleAnnouncementViewModel
+@{ 
+    this.ViewData["Title"] = Model.Title;
+}
+
+<main>
+    <!-- About US Start -->
+    <div class="bg-dark text-center border">
+        <h3 class="text-white title-container">@Model.Title</h3>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block carousel-image rounded mx-auto" src="@Model.MainImageUrl" alt="Заглавна снимка">
+                </div>
+                @foreach (var image in this.Model.Images)
+                {
+                    <div class="carousel-item">
+                        <img class="d-block carousel-image rounded mx-auto" src="@image.ImageUrl" alt="Снимка">
+                    </div>
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                <span class="sr-only">@GlobalConstants.Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                <span class="sr-only">@GlobalConstants.Next</span>
+            </a>
+        </div>
+        <div class="container-fluid text-white position-relative">
+            <div class="announcement-property-container position-absolute top-0 start-0 px-3 py-1 border">Публикувано: @Model.Date.ToShortDateString()</div>
+            <div class="announcement-property-container position-absolute top-0 start-50 px-3 py-1 translate-middle-x border">Автор: Даниел Нинчев</div>
+            <div class="announcement-property-container position-absolute top-0 end-0 px-3 py-1 border">Категория: @Model.CategoryName</div>
+        </div>
+    </div>
+    <div class="bg-light mt-5 px-3 py-1 border border-danger border-5">
+        <p class="text-justify">
+            @Model.Text;
+        </p>
+    </div>
+    <!-- About US End -->
+</main>

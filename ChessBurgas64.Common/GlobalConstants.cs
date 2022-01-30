@@ -3,6 +3,7 @@
     public static class GlobalConstants
     {
         public const string SystemName = "ChessBurgas64";
+        public const string ClubName = "БУРГАС 64";
 
         public const string AdministratorRoleName = "Administrator";
 
@@ -17,10 +18,11 @@
         public const string ExtremePuzzle = "Пето ниво - майсторски";
 
         // Announcements
-        public const int AnnouncementsPerPage = 12;
+        public const int AnnouncementsPerPage = 6;
 
         // Categories
-        public const string AnnouncementsCategory = "Новини";
+        public const string AnnouncementsCategory = "Обяви";
+        public const string NewsCategory = "Новини";
         public const string ArticlesCategory = "Статии";
 
         // Index
@@ -42,6 +44,10 @@
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";
+
+        // Pagination
+        public const string Next = "Следваща";
+        public const string Previous = "Предишна";
 
         // Images
         public static readonly string[] AllowedImageExtensions = new[] { "gif", "jpg", "png" };

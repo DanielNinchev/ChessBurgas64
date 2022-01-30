@@ -1,27 +1,32 @@
 ﻿@model ChessBurgas64.Web.ViewModels.ViewComponents.CreateAnnouncementInputModel
 @{ 
-    this.ViewData["Title"] = "Създаване на новина";
+    this.ViewData["Title"] = "Публикуване на новина";
 }
 
-<h1>@this.ViewData["Title"]</h1>
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
 <form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Title">Заглавие</label>
+        <label class="text-white" asp-for="Title">Заглавие</label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <vc:categories title="CategoryId"></vc:categories>
     <div class="form-group">
-        <label asp-for="Images">Текст</label>
-        <input asp-for="Images" class="form-control"/>
-        <span asp-validation-for="Images" class="text-danger"></span>
+        <label class="text-white" asp-for="MainImage">Добави основна снимка</label>
+        <input asp-for="MainImage" class="form-control" />
+        <span asp-validation-for="MainImage" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Text">Текст</label>
+        <label class="text-white" asp-for="AdditionalImages">Добави допълнителни снимки</label>
+        <input asp-for="AdditionalImages" class="form-control" />
+        <span asp-validation-for="AdditionalImages" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="text-white" asp-for="AdditionalImages">Текст</label>
         <textarea asp-for="Text" class="form-control" rows="30"></textarea>
         <span asp-validation-for="Text" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn-danger">Създай</button>
+    <button type="submit" class="btn-primary">Създай</button>
 </form>

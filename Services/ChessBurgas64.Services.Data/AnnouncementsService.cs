@@ -12,6 +12,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.ViewComponents;
+    using Microsoft.AspNetCore.Http;
 
     public class AnnouncementsService : IAnnouncementsService
     {
@@ -36,28 +37,15 @@
 
             Directory.CreateDirectory(imagePath);
 
-            foreach (var image in input.Images)
+            var mainImage = await this.InitializeAnnouncementImage(input.MainImage, announcement, imagePath);
+
+            announcement.MainImageUrl = $"{GlobalConstants.AnnouncementImagesPath}{mainImage.Id}{mainImage.Extension}";
+
+            foreach (var image in input.AdditionalImages)
             {
-                var extension = Path.GetExtension(image.FileName);
-
-                if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.EndsWith(x)))
-                {
-                    throw new Exception($"{ErrorMessages.InvalidImageExtension}{extension}");
-                }
-
-                var dbImage = new Image
-                {
-                    Announcement = announcement,
-                    Extension = extension,
-                };
+                var dbImage = await this.InitializeAnnouncementImage(image, announcement, imagePath);
 
                 announcement.Images.Add(dbImage);
-
-                var physicalPath = $"{imagePath}{dbImage.Id}{extension}";
-
-                using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-
-                await image.CopyToAsync(fileStream);
             }
 
             await this.announcementsRepository.AddAsync(announcement);
@@ -75,9 +63,43 @@
             return announcements;
         }
 
+        public T GetById<T>(int id)
+        {
+            var announcement = this.announcementsRepository.AllAsNoTracking().Where(x => x.Id == id)
+                .To<T>().FirstOrDefault();
+
+            return announcement;
+        }
+
         public int GetCount()
         {
             return this.announcementsRepository.All().Count();
+        }
+
+        public async Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string imagePath)
+        {
+            var extension = Path.GetExtension(image.FileName);
+
+            if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.EndsWith(x)))
+            {
+                throw new Exception($"{ErrorMessages.InvalidImageExtension}{extension}");
+            }
+
+            var dbImage = new Image
+            {
+                Announcement = announcement,
+                Extension = extension,
+            };
+
+            var physicalPath = $"{imagePath}{dbImage.Id}{extension}";
+
+            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+
+            await image.CopyToAsync(fileStream);
+
+            dbImage.ImageUrl = $"{GlobalConstants.AnnouncementImagesPath}{dbImage.Id}{extension}";
+
+            return dbImage;
         }
     }
 }

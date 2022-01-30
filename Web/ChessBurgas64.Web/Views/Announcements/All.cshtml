@@ -1,22 +1,36 @@
 ﻿@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementsListViewModel
 @{
-    this.ViewData["Title"] = "НОВИНИ";
+    this.ViewData["Title"] = "Новини";
 }
 
-<h1 class="text-center">@this.ViewData["Title"]</h1>
-<hr />
-<div class="row">
-    @foreach(var announcement in this.Model.Announcements)
-    {
-        <div class="card" style="width: 18rem;">
-            <img src="@announcement.ImageUrl" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@announcement.Title </h5>
-                <p class="card-text">@announcement.Date</p>
-                <a href="#" class="btn btn-primary">Прочети</a>
-            </div>
+<div class="container page-header backround-header-image-container"></div>
+<div class="title-container">
+    <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+</div>
+
+<div class="container-xxl">    
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var announcement in this.Model.Announcements)
+            {
+                <div class="card-deck col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="card">
+                        <img class="image-announcement-card img-fluid" src="@announcement.MainImageUrl" alt="">
+                        <div class="card-body text-center">
+                            <h6 class="card-title text">@announcement.Title.ToUpper()</h6>
+                            <p class="card-text">@announcement.Text</p>                   
+                        </div>
+                        <div class="card-footer background-dragon-red text-center">
+                            <a class="text-white" asp-action="ById" asp-route-id="@announcement.Id">ВИЖ ПОВЕЧЕ</a>
+                        </div>
+                        <div class="card-footer bg-dark text-center">
+                            <small class="text-white">Публикувано на @announcement.Date.ToShortDateString()</small>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>
 <hr />
 <nav aria-label="..."> 
@@ -35,7 +49,7 @@
         {
             <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@(Model.PageNumber + 1)">@(Model.PageNumber + 1)</a></li>
         }
-        <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>} ">
+        <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>} ">
             <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">Следваща</a>
         </li>
     </ul>

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChessBurgas64.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220123134704_InitialCreate")]
+    [Migration("20220130080314_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("MainImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -54,9 +57,6 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Views")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -295,6 +295,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -306,9 +309,6 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Property<int?>("PuzzleId")
                         .HasColumnType("int");
-
-                    b.Property<string>("RemoteImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrainerId")
                         .HasColumnType("nvarchar(450)");
@@ -456,7 +456,7 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageId")
@@ -468,7 +468,7 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LastPuzzleLevel")
+                    b.Property<int?>("LastPuzzleLevel")
                         .HasColumnType("int");
 
                     b.Property<string>("MiddleName")
@@ -991,9 +991,7 @@ namespace ChessBurgas64.Data.Migrations
                 {
                     b.HasOne("ChessBurgas64.Data.Models.Group", "Group")
                         .WithMany("Members")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Trainer", null)
                         .WithMany("IndividualStudents")

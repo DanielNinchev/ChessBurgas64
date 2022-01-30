@@ -18,7 +18,7 @@
 
         public string Text { get; set; }
 
-        public int Views { get; set; }
+        public string MainImageUrl { get; set; }
 
         public string AuthorId { get; set; }
 
