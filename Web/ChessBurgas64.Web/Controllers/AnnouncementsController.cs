@@ -16,17 +16,45 @@
     public class AnnouncementsController : Controller
     {
         private readonly IAnnouncementsService announcementsService;
+        private readonly ICategoriesService categoriesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
 
         public AnnouncementsController(
             IAnnouncementsService announcementsService,
+            ICategoriesService categoriesService,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment environment)
         {
             this.announcementsService = announcementsService;
+            this.categoriesService = categoriesService;
             this.userManager = userManager;
             this.environment = environment;
+        }
+
+        public IActionResult All(int id = 1)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            var viewModel = new AnnouncementsListViewModel
+            {
+                ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
+                PageNumber = id,
+                AnnouncementsCount = this.announcementsService.GetCount(),
+                Announcements = this.announcementsService.GetAll<AnnouncementInCardViewModel>(id, GlobalConstants.AnnouncementsPerPage),
+            };
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult ById(int id)
+        {
+            var announcement = this.announcementsService.GetById<SingleAnnouncementViewModel>(id);
+
+            return this.View(announcement);
         }
 
         [Authorize]
@@ -59,24 +87,39 @@
             return this.Redirect("/");
         }
 
-        public IActionResult All(int id = 1)
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
         {
-            var viewModel = new AnnouncementsListViewModel
-            {
-                ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
-                PageNumber = id,
-                AnnouncementsCount = this.announcementsService.GetCount(),
-                Announcements = this.announcementsService.GetAll<AnnouncementInCardViewModel>(id, GlobalConstants.AnnouncementsPerPage),
-            };
+            await this.announcementsService.DeleteAsync(id);
 
-            return this.View(viewModel);
+            return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult ById(int id)
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public IActionResult Edit(int id)
         {
-            var announcement = this.announcementsService.GetById<SingleAnnouncementViewModel>(id);
+            var inputModel = this.announcementsService.GetById<EditAnnouncementInputModel>(id);
 
-            return this.View(announcement);
+            inputModel.Categories = this.categoriesService.GetAllCategories();
+
+            return this.View(inputModel);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditAnnouncementInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                input.Categories = this.categoriesService.GetAllCategories();
+
+                return this.View(input);
+            }
+
+            await this.announcementsService.UpdateAsync(id, input);
+
+            return this.RedirectToAction(nameof(this.ById), new { id });
         }
     }
 }

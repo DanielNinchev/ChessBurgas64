@@ -11,6 +11,7 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
+    using ChessBurgas64.Web.ViewModels.Announcements;
     using ChessBurgas64.Web.ViewModels.ViewComponents;
     using Microsoft.AspNetCore.Http;
 
@@ -49,6 +50,15 @@
             }
 
             await this.announcementsRepository.AddAsync(announcement);
+            await this.announcementsRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var announcement = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
+
+            this.announcementsRepository.Delete(announcement);
+
             await this.announcementsRepository.SaveChangesAsync();
         }
 
@@ -100,6 +110,18 @@
             dbImage.ImageUrl = $"{GlobalConstants.AnnouncementImagesPath}{dbImage.Id}{extension}";
 
             return dbImage;
+        }
+
+        public async Task UpdateAsync(int id, EditAnnouncementInputModel input)
+        {
+            var announcements = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
+
+            announcements.Title = input.Title;
+            announcements.Text = input.Text;
+            announcements.MainImageUrl = input.MainImageUrl;
+            announcements.CategoryId = input.CategoryId;
+
+            await this.announcementsRepository.SaveChangesAsync();
         }
     }
 }

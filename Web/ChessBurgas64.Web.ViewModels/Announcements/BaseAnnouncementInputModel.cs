@@ -1,8 +1,12 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Announcements
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class AnnouncementViewModel
+    using Microsoft.AspNetCore.Mvc.Rendering;
+
+    public abstract class BaseAnnouncementInputModel
     {
         [Required]
         [MinLength(4)]
@@ -12,9 +16,13 @@
         [MinLength(10)]
         public string Text { get; set; }
 
-        public string AuthorId { get; set; }
-
         [Required]
         public int CategoryId { get; set; }
+
+        public string MainImageUrl { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public IEnumerable<SelectListItem> Categories { get; set; }
     }
 }

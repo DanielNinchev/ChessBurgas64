@@ -45,5 +45,30 @@
             @Model.Text;
         </p>
     </div>
+
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+<div class="container-fluid text-white position-relative" style="height: 30px;">
+    <a class="text-white mb-5 position-absolute top-0 start-0 border px-2 py-1 background-dragon-red" asp-action="Edit" asp-route-id="@Model.Id">Обнови</a>
+    <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
+    </form>
+    <button class="btn btn-primary text-white mb-5 position-absolute top-0 end-0 border px-2 py-1" data-toggle="modal" data-target="#deleteModal">Изтрий</button>
+</div>
+    }
+
+    <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Наистина ли искате да изтриете тази публикация?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Да</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- About US End -->
 </main>

@@ -5,15 +5,12 @@
 
     using ChessBurgas64.Web.ViewModels.Announcements;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class CreateAnnouncementInputModel : AnnouncementViewModel
+    public class CreateAnnouncementInputModel : BaseAnnouncementInputModel
     {
         [Required]
         public IFormFile MainImage { get; set; }
 
         public IEnumerable<IFormFile> AdditionalImages { get; set; }
-
-        public IEnumerable<SelectListItem> Categories { get; set; }
     }
 }
