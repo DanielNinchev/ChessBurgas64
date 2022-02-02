@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <UserSecretsId>18bc4f55-779b-4ee8-93a2-3e92a91946c3</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>

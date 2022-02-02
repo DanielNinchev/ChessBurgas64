@@ -116,6 +116,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -126,6 +129,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -133,8 +139,20 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -144,6 +162,9 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Property<string>("MemberId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -179,6 +200,8 @@ namespace ChessBurgas64.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("IsDeleted");
 
@@ -317,17 +340,13 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("MemberId")
-                        .IsUnique()
-                        .HasFilter("[MemberId] IS NOT NULL");
+                    b.HasIndex("MemberId");
 
                     b.HasIndex("PuzzleId")
                         .IsUnique()
                         .HasFilter("[PuzzleId] IS NOT NULL");
 
-                    b.HasIndex("TrainerId")
-                        .IsUnique()
-                        .HasFilter("[TrainerId] IS NOT NULL");
+                    b.HasIndex("TrainerId");
 
                     b.ToTable("Images");
                 });
@@ -427,9 +446,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ClubRating")
                         .HasColumnType("int");
 
@@ -448,35 +464,17 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("LastPuzzleLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("School")
                         .HasColumnType("nvarchar(max)");
@@ -719,9 +717,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -731,32 +726,11 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -891,6 +865,10 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.ApplicationUser", b =>
                 {
+                    b.HasOne("ChessBurgas64.Data.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
                         .WithOne("User")
                         .HasForeignKey("ChessBurgas64.Data.Models.ApplicationUser", "MemberId");
@@ -898,6 +876,8 @@ namespace ChessBurgas64.Data.Migrations
                     b.HasOne("ChessBurgas64.Data.Models.Trainer", "Trainer")
                         .WithOne("User")
                         .HasForeignKey("ChessBurgas64.Data.Models.ApplicationUser", "TrainerId");
+
+                    b.Navigation("Image");
 
                     b.Navigation("Member");
 
@@ -920,16 +900,16 @@ namespace ChessBurgas64.Data.Migrations
                         .HasForeignKey("AnnouncementId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
-                        .WithOne("Image")
-                        .HasForeignKey("ChessBurgas64.Data.Models.Image", "MemberId");
+                        .WithMany()
+                        .HasForeignKey("MemberId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Puzzle", "Puzzle")
                         .WithOne("Image")
                         .HasForeignKey("ChessBurgas64.Data.Models.Image", "PuzzleId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Trainer", "Trainer")
-                        .WithOne("Image")
-                        .HasForeignKey("ChessBurgas64.Data.Models.Image", "TrainerId");
+                        .WithMany()
+                        .HasForeignKey("TrainerId");
 
                     b.Navigation("Announcement");
 
@@ -1155,8 +1135,6 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Member", b =>
                 {
-                    b.Navigation("Image");
-
                     b.Navigation("Lessons");
 
                     b.Navigation("Payments");
@@ -1183,8 +1161,6 @@ namespace ChessBurgas64.Data.Migrations
             modelBuilder.Entity("ChessBurgas64.Data.Models.Trainer", b =>
                 {
                     b.Navigation("Groups");
-
-                    b.Navigation("Image");
 
                     b.Navigation("IndividualStudents");
 

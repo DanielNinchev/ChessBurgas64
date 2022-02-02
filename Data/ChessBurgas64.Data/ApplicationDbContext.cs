@@ -85,20 +85,10 @@
                 .WithOne(u => u.Member)
                 .HasForeignKey<ApplicationUser>(i => i.MemberId);
 
-            builder.Entity<Member>()
-                .HasOne(m => m.Image)
-                .WithOne(i => i.Member)
-                .HasForeignKey<Image>(i => i.MemberId);
-
             builder.Entity<Puzzle>()
                 .HasOne(m => m.Image)
                 .WithOne(i => i.Puzzle)
                 .HasForeignKey<Image>(i => i.PuzzleId);
-
-            builder.Entity<Trainer>()
-                .HasOne(m => m.Image)
-                .WithOne(i => i.Trainer)
-                .HasForeignKey<Image>(i => i.TrainerId);
 
             builder.Entity<Trainer>()
                 .HasOne(m => m.User)

@@ -1,0 +1,10 @@
+﻿@page
+@using ChessBurgas64.Common
+@model ConfirmEmailChangeModel
+@{
+    ViewData["Title"] = GlobalConstants.EmailChangeConfirmationTitle;
+}
+
+<h1 class="text-white text-center">@ViewData["Title"]</h1>
+<hr class="text-white"/>
+<partial name="_StatusMessage" model="Model.StatusMessage" />

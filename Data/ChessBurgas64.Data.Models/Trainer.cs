@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
-    using ChessBurgas64.Data.Models.Enums;
 
     public class Trainer : BaseDeletableModel<string>
     {
@@ -15,24 +14,6 @@
             this.Groups = new HashSet<Group>();
             this.IndividualStudents = new HashSet<Member>();
         }
-
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string Description { get; set; }
-
-        public string ImageId { get; set; }
-
-        public virtual Image Image { get; set; }
-
-        public DateTime BirthDate { get; set; }
-
-        public Gender Gender { get; set; }
-
-        public string PhoneNumber { get; set; }
 
         public DateTime DateOfLastAttendance { get; set; }
 

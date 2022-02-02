@@ -5,7 +5,6 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using ChessBurgas64.Data.Common.Models;
-    using ChessBurgas64.Data.Models.Enums;
 
     public class Member : BaseDeletableModel<string>
     {
@@ -18,25 +17,9 @@
             this.LearnedOpenings = new HashSet<string>();
         }
 
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string ImageId { get; set; }
-
-        public virtual Image Image { get; set; }
-
-        public DateTime BirthDate { get; set; }
-
-        public Gender Gender { get; set; }
-
         public string Address { get; set; }
 
         public string School { get; set; }
-
-        public string PhoneNumber { get; set; }
 
         public DateTime DateOfJoiningTheClub { get; set; }
 

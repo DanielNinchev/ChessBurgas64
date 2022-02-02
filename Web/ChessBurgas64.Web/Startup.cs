@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -64,7 +65,9 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            // services.AddTransient<ISendGridEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(this.configuration);
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IAnnouncementsService, AnnouncementsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();

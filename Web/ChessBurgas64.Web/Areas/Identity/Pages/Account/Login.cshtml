@@ -1,0 +1,51 @@
+﻿@page
+@using ChessBurgas64.Common
+@model LoginModel
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <section>
+            <form id="account" method="post" class="text-center">
+                <h4 class="text-white text-center mt-3">@GlobalConstants.LogInTitle</h4>
+                <hr class="text-white mb-4"/>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group text-white my-5">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group text-white mt-5 mb-2">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group text-white mb-3">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group text-decoration-underline">
+                    <p>
+                        <a id="forgot-password" class="text-white" asp-page="./ForgotPassword">@GlobalConstants.ForgottenPassword</a>
+                    </p>
+                    <p>
+                        <a class="text-white" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@GlobalConstants.RegisterAsANewUser</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" class="text-white" asp-page="./ResendEmailConfirmation">@GlobalConstants.ResendEmailConfirmation</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

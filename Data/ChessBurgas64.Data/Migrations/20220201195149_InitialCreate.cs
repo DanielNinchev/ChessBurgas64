@@ -65,14 +65,6 @@ namespace ChessBurgas64.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfLastAttendance = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -218,15 +210,8 @@ namespace ChessBurgas64.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     School = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfJoiningTheClub = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfLastAttendance = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClubRating = table.Column<int>(type: "int", nullable: false),
@@ -279,49 +264,6 @@ namespace ChessBurgas64.Data.Migrations
                         name: "FK_LessonsGroups_Lessons_LessonId",
                         column: x => x.LessonId,
                         principalTable: "Lessons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    MemberId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Members_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Members",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Trainers_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "Trainers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -436,6 +378,103 @@ namespace ChessBurgas64.Data.Migrations
                         name: "FK_TournamentsMembers_Tournaments_TournamentId",
                         column: x => x.TournamentId,
                         principalTable: "Tournaments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MemberId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AnnouncementId = table.Column<int>(type: "int", nullable: true),
+                    PuzzleId = table.Column<int>(type: "int", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Images_Puzzles_PuzzleId",
+                        column: x => x.PuzzleId,
+                        principalTable: "Puzzles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Images_Trainers_TrainerId",
+                        column: x => x.TrainerId,
+                        principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    MemberId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Trainers_TrainerId",
+                        column: x => x.TrainerId,
+                        principalTable: "Trainers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -559,53 +598,6 @@ namespace ChessBurgas64.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Images",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    MemberId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    AnnouncementId = table.Column<int>(type: "int", nullable: true),
-                    PuzzleId = table.Column<int>(type: "int", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Images", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Images_Announcements_AnnouncementId",
-                        column: x => x.AnnouncementId,
-                        principalTable: "Announcements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Images_Members_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Members",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Images_Puzzles_PuzzleId",
-                        column: x => x.PuzzleId,
-                        principalTable: "Puzzles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Images_Trainers_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "Trainers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Announcements_AuthorId",
                 table: "Announcements",
@@ -657,6 +649,11 @@ namespace ChessBurgas64.Data.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ImageId",
+                table: "AspNetUsers",
+                column: "ImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_IsDeleted",
@@ -712,9 +709,7 @@ namespace ChessBurgas64.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Images_MemberId",
                 table: "Images",
-                column: "MemberId",
-                unique: true,
-                filter: "[MemberId] IS NOT NULL");
+                column: "MemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_PuzzleId",
@@ -726,9 +721,7 @@ namespace ChessBurgas64.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Images_TrainerId",
                 table: "Images",
-                column: "TrainerId",
-                unique: true,
-                filter: "[TrainerId] IS NOT NULL");
+                column: "TrainerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_IsDeleted",
@@ -839,10 +832,22 @@ namespace ChessBurgas64.Data.Migrations
                 name: "IX_Trainers_IsDeleted",
                 table: "Trainers",
                 column: "IsDeleted");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Images_Announcements_AnnouncementId",
+                table: "Images",
+                column: "AnnouncementId",
+                principalTable: "Announcements",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Announcements_AspNetUsers_AuthorId",
+                table: "Announcements");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -857,9 +862,6 @@ namespace ChessBurgas64.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "LessonsGroups");
@@ -883,13 +885,7 @@ namespace ChessBurgas64.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Announcements");
-
-            migrationBuilder.DropTable(
                 name: "Lessons");
-
-            migrationBuilder.DropTable(
-                name: "Puzzles");
 
             migrationBuilder.DropTable(
                 name: "Tournaments");
@@ -898,13 +894,22 @@ namespace ChessBurgas64.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Images");
+
+            migrationBuilder.DropTable(
+                name: "Announcements");
 
             migrationBuilder.DropTable(
                 name: "Members");
 
             migrationBuilder.DropTable(
+                name: "Puzzles");
+
+            migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Trainers");

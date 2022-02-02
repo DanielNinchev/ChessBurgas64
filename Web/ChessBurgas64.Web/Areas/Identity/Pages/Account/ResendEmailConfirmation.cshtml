@@ -1,0 +1,27 @@
+﻿@page
+@using ChessBurgas64.Common
+@model ResendEmailConfirmationModel
+@{
+    ViewData["Title"] = GlobalConstants.ResendEmailConfirmation;
+}
+
+<h1 class="text-white text-center">@ViewData["Title"]</h1>
+<h4 class="text-white text-center">@GlobalConstants.EnterEmailLabel</h4>
+<hr class="text-white"/>
+<div class="row">
+    <div class="col-md-6 text-center offset-3">
+        <form method="post" class="text-center text-white">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group py-3">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-warning"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">@GlobalConstants.Resend</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
