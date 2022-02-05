@@ -1,24 +1,81 @@
 ﻿@page
+@using ChessBurgas64.Common
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Personal Data";
+    ViewData["Title"] = GlobalConstants.PersonalDataPolicyTitle;
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h4>@ViewData["Title"]</h4>
+<h5 class="text-white px-3 offset-2">@ViewData["Title"]</h5>
 
 <div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+    <div class="col-md-12 text-white">
+        <p>@GlobalConstants.PersonalDataPolicyInfo</p>
         <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+            <strong>@GlobalConstants.PersonalDataDeleteWarning</strong>
         </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-secondary">Delete</a>
-        </p>
+
+        <ul>
+            <li>
+                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+                    <button class="btn btn-primary mb-2" type="submit">@GlobalConstants.DownloadPersonalData</button>
+                </form>
+            </li>
+            <li>
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warning">@GlobalConstants.DeleteAccount</a>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <h5 class="text-white px-3 offset-3 text-decoration-underline">@GlobalConstants.ForWhatDoWeUseYourData</h5>
+    <div id="accordion" class="col-md-10">
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingOne">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        @GlobalConstants.BirthDate
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.BirthDateDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingTwo">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        @GlobalConstants.School
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.SchoolDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingThree">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link collapsed btn-primary" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        @GlobalConstants.Address
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                   @GlobalConstants.AddressDataUsageInfo
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

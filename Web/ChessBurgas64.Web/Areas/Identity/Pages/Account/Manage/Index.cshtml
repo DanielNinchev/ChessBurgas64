@@ -1,0 +1,114 @@
+﻿@page
+@using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
+@model IndexModel
+@{
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6 pl-5">
+        <form id="profile-form" method="post" class="text-white">
+            <div asp-validation-summary="ModelOnly" class="text-warning"></div>
+
+            <div class="form-group my-3">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group my-3">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Input.MiddleName"></label>
+                <input asp-for="Input.MiddleName" class="form-control" />
+                <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Input.BirthDate"></label>
+                <input asp-for="Input.BirthDate" class="form-control" />
+                <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+            </div>
+            @Html.DisplayNameFor(m => m.Input.Gender):
+            <div class="form-check form-check-inline m-4">
+                <input class="form-check-input" type="radio" asp-for="Input.Gender" id="inlineRadio1" value="@Gender.Женски.ToString()">
+                <label class="form-check-label" asp-for="Input.Gender">@Gender.Женски.ToString()</label>
+            </div>
+            <div class="form-check form-check-inline m-4">
+                <input class="form-check-input" type="radio" asp-for="Input.Gender" id="inlineRadio1" value="@Gender.Мъжки.ToString()">
+                <label class="form-check-label" asp-for="Input.Gender">@Gender.Мъжки.ToString()</label>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-primary">@GlobalConstants.Save</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <form id="change-password-form" method="post" class="text-white">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Input.OldPassword"></label>
+                <input asp-for="Input.OldPassword" class="form-control" />
+                <span asp-validation-for="Input.OldPassword" class="text-warning"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Input.NewPassword"></label>
+                <input asp-for="Input.NewPassword" class="form-control" />
+                <span asp-validation-for="Input.NewPassword" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-warning"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">@GlobalConstants.PasswordResetConfirmationTopic</button>
+        </form>
+
+        <form id="email-form" method="post" class="text-white">
+            <div asp-validation-summary="All" class="text-warning"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text text-success font-weight-bold">✓</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" disabled />
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">@GlobalConstants.EmailConfirmationTopic</button>
+                }
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.NewEmail"></label>
+                <input asp-for="Input.NewEmail" class="form-control" />
+                <span asp-validation-for="Input.NewEmail" class="text-warning"></span>
+            </div>
+
+            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">@GlobalConstants.ChangeEmail</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

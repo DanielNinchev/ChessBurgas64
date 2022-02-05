@@ -1,7 +1,9 @@
 ﻿namespace ChessBurgas64.Web
 {
+    using System.Globalization;
     using System.Reflection;
 
+    using AutoMapper;
     using ChessBurgas64.Data;
     using ChessBurgas64.Data.Common;
     using ChessBurgas64.Data.Common.Repositories;
@@ -12,8 +14,8 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Services.Messaging;
+    using ChessBurgas64.Web.MappingProfiles;
     using ChessBurgas64.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -36,6 +38,14 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AnnouncementProfile());
+                cfg.AddProfile(new ApplicationUserProfile());
+            });
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 

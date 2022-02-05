@@ -1,15 +1,16 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using ChessBurgas64.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using ChessBurgas64.Common;
-
-namespace ChessBurgas64.Web.Areas.Identity.Pages.Account
+﻿namespace ChessBurgas64.Web.Areas.Identity.Pages.Account
 {
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using ChessBurgas64.Common;
+    using ChessBurgas64.Data.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.WebUtilities;
+
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {

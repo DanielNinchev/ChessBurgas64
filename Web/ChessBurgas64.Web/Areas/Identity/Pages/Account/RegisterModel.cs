@@ -8,6 +8,7 @@
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
+    using AutoMapper;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
@@ -27,17 +28,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
+        private readonly IMapper mapper;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
+            this.mapper = mapper;
         }
 
         [BindProperty]
@@ -87,6 +91,8 @@
 
             [Required]
             [Display(Name = GlobalConstants.BirthDate)]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+            [DataType(DataType.Date)]
             public DateTime BirthDate { get; set; }
 
             [Required]
@@ -106,16 +112,8 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser
-                {
-                    FirstName = this.Input.FirstName,
-                    MiddleName = this.Input.MiddleName,
-                    LastName = this.Input.LastName,
-                    UserName = this.Input.Email,
-                    Email = this.Input.Email,
-                    BirthDate = this.Input.BirthDate,
-                    Gender = this.Input.Gender,
-                };
+                var user = this.mapper.Map<ApplicationUser>(this.Input);
+
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {

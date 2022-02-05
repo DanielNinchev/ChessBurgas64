@@ -5,7 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
@@ -18,23 +18,20 @@
     public class AnnouncementsService : IAnnouncementsService
     {
         private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
+        private readonly IMapper mapper;
 
-        public AnnouncementsService(IDeletableEntityRepository<Announcement> announcementsRepository)
+        public AnnouncementsService(IDeletableEntityRepository<Announcement> announcementsRepository, IMapper mapper)
         {
             this.announcementsRepository = announcementsRepository;
+            this.mapper = mapper;
         }
 
         public async Task CreateAsync(CreateAnnouncementInputModel input, string userId, string imagePath)
         {
-            // TODO: use mapping
-            var announcement = new Announcement
-            {
-                Title = input.Title,
-                Date = DateTime.Now,
-                Text = input.Text,
-                AuthorId = userId,
-                CategoryId = input.CategoryId,
-            };
+            var announcement = this.mapper.Map<Announcement>(input);
+
+            announcement.Date = DateTime.Now;
+            announcement.AuthorId = userId;
 
             Directory.CreateDirectory(imagePath);
 
