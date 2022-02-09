@@ -111,7 +111,10 @@
 
         // Navigation
         public const string AnnouncementsNav = "Новини";
-        public const string CreateAnnouncementNav = "Напиши";
+        public const string Publish = "Публикувай";
+        public const string CreateAnnouncementNav = "Новина";
+        public const string CreateVideoLessonNav = "Видео урок";
+        public const string CreatePuzzleNav = "Шахматна задача";
         public const string HomeNav = "Начало";
         public const string TrainersNav = "Треньори";
         public const string CompetitorsNav = "Състезатели";
@@ -122,14 +125,18 @@
         public const string RegistrationNav = "Регистрация";
         public const string ProfileNav = "Профил";
         public const string ScheduleNav = "График";
-        public const string AdminTools = "Администраторски настройки";
+        public const string AdminTools = "Администратор";
         public const string Exit = "Изход";
         public const string WelcomeMsg = "Здравейте,";
+        public const string PuzzlesNav = "Шахматни задачи";
+        public const string LessonsNav = "Видео уроци";
+        public const string MembersNav = "Членове на клуба";
 
         // Profile navigation
-        public const string Profile = "Личен профил";
         public const string Authentication = "Разпознаване";
-        public const string PersonalData = "Лични данни";
+        public const string PersonalData = "Поверителност";
+        public const string Profile = "Профилни данни";
+        public const string MemberData = "Членски данни";
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";

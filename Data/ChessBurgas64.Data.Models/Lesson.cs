@@ -19,6 +19,8 @@
 
         public DateTime StartingTime { get; set; }
 
+        public string VideoUrl { get; set; }
+
         public string TrainerId { get; set; }
 
         public virtual Trainer Trainer { get; set; }

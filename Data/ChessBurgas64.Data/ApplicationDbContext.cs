@@ -28,6 +28,8 @@
 
         public DbSet<Announcement> Announcements { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Group> Groups { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChessBurgas64.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220201195149_InitialCreate")]
+    [Migration("20220208200801_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -383,6 +383,9 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Property<string>("TrainerId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

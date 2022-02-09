@@ -4,9 +4,10 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 
-<form class="form-inline row">
+<form class="form-inline row mt-3">
     <ul class="nav flex-column col-md-12 background-dragon-red border border-2 border-white py-5 text-center">
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">@GlobalConstants.Profile</button></li>
+        <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">@GlobalConstants.MemberData</button></li>
         @if (hasExternalLogins)
         {
             <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>

@@ -5,20 +5,36 @@
 @inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
-    @if (this.SignInManager.IsSignedIn(this.User))
+   @if (this.SignInManager.IsSignedIn(this.User))
     {
         <li class="nav-item">
             <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@GlobalConstants.WelcomeMsg @this.User.Identity.Name!</a>
         </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">@GlobalConstants.AdminTools</a>
+            <li class="nav-item dropdown">
+                <a class="btn btn-primary nav-link dropdown-toggle text-white" role="button" title="Admin" data-toggle="dropdown" aria-expanded="false">@GlobalConstants.AdminTools</a>
+                <ul class="dropdown-menu background-dragon-red">
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Announcements" asp-action="Create">@GlobalConstants.MembersNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Announcements" asp-action="Create">@GlobalConstants.PuzzlesNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Announcements" asp-action="Create">@GlobalConstants.LessonsNav</a></li>
+
+                    <li class="dropstart text-white">
+                        <a class="btn btn-primary dropdown-item dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.Publish</a>
+
+                        <ul class="submenu dropdown-menu background-dragon-red">
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateVideoLessonNav</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </li>
         }
+
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
-                <button type="submit" class="nav-link btn btn-link text-white">Изход</button>
+                <button type="submit" class="nav-link btn btn-link text-white">@GlobalConstants.Exit</button>
             </form>
         </li>
     }

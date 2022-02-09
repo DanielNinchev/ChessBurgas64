@@ -7,16 +7,15 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/animate/animate.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/lightbox/css/lightbox.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="shortcut icon" href="~/burgas64.ico" />
 </head>
-<body class="container background-theme">
+<body class="container-fluid background-theme">
     <header>
         <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
@@ -26,12 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
                         </li>
-                        @if (this.User.Identity.IsAuthenticated)
+                        @*@if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a>
                             </li>
-                        }
+                        }*@
 
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Trainers" asp-action="Trainers">@GlobalConstants.TrainersNav</a>

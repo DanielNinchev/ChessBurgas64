@@ -21,13 +21,13 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
-        private readonly ILogger<ChangePasswordModel> logger;
+        private readonly ILogger<MemberDataModel> logger;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<ChangePasswordModel> logger)
+            ILogger<MemberDataModel> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;

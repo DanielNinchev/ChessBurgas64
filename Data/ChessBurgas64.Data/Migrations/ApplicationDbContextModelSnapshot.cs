@@ -382,6 +382,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("TrainerId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");

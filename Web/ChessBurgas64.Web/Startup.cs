@@ -1,6 +1,5 @@
 ﻿namespace ChessBurgas64.Web
 {
-    using System.Globalization;
     using System.Reflection;
 
     using AutoMapper;

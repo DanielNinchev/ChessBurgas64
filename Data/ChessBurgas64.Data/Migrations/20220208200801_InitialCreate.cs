@@ -188,6 +188,7 @@ namespace ChessBurgas64.Data.Migrations
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DayOfWeek = table.Column<int>(type: "int", nullable: false),
                     StartingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
