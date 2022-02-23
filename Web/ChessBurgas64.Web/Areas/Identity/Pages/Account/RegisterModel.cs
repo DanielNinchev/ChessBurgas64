@@ -49,6 +49,10 @@
 
         public string ReturnUrl { get; set; }
 
+        [Required]
+        [Display(Name = GlobalConstants.ClubStatus)]
+        public string ClubStatus { get; set; }
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public class InputModel
@@ -131,6 +135,11 @@
                         this.Input.Email,
                         GlobalConstants.RegistrationConfirmationTopic,
                         $"{GlobalConstants.RegistrationConfirmationMsg} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>{GlobalConstants.RegistrationConfirmationTopic}</a>.");
+
+                    await this.emailSender.SendEmailAsync(
+                        GlobalConstants.AdminEmail,
+                        GlobalConstants.StatusValidationTopic,
+                        $"{this.Input.FirstName} {this.Input.MiddleName} {this.Input.LastName} {GlobalConstants.StatusValidationMsg}{this.ClubStatus}");
 
                     if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                     {

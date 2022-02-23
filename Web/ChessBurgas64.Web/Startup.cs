@@ -43,6 +43,8 @@
                 cfg.AddProfile(new ApplicationUserProfile());
             });
 
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<ApplicationDbContext>(
@@ -80,6 +82,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IAnnouncementsService, AnnouncementsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

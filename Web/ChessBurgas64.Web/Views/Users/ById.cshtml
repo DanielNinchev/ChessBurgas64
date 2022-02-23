@@ -1,0 +1,65 @@
+﻿@model ChessBurgas64.Web.ViewModels.Members.MemberViewModel
+@using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
+
+@{
+    this.ViewData["Title"] = String.Concat(Model.FirstName, " ", Model.MiddleName, " ", Model.LastName);
+}
+
+<h1 class="text-white text-center display-5">@GlobalConstants.Profile</h1>
+
+<div class="container-fluid background-dragon-red border border-3 border-white pt-2 mb-5">
+    <h3 class="text-white text-center">@this.ViewData["Title"]</h3>
+</div>
+
+
+<div class="row container-fluid">
+    <div class="col-md-6">
+        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Лични данни</h4>
+
+        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-left">
+            <p>@GlobalConstants.Gender: <i class="fa-solid fa-mars-and-venus"></i> @Model.Gender</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.BirthDate: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
+            <hr class="text-dark" />
+
+            @if (Model.ClubStatus != ClubStatus.Изчакващ.ToString() && Model.ClubStatus != ClubStatus.Треньор.ToString())
+            {
+                <p>@GlobalConstants.Address: <i class="fa-solid fa-location-dot"></i> @Model.Address</p>
+                <hr class="text-dark" />
+                <p>@GlobalConstants.School: <i class="fa-solid fa-school"></i> @Model.School</p>
+                <hr class="text-dark" />
+            }
+
+            <p>@GlobalConstants.ClubStatus: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
+            <hr class="text-dark" />
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Клубни данни</h4>
+
+        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-center">
+            <p>@GlobalConstants.ClubRating: <i class="fa-solid fa-mars-and-venus"></i> @Model.ClubRating</p>
+            <p>@GlobalConstants.DateOfJoiningTheClub: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
+            <p>@GlobalConstants.Group: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
+            <p>@GlobalConstants.DateOfJoingCurrentGroup: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Лични данни</h4>
+
+        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-center">
+            <p>@GlobalConstants.Gender: <i class="fa-solid fa-mars-and-venus"></i> @Model.Gender</p>
+            <p>@GlobalConstants.BirthDate: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
+            <p>@GlobalConstants.ClubStatus: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
+
+            @if (Model.ClubStatus != ClubStatus.Изчакващ.ToString() && Model.ClubStatus != ClubStatus.Треньор.ToString())
+            {
+                <p>@GlobalConstants.Address: <i class="fa-solid fa-location-dot"></i> @Model.Address</p>
+                <p>@GlobalConstants.School: <i class="fa-solid fa-school"></i> @Model.School</p>
+            }
+        </div>
+    </div>
+</div>

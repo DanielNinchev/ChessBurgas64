@@ -35,6 +35,21 @@
         "dist/jquery.validate.unobtrusive.js",
         "dist/jquery.validate.unobtrusive.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net@1.11.4",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net-bs5@1.11.4",
+      "destination": "wwwroot/lib/datatables.net-bs5/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables@1.10.1",
+      "destination": "wwwroot/lib/datatables/"
     }
   ]
 }

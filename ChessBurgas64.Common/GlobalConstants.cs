@@ -4,8 +4,12 @@
     {
         public const string SystemName = "ChessBurgas64";
         public const string ClubName = "БУРГАС 64";
+        public const string AdminEmail = "daniel.ninchev@gmail.com";
 
-        public const string AdministratorRoleName = "Administrator";
+        // Roles
+        public const string AdministratorRoleName = "Администратор";
+        public const string MemberRoleName = "Член";
+        public const string TrainerRoleName = "Треньор";
 
         // Profile
         public const string ProfileManagementTitle = "Управление на профила";
@@ -30,10 +34,16 @@
         public const string PasswordResetConfirmationTopic = "Промяна на парола";
         public const string PasswordResetSuccess = "Вие успешно променихте паролата си!";
         public const string Reset = "Промяна";
-        public const string ResendEmailConfirmationInstructions = "Моля, проверете в кутията на своя email за изпратен от нас линк, за да потвърдите своя email.";
+        public const string ResendEmailConfirmationInstructions = "Моля, проверете в кутията на своя email за изпратен от нас линк, за да го потвърдите.";
         public const string EmailResetFailed = "Вашият email не е променен.";
         public const string NewEmail = "Нов email";
         public const string ChangeEmail = "Смяна на email";
+        public const string StatusValidationTopic = "Потвърждаване на клубен статус";
+        public const string StatusValidationMsg = "заяви следния клубен статус: ";
+
+        // Actions
+        public const string Accept = "Потвърди";
+        public const string Decline = "Отхвърли";
 
         // Registration
         public const string RegistrationConfirmationInstructions = "Моля, проверете в кутията на своя email за изпратен от нас линк, за да потвърдите своята регистрация.";
@@ -44,6 +54,24 @@
         public const string EmailChangeConfirmationTitle = "Потвърдете новия си email.";
         public const string Resend = "Препращане";
         public const string Save = "Запазване";
+        public const string StatusDeclarationInstructions = "Моля, продължете нататък, като заявите своя клубен статус. Ще Ви отнеме минута.";
+        public const string ToStatusDeclaration = "Към заявка на статус";
+        public const string StatusDeclarationTitle = "Клубен статус";
+        public const string StatusDeclarationSubtitle = "Тук можете да заявите промяна на клубния си статус.";
+
+        // Status
+        public const string ClubStatusConfirmed = "Клубният Ви статус е потвърден!";
+        public const string ClubStatusInfo = "Моля, прочетете всяка една от опциите и изберете Вашия клубен статус. След завършване на регистрацията ние ще разгледаме заявения от Вас статус и при съответствие до 1 ден ще го одобрим. Необходимо е след това да попълните допълнителни данни от менюто \"Клубни настройки\" в профила Ви.";
+        public const string PendingApproval = "Новопостъпващ";
+        public const string PendingApprovalInfo = "Отбележете тази опция, ако досега не сте посещавали тренировки при нас и не сте заплатили месечна такса, но желаете да го направите. След регистрацията е необходимо да изберете предпочитани дни за посещение от менюто \"Клубни настройки\" във Вашия профил.";
+        public const string StudentStatus = "Ученик";
+        public const string ValidateStatus = "Заяви избрания статус";
+        public const string ValidateStatusInfo = "При натискане на бутона Вие ще ни изпратите заявка за потвърждаване на статуса Ви, а ние при съответствие ще я одобрим.";
+        public const string StudentStatusInfo = "Изберете тази опция, ако вече сте заплатили месечна такса. Занятия за учениците се провеждат присъствено и онлайн всеки делник, като всяко дете се включва в група и следва съответния график. Учениците заплащат месечна такса в размер на 50 лв, която включва 2 тренировки седмично.";
+        public const string CompetitorStatus = "Състезател";
+        public const string CompetitorStatusInfo = "Състезателите са ученици, които проявяват голям интерес и активно участват в шахматни състезания. Този статус се дава, след като ученикът е взел участие в поне 3 извънградски турнира за 1 година и е картотекиран към нашия клуб. Състезателите получават възможност да посещават по-често тренировки за същия размер на месечната такса.";
+        public const string ChampionStatus = "Шампион";
+        public const string ChampionStatusInfo = "Шампионите са състезатели, отличили се с високи постижения в държавни шахматни турнири. Този статус се дава след спечелено първо място на държавно първенство или две първи места от друг голям турнир. Шампионите се освобождават от месечна такса.";
 
         // Password
         public const string ForgottenPasswordConfirmationInstructions = "Моля, проверете в кутията на своя email за изпратен от нас линк, за да потвърдите, че наистина желаете да промените паролата си.";
@@ -71,6 +99,19 @@
         public const int AddressMinLength = 10;
         public const int SchoolMaxLength = 100;
         public const int SchoolMinLength = 10;
+
+        // Students view
+        public const string Students = "Ученици";
+        public const string StudentsPage = "StudentsPage";
+        public const string DateOfJoiningTheClub = "Дата на записване в клуба";
+        public const string ClubRating = "Клубно ЕЛО";
+        public const string Group = "Група";
+        public const string AttendanceCount = "Посещения";
+        public const string LastAttendance = "Последно посещение";
+        public const string DateOfJoingCurrentGroup = "Дата на включване в групата";
+        public const string Actions = "Действия";
+        public const string PhoneDataTable = "Телефон";
+        public const string BirthDateDataTable = "Роден/а";
 
         // Registration view
         public const string RegistrationLabel = "РЕГИСТРАЦИЯ";
@@ -135,8 +176,9 @@
         // Profile navigation
         public const string Authentication = "Разпознаване";
         public const string PersonalData = "Поверителност";
-        public const string Profile = "Профилни данни";
+        public const string Profile = "Профил";
         public const string MemberData = "Членски данни";
+        public const string ClubStatus = "Клубен статус";
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";

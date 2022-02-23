@@ -50,6 +50,8 @@ namespace ChessBurgas64.Data.Models
 
         public Gender Gender { get; set; }
 
+        public ClubStatus ClubStatus { get; set; }
+
         public string MemberId { get; set; }
 
         public virtual Member Member { get; set; }

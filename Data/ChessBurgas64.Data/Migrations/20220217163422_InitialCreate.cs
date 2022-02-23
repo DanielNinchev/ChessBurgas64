@@ -440,6 +440,7 @@ namespace ChessBurgas64.Data.Migrations
                     ImageId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
+                    ClubStatus = table.Column<int>(type: "int", nullable: false),
                     MemberId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TrainerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
