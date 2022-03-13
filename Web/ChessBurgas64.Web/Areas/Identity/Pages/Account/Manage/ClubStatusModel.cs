@@ -1,11 +1,7 @@
 ﻿namespace ChessBurgas64.Web.Areas.Identity.Pages.Account.Manage
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Text.Json;
     using System.Threading.Tasks;
+
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
@@ -13,8 +9,6 @@
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.AspNetCore.WebUtilities;
-    using Microsoft.Extensions.Logging;
 
     public class ClubStatusModel : PageModel
     {

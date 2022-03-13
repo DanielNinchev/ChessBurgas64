@@ -16,6 +16,7 @@ namespace ChessBurgas64.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Payments = new HashSet<Payment>();
         }
 
         // Audit info
@@ -52,6 +53,10 @@ namespace ChessBurgas64.Data.Models
 
         public ClubStatus ClubStatus { get; set; }
 
+        public int FideRating { get; set; }
+
+        public FideTitle FideTitle { get; set; }
+
         public string MemberId { get; set; }
 
         public virtual Member Member { get; set; }
@@ -59,5 +64,7 @@ namespace ChessBurgas64.Data.Models
         public string TrainerId { get; set; }
 
         public virtual Trainer Trainer { get; set; }
+
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

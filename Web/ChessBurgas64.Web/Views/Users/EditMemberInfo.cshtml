@@ -1,0 +1,47 @@
+﻿@model ChessBurgas64.Web.ViewModels.Members.MemberInputModel
+@using ChessBurgas64.Common
+@{
+    ViewData["Title"] = GlobalConstants.EditUsersClubData;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+<hr class="border border-5 border-white text-white" />
+
+<form method="post" enctype="multipart/form-data" class="mt-5">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group my-3">
+        <label class="text-white" asp-for="@Model.DateOfJoiningTheClub">@GlobalConstants.DateOfJoiningTheClub</label>
+        <input asp-for="@Model.DateOfJoiningTheClub" class="form-control" />
+        <span asp-validation-for="@Model.DateOfJoiningTheClub" class="text-danger"></span>
+    </div>
+    <div class="form-group my-3">
+        <label class="text-white" asp-for="@Model.ClubRating">@GlobalConstants.ClubRating</label>
+        <input asp-for="@Model.ClubRating" class="form-control" />
+        <span asp-validation-for="@Model.ClubRating" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="@Model.DateOfJoiningCurrentGroup">@GlobalConstants.DateOfJoiningCurrentGroup</label>
+        <input asp-for="@Model.DateOfJoiningCurrentGroup" class="form-control" />
+        <span asp-validation-for="@Model.DateOfJoiningCurrentGroup" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="@Model.DateOfLastAttendance">@GlobalConstants.LastAttendance</label>
+        <input asp-for="@Model.DateOfLastAttendance" class="form-control" />
+        <span asp-validation-for="@Model.DateOfLastAttendance" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="@Model.LastPuzzleLevel">@GlobalConstants.LastPuzzleLevel</label>
+        <input asp-for="@Model.LastPuzzleLevel" class="form-control" />
+        <span asp-validation-for="@Model.LastPuzzleLevel" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="@Model.LearnedOpenings">@GlobalConstants.LearnedOpenings</label>
+        <textarea asp-for="@Model.LearnedOpenings" class="form-control" rows="10"></textarea>
+        <span asp-validation-for="@Model.LearnedOpenings" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn-primary">@GlobalConstants.Refresh</button>
+</form>
+
+
+

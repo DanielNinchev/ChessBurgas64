@@ -9,23 +9,20 @@
     {
         public Lesson()
         {
-            this.Groups = new HashSet<LessonGroup>();
             this.Members = new HashSet<LessonMember>();
         }
 
         public string Topic { get; set; }
 
-        public DayOfWeek DayOfWeek { get; set; }
-
         public DateTime StartingTime { get; set; }
-
-        public string VideoUrl { get; set; }
 
         public string TrainerId { get; set; }
 
         public virtual Trainer Trainer { get; set; }
 
-        public virtual ICollection<LessonGroup> Groups { get; set; }
+        public string GroupId { get; set; }
+
+        public virtual Group Group { get; set; }
 
         public virtual ICollection<LessonMember> Members { get; set; }
     }

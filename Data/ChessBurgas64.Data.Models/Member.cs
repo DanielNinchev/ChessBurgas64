@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using ChessBurgas64.Data.Common.Models;
 
@@ -10,11 +9,10 @@
     {
         public Member()
         {
-            this.Payments = new HashSet<Payment>();
+            this.Id = Guid.NewGuid().ToString();
             this.Lessons = new HashSet<LessonMember>();
             this.Puzzles = new HashSet<PuzzleMember>();
             this.Tournaments = new HashSet<TournamentMember>();
-            this.LearnedOpenings = new HashSet<string>();
         }
 
         public string Address { get; set; }
@@ -25,16 +23,13 @@
 
         public DateTime DateOfLastAttendance { get; set; }
 
-        public virtual ICollection<Payment> Payments { get; set; }
-
         public virtual ICollection<LessonMember> Lessons { get; set; }
 
         public virtual ICollection<PuzzleMember> Puzzles { get; set; }
 
         public virtual ICollection<TournamentMember> Tournaments { get; set; }
 
-        [NotMapped]
-        public virtual ICollection<string> LearnedOpenings { get; set; }
+        public string LearnedOpenings { get; set; }
 
         public int ClubRating { get; set; }
 

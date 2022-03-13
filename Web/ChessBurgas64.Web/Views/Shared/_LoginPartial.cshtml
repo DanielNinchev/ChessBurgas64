@@ -15,17 +15,18 @@
             <li class="nav-item dropdown">
                 <a class="btn btn-primary nav-link dropdown-toggle text-white" role="button" title="Admin" data-toggle="dropdown" aria-expanded="false">@GlobalConstants.AdminTools</a>
                 <ul class="dropdown-menu background-dragon-red">
-                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Users" asp-action="ShowUsers">@GlobalConstants.MembersNav</a></li>
-                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Announcements" asp-action="Create">@GlobalConstants.PuzzlesNav</a></li>
-                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-controller="Announcements" asp-action="Create">@GlobalConstants.LessonsNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-area="" asp-controller="Users" asp-action="ShowUsers">@GlobalConstants.MembersNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-area="" asp-controller="Groups" asp-action="ShowGroups">@GlobalConstants.GroupsNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.PuzzlesNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" role="button" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.LessonsNav</a></li>
 
                     <li class="dropstart text-white">
                         <a class="btn btn-primary dropdown-item dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.Publish</a>
 
                         <ul class="submenu dropdown-menu background-dragon-red">
-                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a></li>
-                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
-                            <li><a class="btn btn-primary dropdown-item text-white" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateVideoLessonNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateVideoLessonNav</a></li>
                         </ul>
                     </li>
                 </ul>

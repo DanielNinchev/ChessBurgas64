@@ -17,12 +17,19 @@
     public class UsersService : IUsersService
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
-        private readonly IMapper mapper;
 
-        public UsersService(IDeletableEntityRepository<ApplicationUser> usersRepository, IMapper mapper)
+        public UsersService(
+            IDeletableEntityRepository<ApplicationUser> usersRepository)
         {
             this.usersRepository = usersRepository;
-            this.mapper = mapper;
+        }
+
+        public async Task ChangeClubStatusAsync(string id, string clubStatus)
+        {
+            var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
+            user.ClubStatus = (ClubStatus)Enum.Parse(typeof(ClubStatus), clubStatus);
+
+            await this.usersRepository.SaveChangesAsync();
         }
 
         public T GetById<T>(string id)
@@ -56,18 +63,12 @@
             return userData.To<T>().ToList();
         }
 
-        public async Task UpdateAsync(string id, EditUserInputModel input)
+        public async Task UpdateAsync(string id, UserInputModel input)
         {
             var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
             user.ClubStatus = (ClubStatus)Enum.Parse(typeof(ClubStatus), input.ClubStatus);
-
-            if (user.Member != null)
-            {
-                if (user.ClubStatus != ClubStatus.Изчакващ)
-                {
-                    user.Member = this.mapper.Map<Member>(input);
-                }
-            }
+            user.FideTitle = (FideTitle)Enum.Parse(typeof(FideTitle), input.FideTitle);
+            user.FideRating = input.FideRating;
 
             await this.usersRepository.SaveChangesAsync();
         }

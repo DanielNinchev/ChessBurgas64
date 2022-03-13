@@ -1,0 +1,51 @@
+﻿@model ChessBurgas64.Web.ViewModels.Payments.PaymentInputModel
+@using ChessBurgas64.Common
+@{
+    ViewData["Title"] = GlobalConstants.EditPaymentDataTitle;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="UserId" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label class="text-white" asp-for="DateOfPayment">@GlobalConstants.DateOfPayment</label>
+        <input asp-for="DateOfPayment" class="form-control" />
+        <span asp-validation-for="DateOfPayment" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="text-white" asp-for="Amount">@GlobalConstants.PaidAmount</label>
+        <input asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="text-white" asp-for="Description">@GlobalConstants.PaidFor</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn-primary" data-toggle="modal" data-target="#modalEdit">@GlobalConstants.Save</button>
+</form>
+
+<!-- Modal -->
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@GlobalConstants.Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="@GlobalConstants.Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    @GlobalConstants.DoYouWantToSaveChanges
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@GlobalConstants.Close</button>
+                <button type="button" class="btn btn-primary" onclick="editForm.submit()">@GlobalConstants.Save</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model ChessBurgas64.Web.ViewModels.Groups.GroupViewModel
+@using ChessBurgas64.Common
+
+@{
+    this.ViewData["Title"] = GlobalConstants.GroupData;
+}
+
+<link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+<div class="container-fluid background-dragon-red border border-3 border-white pt-2 mb-5">
+    <h3 class="display-6 text-white text-center">@this.ViewData["Title"]</h3>
+</div>
+
+<div class="row container-fluid">
+    <!-- Group data info start -->
+    <div class="col-md-8 offset-2 text-center">
+        <h4 class="display-6 text-white text-center">@Model.Name</h4>
+        <hr class="border border-5 border-white text-white" />
+
+        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-left">
+            <p>@GlobalConstants.TrainingDay: <i class="fa-solid fa-calendar-day"></i> @Model.TrainingDay</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.TrainingHour: <i class="fa-solid fa-clock"></i> @Model.TrainingHour.ToShortTimeString()</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.TrainerRoleName: <i class="fa-solid fa-user-vneck"></i> @($"{Model.Trainer.User.FirstName} {Model.Trainer.User.LastName}")</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.StudentsCount: <i class="fa-solid fa-users"></i> @Model.MembersCount</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.LowestRating: <i class="fa-solid fa-star-half-stroke"></i> @Model.LowestRating</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.HighestRating: <i class="fa-solid fa-star"></i> @Model.HighestRating</p>
+            <hr class="text-dark" />
+
+            <div class="text-center my-2">
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
+            </div>
+        </div>
+    </div>
+    <!-- Group data info end -->
+    <!-- Payments table start -->
+    <div class="container-fluid text-center">
+        <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.ConductedLessons</h4>
+        <hr class="border border-5 border-white text-white" />
+        <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
+            <table id="lessonsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
+                <thead class="dt-head-center">
+                    <tr>
+                        <th class="dt-head-center">Id</th>
+                        <th class="dt-head-center">@GlobalConstants.DateAndTime</th>
+                        <th class="dt-head-center">@GlobalConstants.Topic</th>
+                        <th class="dt-head-center">@GlobalConstants.Group</th>
+                        <th class="dt-head-center">@GlobalConstants.Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <a class="btn btn-primary" asp-area="" asp-controller="Lessons" asp-action="Create" asp-route-id="@Model.Id">@GlobalConstants.AddLesson</a>
+    </div>
+    <!-- Payments table end -->
+</div>
+
+
+@Html.AntiForgeryToken()
+
+@section Scripts
+{
+    <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src=" //cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js"></script>
+    <script src="~/js/lessonsTable.js"></script>
+}

@@ -1,4 +1,4 @@
-﻿@model ChessBurgas64.Web.ViewModels.Members.MemberViewModel
+﻿@model ChessBurgas64.Web.ViewModels.Users.UserProfileViewModel
 @using ChessBurgas64.Common
 @using ChessBurgas64.Data.Models.Enums
 
@@ -6,60 +6,154 @@
     this.ViewData["Title"] = String.Concat(Model.FirstName, " ", Model.MiddleName, " ", Model.LastName);
 }
 
+<link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
 <h1 class="text-white text-center display-5">@GlobalConstants.Profile</h1>
 
 <div class="container-fluid background-dragon-red border border-3 border-white pt-2 mb-5">
-    <h3 class="text-white text-center">@this.ViewData["Title"]</h3>
+    <h3 class="display-6 text-white text-center">@this.ViewData["Title"]</h3>
 </div>
 
-
 <div class="row container-fluid">
-    <div class="col-md-6">
-        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Лични данни</h4>
+    <!-- Personal and FIDE data info start -->
+    <div class="col-md-8 offset-2 text-center">
+        <h4 class="display-6 text-white text-center">@GlobalConstants.PersonalData</h4>
+        <hr class="border border-5 border-white text-white" />
 
         <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-left">
             <p>@GlobalConstants.Gender: <i class="fa-solid fa-mars-and-venus"></i> @Model.Gender</p>
             <hr class="text-dark" />
             <p>@GlobalConstants.BirthDate: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
-            <hr class="text-dark" />
 
-            @if (Model.ClubStatus != ClubStatus.Изчакващ.ToString() && Model.ClubStatus != ClubStatus.Треньор.ToString())
+            @if (Model.Member != null && Model.ClubStatus != ClubStatus.Треньор.ToString())
             {
-                <p>@GlobalConstants.Address: <i class="fa-solid fa-location-dot"></i> @Model.Address</p>
                 <hr class="text-dark" />
-                <p>@GlobalConstants.School: <i class="fa-solid fa-school"></i> @Model.School</p>
+                <p>@GlobalConstants.Address: <i class="fa-solid fa-location-dot"></i> @Model.Member.Address</p>
                 <hr class="text-dark" />
+                <p>@GlobalConstants.School: <i class="fa-solid fa-school"></i> @Model.Member.School</p>
+                <hr class="text-dark border border-5 border-dark" />
+            }
+            else
+            {
+                <hr class="text-dark border border-5 border-dark" />
             }
 
+            <p>@GlobalConstants.FideRating: <i class="fa-solid fa-star"></i> @Model.FideRating</p>
+            <hr class="text-dark" />
+            <p>@GlobalConstants.FideTitle: <i class="fa-solid fa-award"></i> @Model.FideTitle</p>
+            <hr class="text-dark" />
             <p>@GlobalConstants.ClubStatus: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
             <hr class="text-dark" />
+            <div class="text-center my-2">
+                <a class="btn btn-primary" asp-action="EditUserInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
+            </div>
         </div>
     </div>
+    <!-- Personal and FIDE data info end -->
+    <!-- Club data info start -->
+    <div class="col-md-8 my-5 offset-2 text-center">
+        <h4 class="display-6 text-white text-center">@GlobalConstants.ClubData</h4>
+        <hr class="border border-5 border-white text-white" />
 
-    <div class="col-md-4">
-        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Клубни данни</h4>
-
-        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-center">
-            <p>@GlobalConstants.ClubRating: <i class="fa-solid fa-mars-and-venus"></i> @Model.ClubRating</p>
-            <p>@GlobalConstants.DateOfJoiningTheClub: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
-            <p>@GlobalConstants.Group: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
-            <p>@GlobalConstants.DateOfJoingCurrentGroup: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <h4 class="container-fluid text-white background-dragon-red border border-3 border-white py-2 text-center">Лични данни</h4>
-
-        <div class="bg-white border border-danger border-5 pt-2 text-left px-3 text-center">
-            <p>@GlobalConstants.Gender: <i class="fa-solid fa-mars-and-venus"></i> @Model.Gender</p>
-            <p>@GlobalConstants.BirthDate: <i class="fa-solid fa-cake-candles"></i> @Model.BirthDate.ToShortDateString()</p>
-            <p>@GlobalConstants.ClubStatus: <i class="fa-solid fa-user"></i> @Model.ClubStatus</p>
-
-            @if (Model.ClubStatus != ClubStatus.Изчакващ.ToString() && Model.ClubStatus != ClubStatus.Треньор.ToString())
+        <div class="bg-white border border-danger border-5 pt-2 text-left px-3">
+            @if (Model.Member != null && Model.ClubStatus != ClubStatus.Треньор.ToString())
             {
-                <p>@GlobalConstants.Address: <i class="fa-solid fa-location-dot"></i> @Model.Address</p>
-                <p>@GlobalConstants.School: <i class="fa-solid fa-school"></i> @Model.School</p>
+                <p>@GlobalConstants.ClubRating: <i class="fa-solid fa-star"></i> @Model.Member.ClubRating</p>
+                <hr class="text-dark" />
+                <p>@GlobalConstants.DateOfJoiningTheClub: <i class="fa-solid fa-flag-checkered"></i> @Model.Member.DateOfJoiningTheClub.ToShortDateString()</p>
+                <hr class="text-dark" />
+                <p>@GlobalConstants.LastAttendance: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfLastAttendance.ToShortDateString()</p>
+                <hr class="text-dark" />
+
+                @if (Model.Member.Group != null)
+                {
+                    <p>@GlobalConstants.Group: <i class="fa-solid fa-user-group"></i> @Model.Member.Group.Name</p>
+                    <hr class="text-dark" />
+                    <p>@GlobalConstants.DateOfJoiningCurrentGroup: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfJoiningCurrentGroup.ToShortDateString()</p>
+                    <hr class="text-dark" />
+                }
+                else
+                {
+                    <p>@GlobalConstants.Group: <i class="fa-solid fa-user-group"></i> @GlobalConstants.None</p>
+                    <hr class="text-dark" />
+                }
             }
+            else if (Model.Trainer != null && Model.ClubStatus == ClubStatus.Треньор.ToString())
+            {
+                <p>@GlobalConstants.LastAttendance: <i class="fas fa-calendar-alt"></i> @Model.Trainer.DateOfLastAttendance.ToShortDateString()</p>
+                <hr class="text-dark" />
+            }
+            else
+            {
+                @GlobalConstants.MemberStillNotAddedToTheSystem
+            }
+
+            <div class="container-fluid text-center my-3">
+                @if (Model.ClubStatus == ClubStatus.Треньор.ToString())
+                {
+                    <a class="btn btn-primary" asp-action="EditTrainerInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" asp-action="EditMemberInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
+                }
+            </div>
         </div>
     </div>
+    <!-- Club data info end -->
+    <!-- Payments table start -->
+    <div class="container-fluid text-center">
+        <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.Payments</h4>
+        <hr class="border border-5 border-white text-white" />
+        <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
+            <table id="paymentsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
+                <thead class="dt-head-center">
+                    <tr>
+                        <th class="dt-head-center">Id</th>
+                        <th class="dt-head-center">@GlobalConstants.DateOfPayment</th>
+                        <th class="dt-head-center">@GlobalConstants.PaidFor</th>
+                        <th class="dt-head-center">@GlobalConstants.PaidAmount</th>
+                        <th class="dt-head-center">@GlobalConstants.Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <a class="btn btn-primary" asp-area="" asp-controller="Payments" asp-action="Create" asp-route-id="@Model.Id">@GlobalConstants.AddPayment</a>
+    </div>
+    <!-- Payments table end -->
+    <!-- Lessons table start -->
+    @if (Model.ClubStatus == ClubStatus.Треньор.ToString())
+    {
+        <div class="container-fluid text-center">
+            <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.ConductedLessons</h4>
+            <hr class="border border-5 border-white text-white" />
+            <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
+                <table id="paymentsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
+                    <thead class="dt-head-center">
+                        <tr>
+                            <th class="dt-head-center">Id</th>
+                            <th class="dt-head-center">@GlobalConstants.DateAndTime</th>
+                            <th class="dt-head-center">@GlobalConstants.Topic</th>
+                            <th class="dt-head-center">@GlobalConstants.Group</th>
+                            <th class="dt-head-center">@GlobalConstants.Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <a class="btn btn-primary" asp-area="" asp-controller="Lessons" asp-action="Create" asp-route-id="@Model.Id">@GlobalConstants.AddLesson</a>
+        </div>
+    }
+    <!-- Lessons table end -->
 </div>
+
+
+@Html.AntiForgeryToken()
+
+@section Scripts
+{
+    <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src=" //cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js"></script>
+    <script src="~/js/paymentsTable.js"></script>
+}

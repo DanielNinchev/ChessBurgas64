@@ -24,8 +24,6 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public DbSet<Announcement> Announcements { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -37,8 +35,6 @@
         public DbSet<Member> Members { get; set; }
 
         public DbSet<Lesson> Lessons { get; set; }
-
-        public DbSet<LessonGroup> LessonsGroups { get; set; }
 
         public DbSet<LessonMember> LessonsMembers { get; set; }
 
@@ -94,6 +90,11 @@
                 .HasOne(m => m.User)
                 .WithOne(u => u.Trainer)
                 .HasForeignKey<ApplicationUser>(i => i.TrainerId);
+
+            builder.Entity<Trainer>()
+                .HasOne(m => m.Image)
+                .WithOne(u => u.Trainer)
+                .HasForeignKey<Image>(i => i.TrainerId);
 
             EntityIndexesConfiguration.Configure(builder);
 

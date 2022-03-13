@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\Services\ChessBurgas64.Services.Mapping\ChessBurgas64.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LessonsGroups\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,41 @@
+﻿@using ChessBurgas64.Common
+@{
+    this.ViewData["Title"] = GlobalConstants.GroupsNav;
+}
+
+<link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+<h4 class="display-5 text-white text-center">@this.ViewData["Title"]</h4>
+<hr class="border border-5 border-white text-white" />
+
+<div class="container-fluid">
+    <br />
+    <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
+        <table id="groupsTable" class="bg-dark table-bordered table-responsive text-white compact border border-3 text-center" width="100%" cellspacing="0">
+            <thead class="dt-head-center">
+                <tr>
+                    <th>Id</th>
+                    <th class="dt-head-center">@GlobalConstants.Group</th>
+                    <th class="dt-head-center">@GlobalConstants.LowestRating</th>
+                    <th class="dt-head-center">@GlobalConstants.HighestRating</th>
+                    <th class="dt-head-center">@GlobalConstants.StudentsCount</th>
+                    <th class="dt-head-center">@GlobalConstants.Actions</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="container-fluid text-center">
+        <a class="btn btn-primary" asp-controller="Groups" asp-action="Create">@GlobalConstants.AddNewGroup</a>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts
+{
+    <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src=" //cdn.datatables.net/plug-ins/1.10.11/sorting/datetime-moment.js"></script>
+    <script src="~/js/groupsTable.js"></script>
+}

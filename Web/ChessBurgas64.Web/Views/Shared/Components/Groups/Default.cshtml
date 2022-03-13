@@ -1,0 +1,8 @@
+﻿@model ChessBurgas64.Web.ViewModels.Lessons.LessonInputModel
+@using ChessBurgas64.Common
+
+<div class="form-group">
+    <label class="text-white" asp-for="GroupId">@GlobalConstants.Group</label>
+    <select asp-for="GroupId" . class="form-control" asp-items="@Model.Groups"></select>
+    <span asp-validation-for="GroupId" class="text-danger"></span>
+</div>

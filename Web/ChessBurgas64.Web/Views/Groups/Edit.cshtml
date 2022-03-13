@@ -1,0 +1,27 @@
+﻿@model ChessBurgas64.Web.ViewModels.Groups.GroupInputModel
+@using ChessBurgas64.Common
+@{
+    ViewData["Title"] = GlobalConstants.EditGroupData;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+<hr class="border border-5 border-white text-white" />
+
+<form method="post" enctype="multipart/form-data" class="mt-5 text-center">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <vc:trainers title="TrainerId"></vc:trainers>
+    <div class="form-group my-5">
+        <label class="text-white" asp-for="@Model.TrainingDay">@GlobalConstants.TrainingDay: </label>
+        <select asp-for="@Model.TrainingDay" asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+            <option selected="selected" value="">@GlobalConstants.ChooseDay</option>
+        </select>
+        <span asp-validation-for="@Model.TrainingDay" class="text-danger"></span>
+    </div>
+    <div class="form-group my-5">
+        <label class="text-white" asp-for="@Model.TrainingHour">@GlobalConstants.TrainingHour</label>
+        <input asp-for="@Model.TrainingHour" class="form-control" />
+        <span asp-validation-for="@Model.TrainingHour" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn-primary">@GlobalConstants.Refresh</button>
+</form>

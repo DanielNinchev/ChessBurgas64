@@ -23,10 +23,6 @@
 
         public virtual Trainer Trainer { get; set; }
 
-        public string MemberId { get; set; }
-
-        public virtual Member Member { get; set; }
-
         public int? AnnouncementId { get; set; }
 
         public virtual Announcement Announcement { get; set; }

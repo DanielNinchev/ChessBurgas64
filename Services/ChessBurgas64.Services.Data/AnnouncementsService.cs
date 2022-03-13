@@ -112,12 +112,12 @@
 
         public async Task UpdateAsync(int id, EditAnnouncementInputModel input)
         {
-            var announcements = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
+            var announcement = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
 
-            announcements.Title = input.Title;
-            announcements.Text = input.Text;
-            announcements.MainImageUrl = input.MainImageUrl;
-            announcements.CategoryId = input.CategoryId;
+            announcement.Title = input.Title;
+            announcement.Text = input.Text;
+            announcement.MainImageUrl = input.MainImageUrl;
+            announcement.CategoryId = input.CategoryId;
 
             await this.announcementsRepository.SaveChangesAsync();
         }

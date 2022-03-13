@@ -1,0 +1,35 @@
+﻿@model ChessBurgas64.Web.ViewModels.Users.UserInputModel
+@using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
+@{
+    ViewData["Title"] = GlobalConstants.EditUsersProfileData;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+<hr class="border border-5 border-white text-white" />
+
+<form method="post" enctype="multipart/form-data" class="mt-5 text-center">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row text-center">
+        <div class="form-group mb-5">
+            <label class="text-white" asp-for="@Model.ClubStatus">@GlobalConstants.ClubStatus: </label>
+            <select asp-for="@Model.ClubStatus" asp-items="Html.GetEnumSelectList<ClubStatus>()">
+                <option selected="selected" value="">(избор на статус)</option>
+            </select>
+            <span asp-validation-for="@Model.ClubStatus" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-5">
+            <label class="text-white" asp-for="@Model.FideTitle">@GlobalConstants.FideTitle: </label>
+            <select asp-for="@Model.FideTitle" asp-items="Html.GetEnumSelectList<FideTitle>()">
+                <option selected="selected" value=""></option>
+            </select>
+            <span asp-validation-for="@Model.FideTitle" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-5 col-2 offset-5">
+            <label class="text-white" asp-for="@Model.FideRating">@GlobalConstants.FideRating</label>
+            <input asp-for="@Model.FideRating" class="form-control" />
+            <span asp-validation-for="@Model.FideRating" class="text-danger"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn-primary">@GlobalConstants.Refresh</button>
+</form>

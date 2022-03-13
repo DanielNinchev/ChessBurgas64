@@ -1,0 +1,24 @@
+﻿@model ChessBurgas64.Web.ViewModels.Trainers.TrainerInputModel
+@using ChessBurgas64.Common
+@{
+    ViewData["Title"] = GlobalConstants.EditUsersClubData;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+<hr class="border border-5 border-white text-white" />
+
+<form method="post" enctype="multipart/form-data" class="mt-5">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="@Model.DateOfLastAttendance">@GlobalConstants.LastAttendance</label>
+        <input asp-for="@Model.DateOfLastAttendance" class="form-control" />
+        <span asp-validation-for="@Model.DateOfLastAttendance" class="text-danger"></span>
+    </div>
+    <div class="form-group my-3">
+        <label class="text-white" asp-for="@Model.ProfilePicture">@GlobalConstants.AddProfilePicture</label>
+        <input asp-for="@Model.ProfilePicture" class="form-control" />
+        <span asp-validation-for="@Model.ProfilePicture" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn-primary">@GlobalConstants.Refresh</button>
+</form>

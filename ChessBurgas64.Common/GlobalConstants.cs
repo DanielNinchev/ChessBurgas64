@@ -6,6 +6,9 @@
         public const string ClubName = "БУРГАС 64";
         public const string AdminEmail = "daniel.ninchev@gmail.com";
 
+        // Groups
+        public const string None = "Няма";
+
         // Roles
         public const string AdministratorRoleName = "Администратор";
         public const string MemberRoleName = "Член";
@@ -15,6 +18,12 @@
         public const string ProfileManagementTitle = "Управление на профила";
         public const string ProfileManagementSubtitle = "Тук можете да промените входящите си настройки.";
         public const string ProfileDataUpdatedMsg = "Вашите профилни данни са обновени успешно!";
+
+        // Edit users view
+        public const string EditUsersClubData = "Промяна на клубни данни";
+        public const string EditUsersProfileData = "Промяна на профилни данни";
+        public const string LearnedOpenings = "Научени дебюти";
+        public const string LastPuzzleLevel = "Последна решена задача";
 
         // Personal data view
         public const string PersonalDataPolicyInfo = "Профилът Ви съдържа лични данни, които Вие сте ни предоставили. От текущата страница можете да ги изтеглите, както и да ги изтриете безвъзвратно. Всичката Ваша информация, която сте ни поверили, се използва единствено за определените цели, описани по-долу.";
@@ -54,7 +63,7 @@
         public const string EmailChangeConfirmationTitle = "Потвърдете новия си email.";
         public const string Resend = "Препращане";
         public const string Save = "Запазване";
-        public const string StatusDeclarationInstructions = "Моля, продължете нататък, като заявите своя клубен статус. Ще Ви отнеме минута.";
+        public const string StatusDeclarationInstructions = "Благодарим Ви, че потвърдихте регистрацията си. Съвсем скоро заявеният от Вас клубен статус ще бъде разгледан и одобрен при съответствие.";
         public const string ToStatusDeclaration = "Към заявка на статус";
         public const string StatusDeclarationTitle = "Клубен статус";
         public const string StatusDeclarationSubtitle = "Тук можете да заявите промяна на клубния си статус.";
@@ -91,6 +100,8 @@
         public const string School = "Училище";
         public const string Address = "Адрес";
         public const string PhoneNumber = "Телефон за връзка";
+        public const string FideRating = "FIDE рейтинг";
+        public const string FideTitle = "FIDE титла";
         public const int PasswordMaxLength = 100;
         public const int PasswordMinLength = 6;
         public const int NameMaxLength = 20;
@@ -100,7 +111,20 @@
         public const int SchoolMaxLength = 100;
         public const int SchoolMinLength = 10;
 
+        // Group view
+        public const string LowestRating = "Най-ниско ЕЛО";
+        public const string HighestRating = "Най-високо ЕЛО";
+        public const string StudentsCount = "Брой ученици";
+        public const string GroupName = "Име на групата";
+        public const string TrainingDay = "Тренировъчен ден";
+        public const string TrainingHour = "Тренировъчен час";
+        public const string ChooseDay = "Избор на ден";
+        public const string GroupData = "Групови данни";
+        public const string EditGroupData = "Промяна на групови данни";
+
         // Students view
+        public const string AddNewGroup = "Добави нова група";
+        public const string CreatingNewGroup = "Създаване на нова група";
         public const string Students = "Ученици";
         public const string StudentsPage = "StudentsPage";
         public const string DateOfJoiningTheClub = "Дата на записване в клуба";
@@ -108,10 +132,11 @@
         public const string Group = "Група";
         public const string AttendanceCount = "Посещения";
         public const string LastAttendance = "Последно посещение";
-        public const string DateOfJoingCurrentGroup = "Дата на включване в групата";
+        public const string DateOfJoiningCurrentGroup = "Дата на включване в групата";
         public const string Actions = "Действия";
         public const string PhoneDataTable = "Телефон";
         public const string BirthDateDataTable = "Роден/а";
+        public const string MemberStillNotAddedToTheSystem = "Потребителят все още не е въведен в системата като член на клуба.";
 
         // Registration view
         public const string RegistrationLabel = "РЕГИСТРАЦИЯ";
@@ -141,11 +166,32 @@
 
         // Announcements
         public const int AnnouncementsPerPage = 6;
+        public const int AnnouncementTextRowCount = 30;
 
         // Categories
         public const string AnnouncementsCategory = "Обяви";
         public const string NewsCategory = "Новини";
         public const string ArticlesCategory = "Статии";
+
+        // Payments
+        public const string CreatePayment = "Отбелязване на плащане";
+        public const string Payments = "Плащания";
+        public const string Payment = "Плащане";
+        public const string PaidAmount = "Платена сума [лв.]";
+        public const string DateOfPayment = "Дата на плащане";
+        public const string PaidFor = "Основание";
+        public const int PaidForMinLength = 3;
+        public const int PaidForMaxLength = 20;
+        public const string AddPayment = "Отбележи плащане";
+        public const string EditPaymentDataTitle = "Промяна на данните за плащане";
+
+        // Lessons
+        public const string ConductedLessons = "Проведени занятия";
+        public const string AddLesson = "Отбележи проведено занятие";
+        public const string CreateLesson = "Отбелязване на проведено занятие";
+        public const string Topic = "Тема";
+        public const string DateAndTime = "Дата и час";
+        public const int TopicMaxLength = 20;
 
         // Index
         public const string HomeTitle = "ШАХМАТЕН КЛУБ \"БУРГАС 64\"";
@@ -172,12 +218,14 @@
         public const string PuzzlesNav = "Шахматни задачи";
         public const string LessonsNav = "Видео уроци";
         public const string MembersNav = "Членове на клуба";
+        public const string GroupsNav = "Ученически групи";
 
         // Profile navigation
         public const string Authentication = "Разпознаване";
-        public const string PersonalData = "Поверителност";
+        public const string PersonalData = "Лични данни";
         public const string Profile = "Профил";
         public const string MemberData = "Членски данни";
+        public const string ClubData = "Клубни данни";
         public const string ClubStatus = "Клубен статус";
 
         // File paths
@@ -187,9 +235,24 @@
         public const string Next = "Следваща";
         public const string Previous = "Предишна";
 
+        // Labels
+        public const string Title = "Заглавие";
+        public const string Category = "Категория";
+        public const string AddAdditionalPhotos = "Добави допълнителни снимки";
+        public const string AddMainPhoto = "Добави основна снимка";
+        public const string AddProfilePicture = "Добави профилна снимка";
+        public const string Text = "Текст";
+        public const string Date = "Дата";
+        public const string DoYouWantToSaveChanges = "Желаете ли да запазите промените?";
+        public const string Confirmation = "Потвърждение";
+
         // Buttons
+        public const string Close = "Затваряне";
+        public const string Create = "Създай";
         public const string DeleteAccount = "Изтриване на потребителя";
         public const string DownloadPersonalData = "Изтегляне на личните данни";
+        public const string Edit = "Промяна";
+        public const string Refresh = "Обновяване";
 
         // Images
         public static readonly string[] AllowedImageExtensions = new[] { "gif", "jpg", "png" };

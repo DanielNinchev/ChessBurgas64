@@ -1,4 +1,5 @@
 ﻿@model ChessBurgas64.Web.ViewModels.ViewComponents.CreateAnnouncementInputModel
+@using ChessBurgas64.Common 
 @{ 
     this.ViewData["Title"] = "Публикуване на новина";
 }
@@ -7,26 +8,28 @@
 
 <form method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label class="text-white" asp-for="Title">Заглавие</label>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="Title">@GlobalConstants.Title</label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <vc:categories title="CategoryId"></vc:categories>
-    <div class="form-group">
-        <label class="text-white" asp-for="MainImage">Добави основна снимка</label>
+    <div class="form-group my-3">
+        <label class="text-white" asp-for="MainImage">@GlobalConstants.AddMainPhoto</label>
         <input asp-for="MainImage" class="form-control" />
         <span asp-validation-for="MainImage" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label class="text-white" asp-for="AdditionalImages">Добави допълнителни снимки</label>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="AdditionalImages">@GlobalConstants.AddAdditionalPhotos</label>
         <input asp-for="AdditionalImages" class="form-control" />
         <span asp-validation-for="AdditionalImages" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label class="text-white" asp-for="Text">Текст</label>
-        <textarea asp-for="Text" class="form-control" rows="30"></textarea>
+    <div class="form-group mb-3">
+        <label class="text-white" asp-for="Text">@GlobalConstants.Text</label>
+        <textarea asp-for="Text" class="form-control" rows="@GlobalConstants.AnnouncementTextRowCount"></textarea>
         <span asp-validation-for="Text" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn-primary">Публикувай</button>
+    <div class="container-fluid text-center">
+        <button type="submit" class="btn-primary px-2 py-2 fw-bold">@GlobalConstants.Publish</button>
+    </div>
 </form>

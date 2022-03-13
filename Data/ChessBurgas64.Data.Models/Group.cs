@@ -1,14 +1,16 @@
 ﻿namespace ChessBurgas64.Data.Models
 {
+    using System;
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
 
-    public class Group : BaseDeletableModel<int>
+    public class Group : BaseDeletableModel<string>
     {
         public Group()
         {
-            this.Lessons = new HashSet<LessonGroup>();
+            this.Id = Guid.NewGuid().ToString();
+            this.Lessons = new HashSet<Lesson>();
             this.Members = new HashSet<Member>();
         }
 
@@ -18,11 +20,15 @@
 
         public int HighestRating { get; set; }
 
+        public DayOfWeek TrainingDay { get; set; }
+
+        public DateTime TrainingHour { get; set; }
+
         public string TrainerId { get; set; }
 
         public virtual Trainer Trainer { get; set; }
 
-        public virtual ICollection<LessonGroup> Lessons { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
 
         public virtual ICollection<Member> Members { get; set; }
     }

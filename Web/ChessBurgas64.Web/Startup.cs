@@ -39,27 +39,27 @@
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new AnnouncementProfile());
-                cfg.AddProfile(new ApplicationUserProfile());
+                cfg.AddProfile(new MappingProfile());
             });
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
-
             services.AddAutoMapper(typeof(Startup));
-
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
-
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews(
                 options =>
                     {
@@ -67,7 +67,6 @@
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -75,13 +74,18 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            // Application services
-            // services.AddTransient<ISendGridEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
+            // Email sender
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(this.configuration);
-            services.AddTransient<ISettingsService, SettingsService>();
+
+            // Application services
             services.AddTransient<IAnnouncementsService, AnnouncementsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IGroupsService, GroupsService>();
+            services.AddTransient<ILessonsService, LessonsService>();
+            services.AddTransient<IMembersService, MembersService>();
+            services.AddTransient<IPaymentsService, PaymentsService>();
+            services.AddTransient<ITrainersService, TrainersService>();
             services.AddTransient<IUsersService, UsersService>();
         }
 
@@ -113,6 +117,7 @@
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

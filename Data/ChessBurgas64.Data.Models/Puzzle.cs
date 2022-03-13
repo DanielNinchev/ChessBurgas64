@@ -3,7 +3,6 @@
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
-    using ChessBurgas64.Data.Models.Enums;
 
     public class Puzzle : BaseDeletableModel<int>
     {
@@ -18,7 +17,7 @@
 
         public int Points { get; set; }
 
-        public PuzzleDifficulty Difficulty { get; set; }
+        public string Difficulty { get; set; }
 
         public int CategoryId { get; set; }
 
