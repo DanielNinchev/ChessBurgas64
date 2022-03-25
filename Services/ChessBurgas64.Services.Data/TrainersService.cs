@@ -32,7 +32,7 @@
 
         public IEnumerable<SelectListItem> GetAllTrainers()
         {
-            return this.usersRepository.AllAsNoTracking()
+            var trainers = this.usersRepository.AllAsNoTracking()
                 .Where(tr => tr.ClubStatus.Equals(ClubStatus.Треньор))
                 .ToList()
                 .Select(tr => new
@@ -42,7 +42,9 @@
                 })
                 .OrderBy(x => x.Name)
                 .ToList()
-                .Select(x => new SelectListItem(x.Name, x.TrainerId.ToString()));
+                .Select(x => new SelectListItem(x.Name, x.TrainerId));
+
+            return trainers;
         }
 
         public T GetById<T>(string id)

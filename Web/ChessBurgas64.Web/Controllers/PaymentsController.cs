@@ -51,9 +51,7 @@
         public async Task<IActionResult> Delete(string id)
         {
             await this.paymentsService.DeleteAsync(id);
-
             var userId = this.HttpContext.Session.GetString("userId");
-
             return this.RedirectToAction("/Users/ById/" + userId);
         }
 

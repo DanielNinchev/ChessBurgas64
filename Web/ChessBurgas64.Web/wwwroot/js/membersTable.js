@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#lessonsTable").DataTable({
+    $("#membersTable").DataTable({
         "processing": true,
         "responsive": true,
         "serverSide": true,
@@ -19,7 +19,7 @@
             },
         },
         "ajax": {
-            "url": "/Groups/GetGroupLessons",
+            "url": "/Groups/GetGroupMembers",
             "beforeSend": function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -35,7 +35,15 @@
                 "className": "dt-body-center",
             },
             {
-                "targets": 1,
+                "targets": 5,
+                "render": function (data, type, row) {
+                    return (data)
+                        ? moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
+                        : null;
+                }
+            },
+            {
+                "targets": 6,
                 "render": function (data, type, row) {
                     return (data)
                         ? moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
@@ -45,24 +53,27 @@
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "startingTime", "name": "StartingTime", "autoWidth": true },
-            { "data": "topic", "name": "Topic", "autoWidth": true },
-            { "data": "groupName", "name": "GroupName", "autoWidth": true },
+            { "data": "userFirstName", "name": "UserFirstName", "autoWidth": true },
+            { "data": "userMiddleName", "name": "UserMiddleName", "autoWidth": true },
+            { "data": "userLastName", "name": "UserLastName", "autoWidth": true },
+            { "data": "clubRating", "name": "ClubRating", "autoWidth": true },
+            { "data": "dateOfJoiningCurrentGroup", "name": "DateOfJoiningCurrentGroup", "autoWidth": true },
+            { "data": "lastAttendance", "name": "LastAttendance", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-secondary border border-white' onclick=GoToEditView('" + full.id + "'); >Промяна</a> <a class='btn btn-danger border border-white' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
+                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Премахване</a>";
                 },
             },
         ]
     });
 });
 
-function GoToEditView(id) {
-    window.location.href = 'https://localhost:44319/Payments/Edit/' + id;
+function GoToByIdView(id) {
+    window.location.href = 'https://localhost:44319/Users/ByMemberId/' + id;
 }
 
 function DeleteData(id) {
-    if (confirm("Наистина ли желаете да изтриете данните за това разплащане?")) {
+    if (confirm("Наистина ли желаете да изтриете данните за това занятие?")) {
         Delete(id);
     } else {
         return false;
@@ -72,7 +83,7 @@ function DeleteData(id) {
 function Delete(id) {
     $.ajax({
         type: 'POST',
-        url: "/Payments/Delete",
+        url: "/Members/Delete",
         "beforeSend": function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());

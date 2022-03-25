@@ -28,6 +28,8 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<GroupMember> GroupMembers { get; set; }
+
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<Image> Images { get; set; }
@@ -36,17 +38,17 @@
 
         public DbSet<Lesson> Lessons { get; set; }
 
-        public DbSet<LessonMember> LessonsMembers { get; set; }
+        public DbSet<LessonMember> LessonMembers { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
 
         public DbSet<Puzzle> Puzzles { get; set; }
 
-        public DbSet<PuzzleMember> PuzzlesMembers { get; set; }
+        public DbSet<PuzzleMember> PuzzleMembers { get; set; }
 
         public DbSet<Tournament> Tournaments { get; set; }
 
-        public DbSet<TournamentMember> TournamentsMembers { get; set; }
+        public DbSet<TournamentMember> TournamentMembers { get; set; }
 
         public DbSet<Trainer> Trainers { get; set; }
 

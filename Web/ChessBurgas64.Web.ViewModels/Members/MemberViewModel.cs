@@ -2,13 +2,15 @@
 {
     using System;
 
+    using AutoMapper;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
-    using ChessBurgas64.Web.ViewModels.Users;
 
-    public class MemberViewModel : IMapFrom<Member>
+    public class MemberViewModel : IMapFrom<Member>, IHaveCustomMappings
     {
+        public string Id { get; set; }
+
         public string Address { get; set; }
 
         public string School { get; set; }
@@ -27,6 +29,22 @@
 
         public GroupViewModel Group { get; set; }
 
-        public UserTableViewModel User { get; set; }
+        public string UserFirstName { get; set; }
+
+        public string UserMiddleName { get; set; }
+
+        public string UserLastName { get; set; }
+
+        public string FullName { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Member, MemberViewModel>()
+                .ForMember(mvm => mvm.UserFirstName, opt => opt.MapFrom(m => m.User.FirstName))
+                .ForMember(mvm => mvm.UserMiddleName, opt => opt.MapFrom(m => m.User.MiddleName))
+                .ForMember(mvm => mvm.UserLastName, opt => opt.MapFrom(m => m.User.LastName))
+                .ForMember(mvm => mvm.FullName, opt => opt
+                .MapFrom(m => $"{m.User.FirstName} {m.User.MiddleName} {m.User.LastName}"));
+        }
     }
 }

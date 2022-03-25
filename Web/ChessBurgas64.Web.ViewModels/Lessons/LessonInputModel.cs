@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
@@ -19,17 +20,18 @@
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public string StartingTime { get; set; }
 
+        public string Notes { get; set; }
+
+        [Required]
         public string GroupId { get; set; }
-
-        public string GroupName { get; set; }
-
-        public string TrainerId { get; set; }
-
-        public string TrainerUserFirstName { get; set; }
-
-        public string TrainerUserLastName { get; set; }
 
         [NotMapped]
         public IEnumerable<SelectListItem> Groups { get; set; }
+
+        [Required]
+        public string TrainerId { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> Trainers { get; set; }
     }
 }

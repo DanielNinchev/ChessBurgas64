@@ -1,7 +1,12 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Lessons
 {
+    using System;
+    using System.Collections.Generic;
+
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
+    using ChessBurgas64.Web.ViewModels.Groups;
+    using ChessBurgas64.Web.ViewModels.LessonMembers;
 
     public class LessonViewModel : IMapFrom<Lesson>
     {
@@ -9,16 +14,14 @@
 
         public string Topic { get; set; }
 
-        public string StartingTime { get; set; }
+        public DateTime StartingTime { get; set; }
 
-        public string GroupId { get; set; }
+        public string Notes { get; set; }
 
         public string GroupName { get; set; }
 
-        public string TrainerId { get; set; }
+        public GroupViewModel Group { get; set; }
 
-        public string TrainerUserFirstName { get; set; }
-
-        public string TrainerUserLastName { get; set; }
+        public ICollection<LessonMemberViewModel> Members { get; set; }
     }
 }

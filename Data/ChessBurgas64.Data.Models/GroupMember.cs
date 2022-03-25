@@ -2,11 +2,11 @@
 {
     using ChessBurgas64.Data.Common.Models;
 
-    public class TournamentMember : BaseDeletableModel<int>
+    public class GroupMember : BaseDeletableModel<int>
     {
-        public int TournamentId { get; set; }
+        public string GroupId { get; set; }
 
-        public virtual Tournament Tournament { get; set; }
+        public virtual Group Group { get; set; }
 
         public string MemberId { get; set; }
 

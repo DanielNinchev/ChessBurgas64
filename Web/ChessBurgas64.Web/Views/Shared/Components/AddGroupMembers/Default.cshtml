@@ -1,0 +1,8 @@
+﻿@model ChessBurgas64.Web.ViewModels.GroupMembers.GroupMemberInputModel
+@using ChessBurgas64.Common
+
+<div class="form-group">
+    <label class="text-white" asp-for="@Model.MemberId">@GlobalConstants.MemberRoleName</label>
+    <select asp-for="@Model.MemberId" . class="form-control" asp-items="@Model.Members"></select>
+    <span asp-validation-for="@Model.MemberId" class="text-danger"></span>
+</div>

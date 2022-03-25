@@ -37,9 +37,7 @@
         public async Task DeleteAsync(string id)
         {
             var payment = this.paymentsRepository.All().FirstOrDefault(x => x.Id == id);
-
             this.paymentsRepository.Delete(payment);
-
             await this.paymentsRepository.SaveChangesAsync();
         }
 

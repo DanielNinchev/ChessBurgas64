@@ -11,7 +11,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.Lessons = new HashSet<Lesson>();
-            this.Members = new HashSet<Member>();
+            this.Members = new HashSet<GroupMember>();
         }
 
         public string Name { get; set; }
@@ -30,6 +30,6 @@
 
         public virtual ICollection<Lesson> Lessons { get; set; }
 
-        public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<GroupMember> Members { get; set; }
     }
 }

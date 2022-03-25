@@ -16,16 +16,22 @@
 
     public class GroupsService : IGroupsService
     {
+        private readonly IRepository<GroupMember> groupMembersRepository;
         private readonly IDeletableEntityRepository<Group> groupsRepository;
+        private readonly IDeletableEntityRepository<Member> membersRepository;
         private readonly IDeletableEntityRepository<Trainer> trainersRepository;
         private readonly IMapper mapper;
 
         public GroupsService(
+            IRepository<GroupMember> groupMembersRepository,
             IDeletableEntityRepository<Group> groupsRepository,
+            IDeletableEntityRepository<Member> membersRepository,
             IDeletableEntityRepository<Trainer> trainersRepository,
             IMapper mapper)
         {
+            this.groupMembersRepository = groupMembersRepository;
             this.groupsRepository = groupsRepository;
+            this.membersRepository = membersRepository;
             this.trainersRepository = trainersRepository;
             this.mapper = mapper;
         }
@@ -37,21 +43,25 @@
             await this.groupsRepository.SaveChangesAsync();
         }
 
-        //public async Task DeleteAsync(string id)
-        //{
-        //    var payment = this.groupsRepository.All().FirstOrDefault(x => x.Id == id);
-
-        //    this.groupsRepository.Delete(payment);
-
-        //    await this.groupsRepository.SaveChangesAsync();
-        //}
-
-        public IEnumerable<SelectListItem> GetAllGroups()
+        public async Task DeleteAsync(string id)
         {
-            return this.groupsRepository.AllAsNoTracking()
+            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == id);
+            this.groupsRepository.Delete(group);
+            await this.groupsRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<SelectListItem> GetAllTrainerGroups(string userId)
+        {
+            var trainer = this.trainersRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.UserId == userId);
+
+            var trainerGroups = this.groupsRepository.AllAsNoTracking()
+                .Where(x => x.TrainerId == trainer.Id)
                 .OrderBy(x => x.Name)
                 .ToList()
                 .Select(x => new SelectListItem(x.Name, x.Id));
+
+            return trainerGroups;
         }
 
         public T GetById<T>(string id)
@@ -84,14 +94,64 @@
             return groupData.To<T>().ToList();
         }
 
-        public async Task UpdateAsync(string id, GroupInputModel input)
+        public async Task InitializeGroupProperties(string groupId)
         {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == id);
+            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
+            var groupMembers = this.groupMembersRepository.All().Where(x => x.GroupId == groupId && x.MemberId != null).ToList();
+
+            foreach (var groupMember in groupMembers)
+            {
+                var member = this.membersRepository.All().FirstOrDefault(x => x.Id == groupMember.MemberId);
+                groupMember.Member = member;
+            }
+
+            this.InitializeLowestClubRatingInGroup(groupMembers, group);
+            this.InitializeHighestClubRatingInGroup(groupMembers, group);
+
+            await this.groupMembersRepository.SaveChangesAsync();
+            await this.groupsRepository.SaveChangesAsync();
+        }
+
+        public void InitializeLowestClubRatingInGroup(List<GroupMember> groupMembers, Group group)
+        {
+            group.LowestRating = 0;
+
+            foreach (var groupMember in groupMembers)
+            {
+                if (groupMember.Member != null)
+                {
+                    if (group.LowestRating > groupMember.Member.ClubRating || group.LowestRating == 0)
+                    {
+                        group.LowestRating = groupMember.Member.ClubRating;
+                    }
+                }
+            }
+        }
+
+        public void InitializeHighestClubRatingInGroup(List<GroupMember> groupMembers, Group group)
+        {
+            group.HighestRating = 0;
+
+            foreach (var groupMember in groupMembers)
+            {
+                if (groupMember.Member != null)
+                {
+                    if (group.HighestRating < groupMember.Member.ClubRating)
+                    {
+                        group.HighestRating = groupMember.Member.ClubRating;
+                    }
+                }
+            }
+        }
+
+        public async Task UpdateAsync(string groupId, GroupInputModel input)
+        {
+            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
             group.TrainingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), input.TrainingDay);
             group.TrainingHour = DateTime.Parse(input.TrainingHour);
             group.TrainerId = input.TrainerId;
 
-            await this.groupsRepository.SaveChangesAsync();
+            await this.InitializeGroupProperties(groupId);
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿namespace ChessBurgas64.Data.Models
 {
-    public class PuzzleMember
-    {
-        public int Id { get; set; }
+    using ChessBurgas64.Data.Common.Models;
 
+    public class PuzzleMember : BaseDeletableModel<int>
+    {
         public int PuzzleId { get; set; }
 
         public virtual Puzzle Puzzle { get; set; }
 
-        public int MemberId { get; set; }
+        public string MemberId { get; set; }
 
         public virtual Member Member { get; set; }
     }

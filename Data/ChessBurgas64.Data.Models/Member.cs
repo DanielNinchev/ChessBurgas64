@@ -10,6 +10,7 @@
         public Member()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Groups = new HashSet<GroupMember>();
             this.Lessons = new HashSet<LessonMember>();
             this.Puzzles = new HashSet<PuzzleMember>();
             this.Tournaments = new HashSet<TournamentMember>();
@@ -23,26 +24,24 @@
 
         public DateTime DateOfLastAttendance { get; set; }
 
-        public virtual ICollection<LessonMember> Lessons { get; set; }
-
-        public virtual ICollection<PuzzleMember> Puzzles { get; set; }
-
-        public virtual ICollection<TournamentMember> Tournaments { get; set; }
-
         public string LearnedOpenings { get; set; }
 
         public int ClubRating { get; set; }
 
         public int? LastPuzzleLevel { get; set; }
 
-        public int? GroupId { get; set; }
-
-        public virtual Group Group { get; set; }
-
         public DateTime DateOfJoiningCurrentGroup { get; set; }
 
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+
+        public virtual ICollection<GroupMember> Groups { get; set; }
+
+        public virtual ICollection<LessonMember> Lessons { get; set; }
+
+        public virtual ICollection<PuzzleMember> Puzzles { get; set; }
+
+        public virtual ICollection<TournamentMember> Tournaments { get; set; }
     }
 }

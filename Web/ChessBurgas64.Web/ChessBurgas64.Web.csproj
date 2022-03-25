@@ -44,8 +44,4 @@
     <ProjectReference Include="..\ChessBurgas64.Web.Infrastructure\ChessBurgas64.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\ChessBurgas64.Web.ViewModels\ChessBurgas64.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Members\" />
-  </ItemGroup>
 </Project>

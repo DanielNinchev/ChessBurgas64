@@ -6,7 +6,6 @@
     using System.Linq.Dynamic.Core;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#groupsTable").DataTable({
+    $("#userLessonsTable").DataTable({
         "processing": true,
         "responsive": true,
         "serverSide": true,
@@ -19,7 +19,7 @@
             },
         },
         "ajax": {
-            "url": "/Groups/GetGroups",
+            "url": "/Users/GetUserLessons",
             "beforeSend": function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -34,26 +34,43 @@
                 "searchable": false,
                 "className": "dt-body-center",
             },
+            {
+                "targets": 1,
+                "render": function (data, type, row) {
+                    return (data)
+                        ? moment(data, "YYYY-MM-DD H:mm").format("DD/MM/YYYY H:mm")
+                        : null;
+                }
+            },
+            {
+                "targets": 4,
+                "orderable": false,
+            },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "name", "name": "Name", "autoWidth": true },
-            { "data": "lowestRating", "name": "LowestRating", "autoWidth": true },
-            { "data": "highestRating", "name": "HighestRating", "autoWidth": true },
-            { "data": "membersCount", "name": "MembersCount", "autoWidth": true, },
+            { "data": "startingTime", "name": "StartingTime", "autoWidth": true },
+            { "data": "topic", "name": "Topic", "autoWidth": true },
+            { "data": "groupName", "name": "GroupName", "autoWidth": true },
             {
-                "render": function (data, type, full, meta) { return "<a class='btn btn-secondary border border-white' onclick=GoToGroup('" + full.id + "'); >Преглед</a> <a class='btn btn-danger border border-white' onclick=DeleteData('" + full.id + "'); >Изтриване</a>" }
+                "render": function (data, type, full, meta) {
+                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-warning' onclick=GoToEditView('" + full.id + "'); >Промяна</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
+                },
             },
         ]
     });
 });
 
-function GoToGroup(id) {
-    window.location.href = 'https://localhost:44319/Groups/ById/' + id;
+function GoToByIdView(id) {
+    window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
+}
+
+function GoToEditView(id) {
+    window.location.href = 'https://localhost:44319/Lessons/Edit/' + id;
 }
 
 function DeleteData(id) {
-    if (confirm("Наистина ли желаете да изтриете данните за тази група?")) {
+    if (confirm("Наистина ли желаете да изтриете данните за това занятие?")) {
         Delete(id);
     } else {
         return false;
@@ -63,7 +80,7 @@ function DeleteData(id) {
 function Delete(id) {
     $.ajax({
         type: 'POST',
-        url: "/Groups/Delete",
+        url: "/Lessons/DeleteUserLesson",
         "beforeSend": function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());

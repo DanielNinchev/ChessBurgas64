@@ -8,6 +8,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels.Groups;
     using ChessBurgas64.Web.ViewModels.Lessons;
+    using ChessBurgas64.Web.ViewModels.Members;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,16 @@
     {
         private readonly IGroupsService groupsService;
         private readonly ILessonsService lessonsService;
+        private readonly IMembersService membersService;
 
-        public GroupsController(IGroupsService groupsService, ILessonsService lessonsService)
+        public GroupsController(
+            IGroupsService groupsService,
+            ILessonsService lessonsService,
+            IMembersService membersService)
         {
             this.groupsService = groupsService;
             this.lessonsService = lessonsService;
+            this.membersService = membersService;
         }
 
         public IActionResult ById(string id)
@@ -57,6 +63,13 @@
             }
 
             return this.Redirect("/Groups/ShowGroups");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.groupsService.DeleteAsync(id);
+            return this.Redirect("/Groups");
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -125,6 +138,37 @@
                 recordsTotal = lessonData.Count();
 
                 var data = lessonData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
+
+                return this.Ok(jsonData);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetGroupMembers()
+        {
+            try
+            {
+                var groupId = this.HttpContext.Session.GetString("groupId");
+                var draw = this.Request.Form["draw"].FirstOrDefault();
+                var start = this.Request.Form["start"].FirstOrDefault();
+                var length = this.Request.Form["length"].FirstOrDefault();
+                var sortColumn = this.Request.Form["columns[" + this.Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = this.Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = this.Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                var membersData = this.membersService.GetTableData<MemberViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
+
+                recordsTotal = membersData.Count();
+
+                var data = membersData.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
 
                 return this.Ok(jsonData);

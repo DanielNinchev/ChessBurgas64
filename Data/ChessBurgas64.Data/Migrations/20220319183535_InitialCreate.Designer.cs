@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChessBurgas64.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220312114337_InitialCreate")]
+    [Migration("20220319183535_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -308,6 +308,42 @@ namespace ChessBurgas64.Data.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("ChessBurgas64.Data.Models.GroupMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GroupId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MemberId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("GroupMembers");
+                });
+
             modelBuilder.Entity("ChessBurgas64.Data.Models.Image", b =>
                 {
                     b.Property<string>("Id")
@@ -412,22 +448,33 @@ namespace ChessBurgas64.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MemberId1")
+                    b.Property<string>("MemberId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("LessonId");
 
-                    b.HasIndex("MemberId1");
+                    b.HasIndex("MemberId");
 
-                    b.ToTable("LessonsMembers");
+                    b.ToTable("LessonMembers");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Member", b =>
@@ -456,12 +503,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("GroupId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -484,8 +525,6 @@ namespace ChessBurgas64.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId1");
 
                     b.HasIndex("IsDeleted");
 
@@ -585,22 +624,33 @@ namespace ChessBurgas64.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("MemberId1")
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MemberId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("PuzzleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId1");
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("MemberId");
 
                     b.HasIndex("PuzzleId");
 
-                    b.ToTable("PuzzlesMembers");
+                    b.ToTable("PuzzleMembers");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Tournament", b =>
@@ -653,22 +703,33 @@ namespace ChessBurgas64.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("MemberId1")
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MemberId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("TournamentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId1");
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("MemberId");
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("TournamentsMembers");
+                    b.ToTable("TournamentMembers");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Trainer", b =>
@@ -855,6 +916,21 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("ChessBurgas64.Data.Models.GroupMember", b =>
+                {
+                    b.HasOne("ChessBurgas64.Data.Models.Group", "Group")
+                        .WithMany("Members")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
+                        .WithMany("Groups")
+                        .HasForeignKey("MemberId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Member");
+                });
+
             modelBuilder.Entity("ChessBurgas64.Data.Models.Image", b =>
                 {
                     b.HasOne("ChessBurgas64.Data.Models.Announcement", "Announcement")
@@ -901,7 +977,7 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
                         .WithMany("Lessons")
-                        .HasForeignKey("MemberId1");
+                        .HasForeignKey("MemberId");
 
                     b.Navigation("Lesson");
 
@@ -910,15 +986,9 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Member", b =>
                 {
-                    b.HasOne("ChessBurgas64.Data.Models.Group", "Group")
-                        .WithMany("Members")
-                        .HasForeignKey("GroupId1");
-
                     b.HasOne("ChessBurgas64.Data.Models.Trainer", null)
                         .WithMany("IndividualStudents")
                         .HasForeignKey("TrainerId");
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Payment", b =>
@@ -945,7 +1015,7 @@ namespace ChessBurgas64.Data.Migrations
                 {
                     b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
                         .WithMany("Puzzles")
-                        .HasForeignKey("MemberId1");
+                        .HasForeignKey("MemberId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Puzzle", "Puzzle")
                         .WithMany("Members")
@@ -969,7 +1039,7 @@ namespace ChessBurgas64.Data.Migrations
                 {
                     b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
                         .WithMany("Tournaments")
-                        .HasForeignKey("MemberId1");
+                        .HasForeignKey("MemberId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Tournament", "Tournament")
                         .WithMany("Participants")
@@ -1072,6 +1142,8 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Member", b =>
                 {
+                    b.Navigation("Groups");
+
                     b.Navigation("Lessons");
 
                     b.Navigation("Puzzles");

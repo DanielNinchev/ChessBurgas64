@@ -1,0 +1,24 @@
+﻿@model ChessBurgas64.Web.ViewModels.GroupMembers.GroupMemberCheckboxModel
+@using ChessBurgas64.Common
+
+@{
+    this.ViewData["Title"] = GlobalConstants.AttendedStudents;
+}
+
+<div class="row text-center container-fluid">
+    <h4 class="display-6 text-white text-center">@this.ViewData["Title"]</h4>
+    <hr class="border border-5 border-white text-white col-6 offset-3 mb-5" />
+    <form method="post" enctype="multipart/form-data">
+        @for (int i = 0; i < Model.GroupMembers.Count; i++)
+        {
+            <div class="col-12 my-2">
+                <input type="checkbox" style="height: 20px; width: 20px;" asp-for="@Model.GroupMembers[i].Selected" />
+                <label class="h4 text-white" asp-for="@Model.GroupMembers[i].Selected">@Model.GroupMembers[i].Member.FullName</label>
+                <input type="hidden" asp-for="@Model.GroupMembers[i].MemberId" />
+                <input type="hidden" asp-for="@Model.GroupMembers[i].Member.FullName" />
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">@GlobalConstants.Save</button>
+    </form>
+</div>
+

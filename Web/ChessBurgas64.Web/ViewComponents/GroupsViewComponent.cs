@@ -2,6 +2,7 @@
 {
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels.Lessons;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class GroupsViewComponent : ViewComponent
@@ -13,12 +14,12 @@
             this.groupsService = groupsService;
         }
 
-        public IViewComponentResult Invoke(string title)
+        public IViewComponentResult Invoke()
         {
-            var groups = this.groupsService.GetAllGroups();
+            var userId = this.HttpContext.Session.GetString("userId");
+            var groups = this.groupsService.GetAllTrainerGroups(userId);
             var viewModel = new LessonInputModel
             {
-                GroupName = title,
                 Groups = groups,
             };
 

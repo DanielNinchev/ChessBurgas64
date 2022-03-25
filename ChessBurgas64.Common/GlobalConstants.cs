@@ -89,6 +89,7 @@
         public const string ConfirmNewPassword = "Повторете новата парола";
 
         // User
+        public const string Id = "ID";
         public const string Email = "Email";
         public const string FirstName = "Име";
         public const string MiddleName = "Презиме";
@@ -116,11 +117,16 @@
         public const string HighestRating = "Най-високо ЕЛО";
         public const string StudentsCount = "Брой ученици";
         public const string GroupName = "Име на групата";
+        public const string GroupMembers = "Членове на групата";
         public const string TrainingDay = "Тренировъчен ден";
         public const string TrainingHour = "Тренировъчен час";
         public const string ChooseDay = "Избор на ден";
         public const string GroupData = "Групови данни";
         public const string EditGroupData = "Промяна на групови данни";
+        public const string AddMembersToGroup = "Добавяне членове към групата";
+
+        // Add group member view
+        public const string AddGroupMember = "Добавяне на член към групата";
 
         // Students view
         public const string AddNewGroup = "Добави нова група";
@@ -189,9 +195,16 @@
         public const string ConductedLessons = "Проведени занятия";
         public const string AddLesson = "Отбележи проведено занятие";
         public const string CreateLesson = "Отбелязване на проведено занятие";
+        public const string AttendedStudentsCount = "Присъствали [брой ученици]";
+        public const string Lesson = "Занятие";
+        public const string EditConductedLessonData = "Промяна на данните за проведено занятие";
+        public const string AttendedStudents = "Присъствали ученици";
+        public const string NoMarkedAttendances = "Няма отбелязани присъствия за това занятие.";
+        public const string AdditionalNotes = "Допълнителни бележки";
         public const string Topic = "Тема";
         public const string DateAndTime = "Дата и час";
         public const int TopicMaxLength = 20;
+        public const int NotesTextAreaRowCount = 10;
 
         // Index
         public const string HomeTitle = "ШАХМАТЕН КЛУБ \"БУРГАС 64\"";
@@ -248,6 +261,7 @@
 
         // Buttons
         public const string Close = "Затваряне";
+        public const string Add = "Добавяне";
         public const string Create = "Създай";
         public const string DeleteAccount = "Изтриване на потребителя";
         public const string DownloadPersonalData = "Изтегляне на личните данни";

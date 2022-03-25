@@ -1,0 +1,16 @@
+﻿@model ChessBurgas64.Web.ViewModels.GroupMembers.GroupMemberInputModel
+@using ChessBurgas64.Common
+@{
+    this.ViewData["Title"] = GlobalConstants.AddGroupMember;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+<hr class="text-white border border-5" />
+
+<form method="post" enctype="multipart/form-data" class="text-center">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <vc:add-group-members title="MemberId"></vc:add-group-members>
+    <div class="container-fluid text-center">
+        <button type="submit" class="btn btn-primary">@GlobalConstants.Add</button>
+    </div>
+</form>

@@ -5,6 +5,7 @@
 
     using ChessBurgas64.Common;
     using ChessBurgas64.Services.Data.Contracts;
+    using ChessBurgas64.Web.ViewModels.GroupMembers;
     using ChessBurgas64.Web.ViewModels.Lessons;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -19,6 +20,12 @@
             ILessonsService lessonsService)
         {
             this.lessonsService = lessonsService;
+        }
+
+        public IActionResult ById(int id)
+        {
+            var viewModel = this.lessonsService.GetById<LessonViewModel>(id);
+            return this.View(viewModel);
         }
 
         public IActionResult Create()
@@ -44,17 +51,31 @@
                 return this.View(input);
             }
 
-            return this.Redirect("/Groups/ById/" + id);
+            return this.Redirect("/Users/ById/" + id);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             await this.lessonsService.DeleteAsync(id);
-
             var groupId = this.HttpContext.Session.GetString("groupId");
-
             return this.RedirectToAction("/Groups/ById/" + groupId);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteGroupLesson(int id)
+        {
+            await this.lessonsService.DeleteAsync(id);
+            var groupId = this.HttpContext.Session.GetString("groupId");
+            return this.RedirectToAction("/Groups/ById/" + groupId);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUserLesson(int id)
+        {
+            await this.lessonsService.DeleteAsync(id);
+            var userId = this.HttpContext.Session.GetString("userId");
+            return this.RedirectToAction("/Users/ById/" + userId);
         }
 
         public IActionResult Edit(int id)
@@ -74,9 +95,31 @@
 
             await this.lessonsService.UpdateAsync(id, input);
 
-            // id = input.GroupId;
+            return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
+        }
 
-            return this.RedirectToAction(nameof(GroupsController.ById), "Groups", new { id });
+        public IActionResult EditAttendants(int id)
+        {
+            var lessonGroupMembers = this.lessonsService.GetLessonGroupMembers<GroupMemberViewModel>(id);
+            var checkboxModel = new GroupMemberCheckboxModel
+            {
+                GroupMembers = lessonGroupMembers,
+            };
+
+            return this.View(checkboxModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAttendants(int id, GroupMemberCheckboxModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.lessonsService.MarkLessonMemberAttendance(id, model);
+
+            return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
         }
     }
 }
