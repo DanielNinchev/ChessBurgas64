@@ -12,6 +12,7 @@
     using ChessBurgas64.Web.ViewModels.Trainers;
     using ChessBurgas64.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -22,19 +23,22 @@
         private readonly IPaymentsService paymentsService;
         private readonly ITrainersService trainersService;
         private readonly IUsersService usersService;
+        private readonly IWebHostEnvironment environment;
 
         public UsersController(
             ILessonsService lessonsService,
             IMembersService membersService,
             IPaymentsService paymentsService,
             ITrainersService trainersService,
-            IUsersService usersService)
+            IUsersService usersService,
+            IWebHostEnvironment environment)
         {
             this.lessonsService = lessonsService;
             this.membersService = membersService;
             this.paymentsService = paymentsService;
             this.trainersService = trainersService;
             this.usersService = usersService;
+            this.environment = environment;
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -94,7 +98,7 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> EditTrainerInfo(string id, TrainerInputModel input)
         {
-            await this.trainersService.UpdateAsync(id, input);
+            await this.trainersService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.TrainerImagesPath}");
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
@@ -175,7 +179,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var lessonData = this.lessonsService.GetTableData<LessonViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
+                var lessonData = this.lessonsService.GetTrainerLessonsTableData<LessonViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = lessonData.Count();
 

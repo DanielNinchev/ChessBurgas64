@@ -206,6 +206,9 @@
         public const int TopicMaxLength = 20;
         public const int NotesTextAreaRowCount = 10;
 
+        // Trainers
+        public const int TrainersPerPage = 3;
+
         // Index
         public const string HomeTitle = "ШАХМАТЕН КЛУБ \"БУРГАС 64\"";
 
@@ -243,6 +246,7 @@
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";
+        public const string TrainerImagesPath = "/images/trainers/";
 
         // Pagination
         public const string Next = "Следваща";

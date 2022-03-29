@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
     using ChessBurgas64.Data.Common.Models;
 
     public class Member : BaseDeletableModel<string>

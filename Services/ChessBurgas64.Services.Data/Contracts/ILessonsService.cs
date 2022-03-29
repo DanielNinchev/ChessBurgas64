@@ -16,7 +16,9 @@
 
         List<T> GetLessonGroupMembers<T>(int id);
 
-        IEnumerable<T> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
+        IEnumerable<T> GetGroupLessonsTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
+
+        IEnumerable<T> GetTrainerLessonsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
 
         Task MarkLessonMemberAttendance(int id, GroupMemberCheckboxModel model);
 

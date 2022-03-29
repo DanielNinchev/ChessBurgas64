@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#membersTable").DataTable({
+    $("#groupLessonsTable").DataTable({
         "processing": true,
         "responsive": true,
         "serverSide": true,
@@ -19,7 +19,7 @@
             },
         },
         "ajax": {
-            "url": "/Groups/GetGroupMembers",
+            "url": "/Groups/GetGroupLessons",
             "beforeSend": function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -35,37 +35,27 @@
                 "className": "dt-body-center",
             },
             {
+                "targets": 1,
+                "render": function (data, type, row) {
+                    return (data)
+                        ? moment(data, "YYYY-MM-DD H:mm").format("DD/MM/YYYY H:mm")
+                        : null;
+                }
+            },
+            {
                 "targets": 5,
-                "render": function (data, type, row) {
-                    return (data)
-                        ? moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
-                        : null;
-                }
-            },
-            {
-                "targets": 6,
-                "render": function (data, type, row) {
-                    return (data)
-                        ? moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
-                        : null;
-                }
-            },
-            {
-                "targets": 7,
                 "orderable": false,
             },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "userFirstName", "name": "User.FirstName", "autoWidth": true },
-            { "data": "userMiddleName", "name": "User.MiddleName", "autoWidth": true },
-            { "data": "userLastName", "name": "User.LastName", "autoWidth": true },
-            { "data": "clubRating", "name": "ClubRating", "autoWidth": true },
-            { "data": "dateOfJoiningCurrentGroup", "name": "DateOfJoiningCurrentGroup", "autoWidth": true },
-            { "data": "dateOfLastAttendance", "name": "DateOfLastAttendance", "autoWidth": true },
+            { "data": "startingTime", "name": "StartingTime", "autoWidth": true },
+            { "data": "topic", "name": "Topic", "autoWidth": true },
+            { "data": "groupTrainerUserFirstName", "name": "Group.Trainer.User.FirstName", "autoWidth": true },
+            { "data": "membersCount", "name": "Members.Count", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Премахване</a>";
+                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
                 },
             },
         ]
@@ -73,7 +63,7 @@
 });
 
 function GoToByIdView(id) {
-    window.location.href = 'https://localhost:44319/Users/ByMemberId/' + id;
+    window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
 }
 
 function DeleteData(id) {
@@ -87,7 +77,7 @@ function DeleteData(id) {
 function Delete(id) {
     $.ajax({
         type: 'POST',
-        url: "/Members/Delete",
+        url: "/Lessons/DeleteUserLesson",
         "beforeSend": function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());

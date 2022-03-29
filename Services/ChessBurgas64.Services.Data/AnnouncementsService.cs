@@ -31,7 +31,6 @@
         {
             var announcement = this.mapper.Map<Announcement>(input);
 
-            announcement.Date = DateTime.Now;
             announcement.AuthorId = userId;
 
             Directory.CreateDirectory(imagePath);
@@ -40,11 +39,14 @@
 
             announcement.MainImageUrl = $"{GlobalConstants.AnnouncementImagesPath}{mainImage.Id}{mainImage.Extension}";
 
-            foreach (var image in input.AdditionalImages)
+            if (input.AdditionalImages != null)
             {
-                var dbImage = await this.InitializeAnnouncementImage(image, announcement, imagePath);
+                foreach (var image in input.AdditionalImages)
+                {
+                    var dbImage = await this.InitializeAnnouncementImage(image, announcement, imagePath);
 
-                announcement.Images.Add(dbImage);
+                    announcement.Images.Add(dbImage);
+                }
             }
 
             await this.announcementsRepository.AddAsync(announcement);
@@ -63,7 +65,7 @@
         public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)
         {
             var announcements = this.announcementsRepository.AllAsNoTracking()
-                .OrderByDescending(x => x.Id)
+                .OrderByDescending(x => x.Date)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
                 .ToList();
@@ -81,7 +83,7 @@
 
         public int GetCount()
         {
-            return this.announcementsRepository.All().Count();
+            return this.announcementsRepository.AllAsNoTracking().Count();
         }
 
         public async Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string imagePath)
@@ -95,6 +97,7 @@
 
             var dbImage = new Image
             {
+                AnnouncementId = announcement.Id,
                 Announcement = announcement,
                 Extension = extension,
             };
@@ -116,8 +119,8 @@
 
             announcement.Title = input.Title;
             announcement.Text = input.Text;
-            announcement.MainImageUrl = input.MainImageUrl;
             announcement.CategoryId = input.CategoryId;
+            announcement.Date = DateTime.Parse(input.Date);
 
             await this.announcementsRepository.SaveChangesAsync();
         }

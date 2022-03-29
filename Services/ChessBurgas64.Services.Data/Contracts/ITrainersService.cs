@@ -3,15 +3,25 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.ViewModels.Trainers;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface ITrainersService
     {
-        IEnumerable<SelectListItem> GetAllTrainers();
+        Task<Trainer> CreateAsync(TrainerInputModel input, string userId, string imagePath);
+
+        IEnumerable<SelectListItem> GetAllTrainersInSelectList();
+
+        IEnumerable<T> GetAllTrainersForPublicView<T>(int page, int itemsPerPage);
 
         T GetById<T>(string id);
 
-        Task UpdateAsync(string id, TrainerInputModel input);
+        int GetCount();
+
+        Task<Image> InitializeTrainerImage(IFormFile image, Trainer trainer, string imagePath);
+
+        Task UpdateAsync(string id, TrainerInputModel input, string imagePath);
     }
 }

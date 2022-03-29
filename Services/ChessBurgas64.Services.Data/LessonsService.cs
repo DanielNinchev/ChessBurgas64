@@ -21,6 +21,7 @@
         private readonly IDeletableEntityRepository<GroupMember> groupMembersRepository;
         private readonly IDeletableEntityRepository<Lesson> lessonsRepository;
         private readonly IDeletableEntityRepository<LessonMember> lessonMembersRepository;
+        private readonly IDeletableEntityRepository<Member> membersRepository;
         private readonly IDeletableEntityRepository<Trainer> trainersRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IMapper mapper;
@@ -30,6 +31,7 @@
             IDeletableEntityRepository<GroupMember> groupMembersRepository,
             IDeletableEntityRepository<Lesson> lessonsRepository,
             IDeletableEntityRepository<LessonMember> lessonMembersRepository,
+            IDeletableEntityRepository<Member> membersRepository,
             IDeletableEntityRepository<Trainer> trainersRepository,
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             IMapper mapper)
@@ -38,6 +40,7 @@
             this.groupMembersRepository = groupMembersRepository;
             this.lessonsRepository = lessonsRepository;
             this.lessonMembersRepository = lessonMembersRepository;
+            this.membersRepository = membersRepository;
             this.trainersRepository = trainersRepository;
             this.usersRepository = usersRepository;
             this.mapper = mapper;
@@ -118,7 +121,29 @@
             return lessonGroupMembers;
         }
 
-        public IEnumerable<T> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
+        public IEnumerable<T> GetGroupLessonsTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
+        {
+            var lessons = this.lessonsRepository.AllAsNoTracking().Where(x => x.GroupId == groupId);
+            var lessonData = from lesson in lessons select lesson;
+
+            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+            {
+                lessonData = lessonData.OrderBy(sortColumn + " " + sortColumnDirection);
+            }
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                // TODO: add search by date and amount
+                lessonData = lessonData.Where(l => l.Topic.Contains(searchValue)
+                                    || l.StartingTime.Equals(searchValue)
+                                    || l.Trainer.User.FirstName.Contains(searchValue)
+                                    || l.Trainer.User.LastName.Contains(searchValue));
+            }
+
+            return lessonData.To<T>().ToList();
+        }
+
+        public IEnumerable<T> GetTrainerLessonsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
         {
             var user = this.usersRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == userId);
             IQueryable<Lesson> lessons;
@@ -170,15 +195,41 @@
 
             foreach (var groupMember in model.GroupMembers.Where(x => x.Selected))
             {
-                lesson.Members.Add(new LessonMember
+                var lessonMember = new LessonMember
                 {
                     LessonId = id,
                     MemberId = groupMember.MemberId,
-                });
+                };
+
+                var member = this.membersRepository.All().FirstOrDefault(x => x.Id == groupMember.MemberId);
+
+                member.Lessons.Add(lessonMember);
+                lesson.Members.Add(lessonMember);
             }
 
-            await this.lessonsRepository.SaveChangesAsync();
             await this.lessonMembersRepository.SaveChangesAsync();
+            await this.lessonsRepository.SaveChangesAsync();
+            await this.membersRepository.SaveChangesAsync();
+
+            await this.MarkLastAttendances(id);
+        }
+
+        public async Task MarkLastAttendances(int lessonId)
+        {
+            var members = this.membersRepository.All().Where(x => x.Lessons.Any(l => l.LessonId == lessonId));
+
+            foreach (var member in members)
+            {
+                var lessons = this.lessonMembersRepository.AllAsNoTracking()
+                    .Where(x => x.MemberId == member.Id)
+                    .OrderByDescending(x => x.Lesson.StartingTime);
+
+                var memberLessonId = lessons.FirstOrDefault(x => x.MemberId == member.Id).LessonId;
+                var memberLesson = this.GetById<LessonViewModel>(memberLessonId);
+                member.DateOfLastAttendance = memberLesson.StartingTime;
+            }
+
+            await this.membersRepository.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(int id, LessonInputModel input)

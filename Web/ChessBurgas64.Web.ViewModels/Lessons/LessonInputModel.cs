@@ -22,13 +22,11 @@
 
         public string Notes { get; set; }
 
-        [Required]
         public string GroupId { get; set; }
 
         [NotMapped]
         public IEnumerable<SelectListItem> Groups { get; set; }
 
-        [Required]
         public string TrainerId { get; set; }
 
         [NotMapped]

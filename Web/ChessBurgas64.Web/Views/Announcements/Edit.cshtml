@@ -14,12 +14,12 @@
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-    <vc:categories title="CategoryId"></vc:categories>
-    <div class="form-group my-3">
+    <div class="form-group mb-3">
         <label class="text-white" asp-for="Date">@GlobalConstants.Date</label>
         <input asp-for="Date" class="form-control" />
         <span asp-validation-for="Date" class="text-danger"></span>
     </div>
+    <vc:categories title="CategoryId"></vc:categories>
     <div class="form-group mb-3">
         <label class="text-white" asp-for="Text">@GlobalConstants.Text</label>
         <textarea asp-for="Text" class="form-control" rows="30"></textarea>

@@ -133,7 +133,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var lessonData = this.lessonsService.GetTableData<LessonViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
+                var lessonData = this.lessonsService.GetGroupLessonsTableData<LessonViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = lessonData.Count();
 

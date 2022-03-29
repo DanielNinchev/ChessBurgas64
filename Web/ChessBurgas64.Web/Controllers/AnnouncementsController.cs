@@ -43,7 +43,7 @@
             {
                 ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
                 PageNumber = id,
-                AnnouncementsCount = this.announcementsService.GetCount(),
+                Count = this.announcementsService.GetCount(),
                 Announcements = this.announcementsService.GetAll<AnnouncementInCardViewModel>(id, GlobalConstants.AnnouncementsPerPage),
             };
 

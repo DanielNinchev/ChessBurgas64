@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using AutoMapper;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
@@ -20,7 +20,11 @@
 
         public string GroupName { get; set; }
 
+        public string GroupTrainerUserFirstName { get; set; }
+
         public GroupViewModel Group { get; set; }
+
+        public int MembersCount { get; set; }
 
         public ICollection<LessonMemberViewModel> Members { get; set; }
     }

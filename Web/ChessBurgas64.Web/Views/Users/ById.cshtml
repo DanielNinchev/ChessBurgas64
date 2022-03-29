@@ -122,7 +122,7 @@
     </div>
     <!-- Payments table end -->
     <!-- Lessons table start -->
-    @if (Model.ClubStatus == ClubStatus.Треньор.ToString())
+    @if (Model.ClubStatus == ClubStatus.Треньор.ToString() && (Model.Trainer != null || Model.Member != null))
     {
         <div class="container-fluid text-center">
             <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.ConductedLessons</h4>

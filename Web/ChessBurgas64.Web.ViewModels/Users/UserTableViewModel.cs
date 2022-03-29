@@ -24,5 +24,7 @@
         public string Gender { get; set; }
 
         public string ClubStatus { get; set; }
+
+        public string FideTitle { get; set; }
     }
 }

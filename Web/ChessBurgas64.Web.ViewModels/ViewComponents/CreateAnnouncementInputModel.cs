@@ -1,5 +1,6 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.ViewComponents
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 

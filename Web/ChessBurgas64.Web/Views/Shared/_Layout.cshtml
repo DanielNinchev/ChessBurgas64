@@ -27,15 +27,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
                         </li>
-                        @*@if (this.User.Identity.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a>
-                                </li>
-                            }*@
-
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Trainers" asp-action="Trainers">@GlobalConstants.TrainersNav</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.TrainersNav</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>

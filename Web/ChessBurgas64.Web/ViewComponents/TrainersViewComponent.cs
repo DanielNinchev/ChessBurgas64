@@ -15,7 +15,7 @@
 
         public IViewComponentResult Invoke(string title)
         {
-            var trainers = this.trainersService.GetAllTrainers();
+            var trainers = this.trainersService.GetAllTrainersInSelectList();
             var viewModel = new GroupInputModel
             {
                 Name = title,

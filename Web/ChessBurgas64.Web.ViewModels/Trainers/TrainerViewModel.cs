@@ -13,6 +13,8 @@
     {
         public DateTime DateOfLastAttendance { get; set; }
 
+        public string ImageImageUrl { get; set; }
+
         public UserTableViewModel User { get; set; }
 
         public virtual ICollection<GroupViewModel> Groups { get; set; }

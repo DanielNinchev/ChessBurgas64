@@ -51,7 +51,7 @@
             { "data": "id", "name": "Id", "autoWidth": true },
             { "data": "startingTime", "name": "StartingTime", "autoWidth": true },
             { "data": "topic", "name": "Topic", "autoWidth": true },
-            { "data": "groupName", "name": "GroupName", "autoWidth": true },
+            { "data": "groupName", "name": "Group.Name", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
                     return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-warning' onclick=GoToEditView('" + full.id + "'); >Промяна</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
