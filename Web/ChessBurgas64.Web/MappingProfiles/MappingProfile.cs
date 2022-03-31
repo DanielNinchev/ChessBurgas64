@@ -18,6 +18,7 @@
             this.CreateMap<Group, GroupInputModel>().ReverseMap();
             this.CreateMap<Lesson, LessonInputModel>().ReverseMap();
             this.CreateMap<Member, MemberInputModel>().ReverseMap();
+            this.CreateMap<Member, MemberProfileModel>().ReverseMap();
             this.CreateMap<Payment, PaymentInputModel>().ReverseMap();
             this.CreateMap<Trainer, TrainerInputModel>().ReverseMap();
             this.CreateMap<ApplicationUser, RegisterModel.InputModel>().ReverseMap()

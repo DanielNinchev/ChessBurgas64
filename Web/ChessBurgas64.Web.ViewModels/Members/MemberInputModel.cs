@@ -19,15 +19,6 @@
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public string DateOfJoiningTheClub { get; set; }
 
-        [Display(Name = GlobalConstants.LastAttendance)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public string DateOfLastAttendance { get; set; }
-
-        [Display(Name = GlobalConstants.DateOfJoiningCurrentGroup)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        [DataType(DataType.Date)]
-        public DateTime DateOfJoiningCurrentGroup { get; set; }
-
         public string LearnedOpenings { get; set; }
     }
 }

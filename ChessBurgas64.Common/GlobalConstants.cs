@@ -31,7 +31,7 @@
         public const string PersonalDataDeleteWarning = "Изтриването на данните Ви е необратимо - те никога няма да могат да бъдат възстановени.";
         public const string BirthDateDataUsageInfo = "Датите на раждане са ни необходими, за да можем да разпределяме учениците по възрастови групи при тренировки, както и за записване в състезания, в които възрастовата група е от значение.";
         public const string SchoolDataUsageInfo = "Информацията за училището, в което съответният ученик школува, ни дава възможност да разпределяме отбори за ученически първенства, както и да издаваме извинителни бележки за отсъствие от учебни часове при участия в състезания.";
-        public const string AddressDataUsageInfo = "Адресът Ви ни е нужен, за да знаем местонахожданието Ви, като по този начин имаме по-добра организация при пътувания за извънградски турнири.";
+        public const string AddressDataUsageInfo = "Адресът Ви ни е нужен, за да знаем местоживеенето Ви, като по този начин ще имаме по-добра организация при пътувания за извънградски турнири.";
         public const string ForWhatDoWeUseYourData = "За какво използваме Вашите данни?";
 
         // Email messages
@@ -47,8 +47,8 @@
         public const string EmailResetFailed = "Вашият email не е променен.";
         public const string NewEmail = "Нов email";
         public const string ChangeEmail = "Смяна на email";
-        public const string StatusValidationTopic = "Потвърждаване на клубен статус";
-        public const string StatusValidationMsg = "заяви следния клубен статус: ";
+        public const string StatusValidationTopic = "Потвърждаване на клубен статут";
+        public const string StatusValidationMsg = "заяви следния клубен статут: ";
 
         // Actions
         public const string Accept = "Потвърди";
@@ -63,24 +63,24 @@
         public const string EmailChangeConfirmationTitle = "Потвърдете новия си email.";
         public const string Resend = "Препращане";
         public const string Save = "Запазване";
-        public const string StatusDeclarationInstructions = "Благодарим Ви, че потвърдихте регистрацията си. Съвсем скоро заявеният от Вас клубен статус ще бъде разгледан и одобрен при съответствие.";
-        public const string ToStatusDeclaration = "Към заявка на статус";
-        public const string StatusDeclarationTitle = "Клубен статус";
-        public const string StatusDeclarationSubtitle = "Тук можете да заявите промяна на клубния си статус.";
+        public const string StatusDeclarationInstructions = "Регистрирахте се успешно! Съвсем скоро заявеният от Вас клубен статут ще бъде разгледан и одобрен при съответствие.";
+        public const string ToStatusDeclaration = "Към заявка на статут";
+        public const string StatusDeclarationTitle = "Клубен статут";
+        public const string StatusDeclarationSubtitle = "Тук можете да заявите промяна на клубния си статут.";
 
         // Status
-        public const string ClubStatusConfirmed = "Клубният Ви статус е потвърден!";
-        public const string ClubStatusInfo = "Моля, прочетете всяка една от опциите и изберете Вашия клубен статус. След завършване на регистрацията ние ще разгледаме заявения от Вас статус и при съответствие до 1 ден ще го одобрим. Необходимо е след това да попълните допълнителни данни от менюто \"Клубни настройки\" в профила Ви.";
+        public const string ClubStatusConfirmed = "Клубният Ви статут е потвърден!";
+        public const string ClubStatusInfo = "Моля, прочетете всяка една от опциите и изберете Вашия клубен статут. След завършване на регистрацията ние ще разгледаме заявения от Вас статут и при съответствие до 1 ден ще го одобрим. Необходимо е след това да попълните допълнителни данни от менюто \"Клубни настройки\" в профила Ви.";
         public const string PendingApproval = "Новопостъпващ";
         public const string PendingApprovalInfo = "Отбележете тази опция, ако досега не сте посещавали тренировки при нас и не сте заплатили месечна такса, но желаете да го направите. След регистрацията е необходимо да изберете предпочитани дни за посещение от менюто \"Клубни настройки\" във Вашия профил.";
         public const string StudentStatus = "Ученик";
-        public const string ValidateStatus = "Заяви избрания статус";
-        public const string ValidateStatusInfo = "При натискане на бутона Вие ще ни изпратите заявка за потвърждаване на статуса Ви, а ние при съответствие ще я одобрим.";
-        public const string StudentStatusInfo = "Изберете тази опция, ако вече сте заплатили месечна такса. Занятия за учениците се провеждат присъствено и онлайн всеки делник, като всяко дете се включва в група и следва съответния график. Учениците заплащат месечна такса в размер на 50 лв, която включва 2 тренировки седмично.";
+        public const string ValidateStatus = "Заяви избрания статут";
+        public const string ValidateStatusInfo = "При натискане на бутона Вие ще ни изпратите заявка за потвърждаване на статута Ви, а ние при съответствие ще я одобрим.";
+        public const string StudentStatusInfo = "Изберете тази опция, ако вече сте заплатили месечна такса. Занятия за учениците се провеждат присъствено и онлайн всеки делник, като всяко дете се включва в група и следва съответния график. Учениците заплащат месечна такса в размер на 50 лв, която включва поне 2 тренировки седмично.";
         public const string CompetitorStatus = "Състезател";
-        public const string CompetitorStatusInfo = "Състезателите са ученици, които проявяват голям интерес и активно участват в шахматни състезания. Този статус се дава, след като ученикът е взел участие в поне 3 извънградски турнира за 1 година и е картотекиран към нашия клуб. Състезателите получават възможност да посещават по-често тренировки за същия размер на месечната такса.";
+        public const string CompetitorStatusInfo = "Състезателите са ученици, които проявяват голям интерес и активно участват в шахматни състезания. Този статут се дава, след като ученикът е взел участие в поне 3 извънградски турнира за 1 година и е картотекиран към нашия клуб. Състезателите получават възможност да посещават по-често тренировки за същия размер на месечната такса.";
         public const string ChampionStatus = "Шампион";
-        public const string ChampionStatusInfo = "Шампионите са състезатели, отличили се с високи постижения в държавни шахматни турнири. Този статус се дава след спечелено първо място на държавно първенство или две първи места от друг голям турнир. Шампионите се освобождават от месечна такса.";
+        public const string ChampionStatusInfo = "Шампионите са състезатели, отличили се с високи постижения в държавни шахматни турнири. Този статут се дава след спечелено първо място на държавно първенство или две първи места от друг голям турнир. Шампионите се освобождават от месечна такса.";
 
         // Password
         public const string ForgottenPasswordConfirmationInstructions = "Моля, проверете в кутията на своя email за изпратен от нас линк, за да потвърдите, че наистина желаете да промените паролата си.";
@@ -238,11 +238,10 @@
 
         // Profile navigation
         public const string Authentication = "Разпознаване";
-        public const string PersonalData = "Лични данни";
+        public const string Privacy = "Поверителност";
         public const string Profile = "Профил";
-        public const string MemberData = "Членски данни";
-        public const string ClubData = "Клубни данни";
-        public const string ClubStatus = "Клубен статус";
+        public const string PersonalData = "Лични данни";
+        public const string ClubStatus = "Клубен статут";
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";
@@ -272,7 +271,11 @@
         public const string Edit = "Промяна";
         public const string Refresh = "Обновяване";
 
+        // Access
+        public const string AccessDenied = "Неразрешен достъп!";
+        public const string YouDoNotHavePermissionForThisResource = "Нямате достъп до това съдържание.";
+
         // Images
-        public static readonly string[] AllowedImageExtensions = new[] { "gif", "jpg", "png" };
+        public static readonly string[] AllowedImageExtensions = new[] { "gif", "jpeg", "jpg", "png" };
     }
 }

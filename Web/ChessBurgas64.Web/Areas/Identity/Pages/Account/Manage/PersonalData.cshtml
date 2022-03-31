@@ -1,82 +1,84 @@
 ﻿@page
 @using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
 @model PersonalDataModel
 @{
-    ViewData["Title"] = GlobalConstants.PersonalDataPolicyTitle;
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h5 class="text-white px-3 offset-2">@ViewData["Title"]</h5>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="container-fluid">
+    <form id="profile-form" method="post" class="text-white">
+        <div asp-validation-summary="ModelOnly" class="text-warning"></div>
 
-<div class="row">
-    <div class="col-md-12 text-white">
-        <p>@GlobalConstants.PersonalDataPolicyInfo</p>
-        <p>
-            <strong>@GlobalConstants.PersonalDataDeleteWarning</strong>
-        </p>
-
-        <ul>
-            <li>
-                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-                    <button class="btn btn-primary mb-2" type="submit">@GlobalConstants.DownloadPersonalData</button>
-                </form>
-            </li>
-            <li>
-                <p>
-                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warning">@GlobalConstants.DeleteAccount</a>
-                </p>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <h5 class="text-white px-3 offset-3 text-decoration-underline">@GlobalConstants.ForWhatDoWeUseYourData</h5>
-    <div id="accordion" class="col-md-10">
-        <div class="card">
-            <div class="card-header background-dragon-red border border-1 border-white" id="headingOne">
-                <h5 class="mb-0 text-center">
-                    <button class="btn btn-link btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        @GlobalConstants.BirthDate
-                    </button>
-                </h5>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body">
-                    @GlobalConstants.BirthDateDataUsageInfo
+        <div class="row">
+            <div class="col-md-6 pl-5">
+                <div class="form-group my-3">
+                    <label asp-for="Input.FirstName"></label>
+                    <input asp-for="Input.FirstName" class="form-control" />
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label asp-for="Input.MiddleName"></label>
+                    <input asp-for="Input.MiddleName" class="form-control" />
+                    <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label asp-for="Input.LastName"></label>
+                    <input asp-for="Input.LastName" class="form-control" />
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group my-3">
+                    <label asp-for="Input.BirthDate"></label>
+                    <input asp-for="Input.BirthDate" class="form-control" />
+                    <span asp-validation-for="Input.BirthDate" class="text-danger"></span>
+                </div>
+                @Html.DisplayNameFor(m => m.Input.Gender):
+                <div class="form-check form-check-inline m-4">
+                    <input class="form-check-input" type="radio" asp-for="Input.Gender" id="inlineRadio1" value="@Gender.Женски.ToString()">
+                    <label class="form-check-label" asp-for="Input.Gender">@Gender.Женски.ToString()</label>
+                </div>
+                <div class="form-check form-check-inline m-4">
+                    <input class="form-check-input" type="radio" asp-for="Input.Gender" id="inlineRadio1" value="@Gender.Мъжки.ToString()">
+                    <label class="form-check-label" asp-for="Input.Gender">@Gender.Мъжки.ToString()</label>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="card-header background-dragon-red border border-1 border-white" id="headingTwo">
-                <h5 class="mb-0 text-center">
-                    <button class="btn btn-link btn-primary" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        @GlobalConstants.School
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="card-body">
-                    @GlobalConstants.SchoolDataUsageInfo
+
+            <div class="col-md-6">
+                <div class="form-group my-3">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                 </div>
+
+                @if (Model.Input.Member != null)
+                {
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.Member.Address"></label>
+                        <input asp-for="Input.Member.Address" class="form-control" />
+                        <span asp-validation-for="Input.Member.Address" class="text-warning"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Input.Member.School"></label>
+                        <input asp-for="Input.Member.School" class="form-control" />
+                        <span asp-validation-for="Input.Member.School" class="text-warning"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.Member.DateOfJoiningTheClub"></label>
+                        <input asp-for="Input.Member.DateOfJoiningTheClub" class="form-control" />
+                        <span asp-validation-for="Input.Member.DateOfJoiningTheClub" class="text-warning"></span>
+                    </div>
+                }
+
             </div>
         </div>
-        <div class="card">
-            <div class="card-header background-dragon-red border border-1 border-white" id="headingThree">
-                <h5 class="mb-0 text-center">
-                    <button class="btn btn-link collapsed btn-primary" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        @GlobalConstants.Address
-                    </button>
-                </h5>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="card-body">
-                   @GlobalConstants.AddressDataUsageInfo
-                </div>
-            </div>
+        <hr />
+        <div class="text-center">
+            <button id="update-profile-button" type="submit" class="btn btn-primary">@GlobalConstants.Save</button>
         </div>
-    </div>
+    </form>
 </div>
 
 @section Scripts {

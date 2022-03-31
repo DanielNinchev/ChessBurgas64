@@ -1,6 +1,5 @@
 ﻿namespace ChessBurgas64.Web.Areas.Identity.Pages.Account.Manage
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using System.Text;
     using System.Text.Encodings.Web;
@@ -8,7 +7,6 @@
 
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
-    using ChessBurgas64.Data.Models.Enums;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
@@ -50,29 +48,6 @@
             [Display(Name = GlobalConstants.NewEmail)]
             public string NewEmail { get; set; }
 
-            [Phone]
-            [Display(Name = GlobalConstants.PhoneNumber)]
-            public string PhoneNumber { get; set; }
-
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
-            [Display(Name = GlobalConstants.FirstName)]
-            public string FirstName { get; set; }
-
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
-            [Display(Name = GlobalConstants.MiddleName)]
-            public string MiddleName { get; set; }
-
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
-            [Display(Name = GlobalConstants.LastName)]
-            public string LastName { get; set; }
-
-            [Display(Name = GlobalConstants.BirthDate)]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-            public string BirthDate { get; set; }
-
-            [Display(Name = GlobalConstants.Gender)]
-            public Gender Gender { get; set; }
-
             [DataType(DataType.Password)]
             [Display(Name = GlobalConstants.CurrentPassword)]
             public string OldPassword { get; set; }
@@ -91,7 +66,6 @@
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await this.userManager.GetUserNameAsync(user);
-            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
             var email = await this.userManager.GetEmailAsync(user);
 
             this.Username = userName;
@@ -100,12 +74,6 @@
             this.Input = new InputModel
             {
                 NewEmail = email,
-                PhoneNumber = phoneNumber,
-                FirstName = user.FirstName,
-                MiddleName = user.MiddleName,
-                LastName = user.LastName,
-                BirthDate = user.BirthDate.ToShortDateString(),
-                Gender = user.Gender,
             };
 
             this.IsEmailConfirmed = await this.userManager.IsEmailConfirmedAsync(user);
@@ -147,19 +115,6 @@
                     return this.Page();
                 }
             }
-
-            var phoneNumber = await this.userManager.GetPhoneNumberAsync(user);
-            if (this.Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await this.userManager.SetPhoneNumberAsync(user, this.Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    this.StatusMessage = "Unexpected error when trying to set phone number.";
-                    return this.RedirectToPage();
-                }
-            }
-
-            this.SetUserCredentials(user);
 
             await this.userManager.UpdateAsync(user);
             await this.signInManager.RefreshSignInAsync(user);
@@ -221,34 +176,6 @@
 
             this.StatusMessage = GlobalConstants.ResendEmailConfirmationInstructions;
             return this.RedirectToPage();
-        }
-
-        public void SetUserCredentials(ApplicationUser user)
-        {
-            if (user.FirstName != this.Input.FirstName)
-            {
-                user.FirstName = this.Input.FirstName;
-            }
-
-            if (user.MiddleName != this.Input.MiddleName)
-            {
-                user.MiddleName = this.Input.MiddleName;
-            }
-
-            if (user.LastName != this.Input.LastName)
-            {
-                user.LastName = this.Input.LastName;
-            }
-
-            if (user.BirthDate.ToShortDateString() != this.Input.BirthDate)
-            {
-                user.BirthDate = DateTime.Parse(this.Input.BirthDate);
-            }
-
-            if (user.Gender != this.Input.Gender)
-            {
-                user.Gender = this.Input.Gender;
-            }
         }
 
         public async Task<IActionResult> ValidateUser(ApplicationUser user)

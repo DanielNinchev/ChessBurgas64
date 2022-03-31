@@ -16,28 +16,31 @@
 </head>
 <body class="container-fluid background-theme">
     <header>
-        <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm border-bottom border-3 mb-3">
             <div class="container-fluid">
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.TrainersNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.TrainersNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Contacts" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
                         </li>
                     </ul>
                 </div>
@@ -52,7 +55,7 @@
         </main>
     </div>
 
-    <footer class="footer text-white">
+    <footer class="footer text-white border-top border-3 border-white">
         <div class="container">
             &copy; @DateTime.Now.Year - @GlobalConstants.ClubName
         </div>
