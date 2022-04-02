@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class AnnouncementsListViewModel : PublicEntityInListViewModel
+    public class AnnouncementsListViewModel : EntityInListViewModel
     {
         public IEnumerable<AnnouncementInCardViewModel> Announcements { get; set; }
     }

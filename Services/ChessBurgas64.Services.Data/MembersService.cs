@@ -183,7 +183,7 @@
 
             user.Member = member;
             user.MemberId = member.Id;
-            //user.Member.DateOfLastAttendance = DateTime.Parse(input.DateOfLastAttendance);
+
             user.Member.DateOfJoiningTheClub = DateTime.Parse(input.DateOfJoiningTheClub);
 
             await this.membersRepository.SaveChangesAsync();

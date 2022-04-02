@@ -14,7 +14,6 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Trainers;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class TrainersService : ITrainersService
@@ -44,8 +43,6 @@
             await this.trainersRepository.AddAsync(trainer);
 
             Directory.CreateDirectory(imagePath);
-
-            trainer.Image = await this.InitializeTrainerImage(input.ProfilePicture, trainer, imagePath);
 
             await this.trainersRepository.AddAsync(trainer);
             await this.trainersRepository.SaveChangesAsync();
@@ -95,42 +92,6 @@
             return this.trainersRepository.AllAsNoTracking().Count();
         }
 
-        public async Task<Image> InitializeTrainerImage(IFormFile image, Trainer trainer, string imagePath)
-        {
-            var extension = Path.GetExtension(image.FileName);
-
-            if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.ToLower().EndsWith(x)))
-            {
-                throw new Exception($"{ErrorMessages.InvalidImageExtension}{extension}");
-            }
-
-            var dbImage = new Image
-            {
-                TrainerId = trainer.Id,
-                Trainer = trainer,
-                Extension = extension,
-            };
-
-            var physicalPath = $"{imagePath}{dbImage.Id}{extension}";
-
-            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-
-            await image.CopyToAsync(fileStream);
-
-            dbImage.ImageUrl = $"{GlobalConstants.TrainerImagesPath}{dbImage.Id}{extension}";
-
-            if (trainer.ImageId != null)
-            {
-                var oldImage = this.imagesRepository.All().FirstOrDefault(x => x.Id == trainer.ImageId);
-                this.imagesRepository.HardDelete(oldImage);
-            }
-
-            await this.imagesRepository.AddAsync(dbImage);
-            await this.imagesRepository.SaveChangesAsync();
-
-            return dbImage;
-        }
-
         public async Task UpdateAsync(string id, TrainerInputModel input, string imagePath)
         {
             var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
@@ -142,7 +103,7 @@
             else
             {
                 user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.UserId == id);
-                user.Trainer.Image = await this.InitializeTrainerImage(input.ProfilePicture, user.Trainer, imagePath);
+                //user.Trainer.Image = await this.InitializeTrainerImage(input.ProfilePicture, user.Trainer, imagePath);
             }
 
             user.Trainer.DateOfLastAttendance = DateTime.Parse(input.DateOfLastAttendance);

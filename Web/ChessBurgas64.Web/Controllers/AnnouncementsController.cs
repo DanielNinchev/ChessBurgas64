@@ -101,7 +101,7 @@
         {
             var inputModel = this.announcementsService.GetById<EditAnnouncementInputModel>(id);
 
-            inputModel.Categories = this.categoriesService.GetAllCategories();
+            inputModel.Categories = this.categoriesService.GetAnnouncementCategories();
 
             return this.View(inputModel);
         }
@@ -112,7 +112,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                input.Categories = this.categoriesService.GetAllCategories();
+                input.Categories = this.categoriesService.GetAnnouncementCategories();
 
                 return this.View(input);
             }

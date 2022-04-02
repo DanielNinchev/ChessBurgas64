@@ -15,7 +15,7 @@
 
         public IViewComponentResult Invoke(string title)
         {
-            var categories = this.categoriesService.GetAllCategories();
+            var categories = this.categoriesService.GetAnnouncementCategories();
             var viewModel = new CreateAnnouncementInputModel
             {
                 Title = title,

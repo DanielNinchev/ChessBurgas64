@@ -6,21 +6,19 @@
 
     public enum PuzzleDifficulty
     {
-        None = 0,
-
         [Display(Name = GlobalConstants.BeginnerPuzzle)]
-        Beginner = 1,
+        Начинаеща = 1, // Beginner
 
         [Display(Name = GlobalConstants.EasyPuzzle)]
-        Low = 2,
+        Ниска = 2, // Low
 
         [Display(Name = GlobalConstants.AveragePuzzle)]
-        Average = 3,
+        Средна = 3, // Average
 
-        [Display(Name = GlobalConstants.HardPuzzles)]
-        High = 4,
+        [Display(Name = GlobalConstants.HardPuzzle)]
+        Висока = 4, // High
 
         [Display(Name = GlobalConstants.ExtremePuzzle)]
-        Extreme = 5,
+        Майсторска = 5, // Extreme (Master)
     }
 }

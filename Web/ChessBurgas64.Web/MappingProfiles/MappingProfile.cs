@@ -7,6 +7,7 @@
     using ChessBurgas64.Web.ViewModels.Lessons;
     using ChessBurgas64.Web.ViewModels.Members;
     using ChessBurgas64.Web.ViewModels.Payments;
+    using ChessBurgas64.Web.ViewModels.Puzzles;
     using ChessBurgas64.Web.ViewModels.Trainers;
     using ChessBurgas64.Web.ViewModels.ViewComponents;
 
@@ -20,6 +21,7 @@
             this.CreateMap<Member, MemberInputModel>().ReverseMap();
             this.CreateMap<Member, MemberProfileModel>().ReverseMap();
             this.CreateMap<Payment, PaymentInputModel>().ReverseMap();
+            this.CreateMap<Puzzle, PuzzleInputModel>().ReverseMap();
             this.CreateMap<Trainer, TrainerInputModel>().ReverseMap();
             this.CreateMap<ApplicationUser, RegisterModel.InputModel>().ReverseMap()
                 .ForMember(apu => apu.UserName, rm => rm.MapFrom(apu => apu.Email));

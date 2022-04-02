@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;

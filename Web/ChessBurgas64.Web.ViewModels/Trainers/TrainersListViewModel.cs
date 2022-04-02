@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class TrainersListViewModel : PublicEntityInListViewModel
+    public class TrainersListViewModel : EntityInListViewModel
     {
         public IEnumerable<TrainerViewModel> Trainers { get; set; }
     }

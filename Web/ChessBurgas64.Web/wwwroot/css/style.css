@@ -89,7 +89,6 @@
 
 .card-title {
     margin-bottom: 10px;
-    height: 45px;
     max-height: calc(1.4rem * var(--max-lines));
 }
 
@@ -104,8 +103,9 @@
 }
 
 .image-announcement-card {
-    height: 330px;
-    width: 398px;
+    height: 487px;
+    width: 602px;
+    position: center;
 }
 
 .image-trainer-card {
@@ -133,7 +133,7 @@
 }
 
 .background-theme {
-    background: url(../images/homePage/wooden-theme.jpg);
+    background: url(../images/homePage/dark-wooden-wallpaper.jpg);
 }
 
 .fw-medium {

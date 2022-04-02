@@ -20,8 +20,6 @@
 
         int GetCount();
 
-        Task<Image> InitializeTrainerImage(IFormFile image, Trainer trainer, string imagePath);
-
         Task UpdateAsync(string id, TrainerInputModel input, string imagePath);
     }
 }

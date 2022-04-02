@@ -1,0 +1,60 @@
+﻿@model ChessBurgas64.Web.ViewModels.Puzzles.PuzzleListViewModel
+@using ChessBurgas64.Common
+@{
+    this.ViewData["Title"] = GlobalConstants.PuzzlesNav;
+}
+
+<main>
+    <div class="container page-header backround-header-image-container"></div>
+    <div class="title-container border border-3 border-white mb-3">
+        <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+    </div>
+
+    <div class="container-xxl">
+        <div class="container">
+            <div class="row g-4">
+                @foreach (var puzzle in this.Model.Puzzles)
+                {
+                    <div class="card-deck col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="card border border-5 border-white">
+                            <img class="image-trainer-card img-fluid" src="@puzzle.ImageImageUrl" alt="">
+                            <div class="card-body text-center">
+                                <h4 class="card-title text-center">@GlobalConstants.PuzzleNumber @puzzle.Number</h4>
+                                <small>@puzzle.Objective</small>
+                                <hr />
+                                <p class="card-text"><strong>@GlobalConstants.Difficulty:</strong> <i class="fa-solid fa-brain"></i>  @puzzle.Difficulty</p>
+                                <hr />
+                                <p class="card-text"><strong>@GlobalConstants.Points:</strong> <i class="fa-solid fa-star"></i>  @puzzle.Points</p>
+
+                                @if (User.IsInRole(GlobalConstants.AdministratorRoleName) || User.IsInRole(GlobalConstants.TrainerRoleName))
+                                {
+                                    <hr />
+                                    <p class="card-text"><strong>@GlobalConstants.Solution:</strong> <i class="fa-solid fa-chess-board"></i>  @puzzle.Solution</p>
+                                    <hr />
+                                    <form method="post" asp-action="Delete" id="deletePuzzleForm" asp-route-id="@puzzle.Id">
+                                    </form>
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@puzzle.Id">@GlobalConstants.Edit</a>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#deletePuzzleModal">@GlobalConstants.Delete</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="deletePuzzleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>@GlobalConstants.DeletePuzzleConfirmation</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="document.getElementById('deletePuzzleForm').submit()">@GlobalConstants.Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@GlobalConstants.No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -2,8 +2,8 @@
 {
     public static class GlobalConstants
     {
-        public const string SystemName = "ChessBurgas64";
-        public const string ClubName = "БУРГАС 64";
+        public const string SystemName = "ШК \"Бургас 64\"";
+        public const string ClubName = "Шахматен клуб \"Бургас 64\"";
         public const string AdminEmail = "daniel.ninchev@gmail.com";
 
         // Groups
@@ -88,6 +88,24 @@
         public const string NewPassword = "Нова парола";
         public const string ConfirmNewPassword = "Повторете новата парола";
 
+        // Puzzle
+        public const int PuzzlePointsMultiplier = 10;
+        public const int PuzzleSolutionMinLength = 2;
+        public const int PuzzleObjectiveMinLength = 3;
+        public const int PuzzleObjectiveMaxLength = 50;
+        public const int PuzzlesPerPage = 6;
+        public const string AddingNewPuzzle = "Добавяне на нова задача";
+        public const string DeletePuzzleConfirmation = "Наистина ли искате да изтриете тази задача?";
+        public const string EditPuzzle = "Промяна на задача";
+        public const string Objective = "Условие";
+        public const string Points = "Точки";
+        public const string Solution = "Решение";
+        public const string PuzzleNumber = "Задача №";
+        public const string Number = "Пореден номер";
+        public const string PositionImage = "Изображение на позицията";
+        public const string Difficulty = "Трудност";
+        public const string DifficultyChoice = "*избор на трудност";
+
         // User
         public const string Id = "ID";
         public const string Email = "Email";
@@ -167,12 +185,16 @@
         public const string BeginnerPuzzle = "Първо ниво - за начинаещи";
         public const string EasyPuzzle = "Второ ниво - ниска трудност";
         public const string AveragePuzzle = "Трето ниво - средна трудност";
-        public const string HardPuzzles = "Четвърто ниво - висока трудност";
+        public const string HardPuzzle = "Четвърто ниво - висока трудност";
         public const string ExtremePuzzle = "Пето ниво - майсторски";
 
         // Announcements
         public const int AnnouncementsPerPage = 6;
         public const int AnnouncementTextRowCount = 30;
+        public const string Author = "Автор";
+        public const string PublishedOn = "Публикувано на";
+        public const string DeleteAnnouncementConfirmation = "Наистина ли искате да изтриете тази новина?";
+        public const string Photos = "Снимки";
 
         // Categories
         public const string AnnouncementsCategory = "Обяви";
@@ -245,6 +267,7 @@
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";
+        public const string PuzzleImagesPath = "/images/puzzles/";
         public const string TrainerImagesPath = "/images/trainers/";
 
         // Pagination
@@ -266,10 +289,14 @@
         public const string Close = "Затваряне";
         public const string Add = "Добавяне";
         public const string Create = "Създай";
+        public const string Delete = "Изтриване";
+        public const string Yes = "Да";
+        public const string No = "Не";
         public const string DeleteAccount = "Изтриване на потребителя";
         public const string DownloadPersonalData = "Изтегляне на личните данни";
         public const string Edit = "Промяна";
         public const string Refresh = "Обновяване";
+        public const string View = "Преглед";
 
         // Access
         public const string AccessDenied = "Неразрешен достъп!";

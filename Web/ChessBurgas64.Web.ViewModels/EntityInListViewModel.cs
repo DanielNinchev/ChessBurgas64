@@ -2,7 +2,7 @@
 {
     using System;
 
-    public abstract class PublicEntityInListViewModel
+    public abstract class EntityInListViewModel
     {
         public int PageNumber { get; set; }
 

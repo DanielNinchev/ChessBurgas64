@@ -19,8 +19,6 @@
         [Required]
         public int CategoryId { get; set; }
 
-        public string MainImageUrl { get; set; }
-
         public string Date { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }

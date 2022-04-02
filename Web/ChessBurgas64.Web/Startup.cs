@@ -82,9 +82,11 @@
             services.AddTransient<IAnnouncementsService, AnnouncementsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IGroupsService, GroupsService>();
+            services.AddTransient<IImagesService, ImagesService>();
             services.AddTransient<ILessonsService, LessonsService>();
             services.AddTransient<IMembersService, MembersService>();
             services.AddTransient<IPaymentsService, PaymentsService>();
+            services.AddTransient<IPuzzlesService, PuzzlesService>();
             services.AddTransient<ITrainersService, TrainersService>();
             services.AddTransient<IUsersService, UsersService>();
         }

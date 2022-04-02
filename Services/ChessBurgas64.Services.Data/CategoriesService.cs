@@ -11,13 +11,17 @@
     public class CategoriesService : ICategoriesService
     {
         private readonly IDeletableEntityRepository<Category> categoriesRepository;
+        private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
 
-        public CategoriesService(IDeletableEntityRepository<Category> categoriesRepository)
+        public CategoriesService(
+            IDeletableEntityRepository<Category> categoriesRepository,
+            IDeletableEntityRepository<Puzzle> puzzlesRepository)
         {
             this.categoriesRepository = categoriesRepository;
+            this.puzzlesRepository = puzzlesRepository;
         }
 
-        public IEnumerable<SelectListItem> GetAllCategories()
+        public IEnumerable<SelectListItem> GetAnnouncementCategories()
         {
             return this.categoriesRepository.AllAsNoTracking()
                 .Select(x => new

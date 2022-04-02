@@ -11,7 +11,9 @@
             this.Members = new HashSet<PuzzleMember>();
         }
 
-        public string Name { get; set; }
+        public int Number { get; set; }
+
+        public string Objective { get; set; }
 
         public string Solution { get; set; }
 

@@ -5,8 +5,7 @@
 }
 
 <main>
-    <div class="bg-dark text-center border">
-        <h3 class="text-white title-container">@Model.Title</h3>
+    <div class="bg-dark text-center">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -15,12 +14,12 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block carousel-image rounded mx-auto" src="@Model.MainImageUrl" alt="Заглавна снимка">
+                    <img class="d-block carousel-image rounded mx-auto" src="@Model.MainImageUrl" alt="@GlobalConstants.Photos">
                 </div>
                 @foreach (var image in this.Model.Images)
                 {
                     <div class="carousel-item">
-                        <img class="d-block carousel-image rounded mx-auto" src="@image.ImageUrl" alt="Снимка">
+                        <img class="d-block carousel-image rounded mx-auto" src="@image.ImageUrl" alt="@image.Description">
                     </div>
                 }
             </div>
@@ -33,13 +32,15 @@
                 <span class="sr-only">@GlobalConstants.Next</span>
             </a>
         </div>
-        <div class="container-fluid text-white position-relative">
-            <div class="announcement-property-container position-absolute top-0 start-0 px-3 py-1 border">Публикувано: @Model.Date.ToShortDateString()</div>
-            <div class="announcement-property-container position-absolute top-0 start-50 px-3 py-1 translate-middle-x border">Автор: Даниел Нинчев</div>
-            <div class="announcement-property-container position-absolute top-0 end-0 px-3 py-1 border">Категория: @Model.CategoryName</div>
-        </div>
     </div>
-    <div class="bg-light mt-5 px-3 py-1 border border-danger border-5">
+    <h3 class="text-white text-center title-container">@Model.Title</h3>
+    <div class="container-fluid text-white text-center my-3">
+        <div class="btn btn-primary disabled mx-3">@GlobalConstants.PublishedOn: <i class="fa-solid fa-calendar-days"></i> @Model.Date.ToShortDateString()</div>
+        <div class="btn btn-primary disabled mx-3">@GlobalConstants.Author: <i class="fa-solid fa-user-pen"></i> @Model.AuthorName</div>
+        <div class="btn btn-primary disabled mx-3">@GlobalConstants.Category: <i class="fa-solid fa-list"></i> @Model.CategoryName</div>
+    </div>
+    <hr class="border border-white border-3" />
+    <div class="my-3 text-white">
         <p class="text-justify">
             @Model.Text;
         </p>
@@ -47,11 +48,11 @@
 
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-        <div class="container-fluid text-white position-relative" style="height: 30px;">
-            <a class="text-white mb-5 position-absolute top-0 start-0 border px-2 py-1 background-dragon-red" asp-action="Edit" asp-route-id="@Model.Id">Обнови</a>
+        <div class="container-fluid text-white text-center my-2">
             <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
             </form>
-            <button class="btn btn-primary text-white mb-5 position-absolute top-0 end-0 border px-2 py-1" data-toggle="modal" data-target="#deleteModal">Изтрий</button>
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">@GlobalConstants.Refresh</a>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">@GlobalConstants.Delete</button>
         </div>
     }
 
@@ -59,11 +60,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p>Наистина ли искате да изтриете тази публикация?</p>
+                    <p>@GlobalConstants.DeleteAnnouncementConfirmation</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Да</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Не</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">@GlobalConstants.Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@GlobalConstants.No</button>
                 </div>
             </div>
         </div>

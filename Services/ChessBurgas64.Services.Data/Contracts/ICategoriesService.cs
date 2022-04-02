@@ -6,6 +6,6 @@
 
     public interface ICategoriesService
     {
-        IEnumerable<SelectListItem> GetAllCategories();
+        IEnumerable<SelectListItem> GetAnnouncementCategories();
     }
 }
