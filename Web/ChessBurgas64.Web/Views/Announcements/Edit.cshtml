@@ -1,8 +1,11 @@
 ﻿@model ChessBurgas64.Web.ViewModels.Announcements.EditAnnouncementInputModel
-@using ChessBurgas64.Common 
+@using ChessBurgas64.Common
 @{
     ViewData["Title"] = "Обновяване на новина";
 }
+
+<link href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/Trumbowyg-main/dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
@@ -22,7 +25,7 @@
     <vc:categories title="CategoryId"></vc:categories>
     <div class="form-group mb-3">
         <label class="text-white" asp-for="Text">@GlobalConstants.Text</label>
-        <textarea asp-for="Text" class="form-control" rows="30"></textarea>
+        <textarea id="editor" asp-for="Text" class="form-control"></textarea>
         <span asp-validation-for="Text" class="text-danger"></span>
     </div>
     <button type="submit" class="btn-primary" data-toggle="modal" data-target="#modalEdit">@GlobalConstants.Refresh</button>
@@ -50,3 +53,13 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/trumbowyg.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
+    <script src="~/js/textEditorButtons.js"></script>
+}

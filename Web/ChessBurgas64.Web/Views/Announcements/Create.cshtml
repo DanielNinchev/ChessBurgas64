@@ -1,12 +1,15 @@
 ﻿@model ChessBurgas64.Web.ViewModels.ViewComponents.CreateAnnouncementInputModel
-@using ChessBurgas64.Common 
-@{ 
+@using ChessBurgas64.Common
+@{
     this.ViewData["Title"] = "Публикуване на новина";
 }
 
+<link href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/lib/Trumbowyg-main/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" id="form-element">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group mb-3">
         <label class="text-white" asp-for="Title">@GlobalConstants.Title</label>
@@ -31,10 +34,20 @@
     </div>
     <div class="form-group mb-3">
         <label class="text-white" asp-for="Text">@GlobalConstants.Text</label>
-        <textarea asp-for="Text" class="form-control" rows="@GlobalConstants.AnnouncementTextRowCount"></textarea>
+        <textarea id="editor" asp-for="Text" class="form-control"></textarea>
         <span asp-validation-for="Text" class="text-danger"></span>
     </div>
     <div class="container-fluid text-center">
         <button type="submit" class="btn-primary px-2 py-2 fw-bold">@GlobalConstants.Publish</button>
     </div>
 </form>
+
+@section Scripts
+{
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/trumbowyg.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+    <script src="~/lib/Trumbowyg-main/dist/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
+    <script src="~/js/textEditorButtons.js"></script>
+}
