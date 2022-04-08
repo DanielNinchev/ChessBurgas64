@@ -13,7 +13,6 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using ChessBurgas64.Web.ViewModels.ViewComponents;
     using Microsoft.AspNetCore.Http;
 
     public class AnnouncementsService : IAnnouncementsService
@@ -27,7 +26,7 @@
             this.mapper = mapper;
         }
 
-        public async Task CreateAsync(CreateAnnouncementInputModel input, string userId, string imagePath)
+        public async Task CreateAsync(AnnouncementInputModel input, string userId, string imagePath)
         {
             var announcement = this.mapper.Map<Announcement>(input);
 
@@ -113,7 +112,7 @@
             return dbImage;
         }
 
-        public async Task UpdateAsync(int id, EditAnnouncementInputModel input)
+        public async Task UpdateAsync(int id, AnnouncementInputModel input)
         {
             var announcement = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
 

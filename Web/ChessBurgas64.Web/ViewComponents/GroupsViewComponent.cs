@@ -16,8 +16,8 @@
 
         public IViewComponentResult Invoke()
         {
-            var userId = this.HttpContext.Session.GetString("userId");
-            var groups = this.groupsService.GetAllTrainerGroups(userId);
+            var trainerId = this.HttpContext.Session.GetString("trainerId");
+            var groups = this.groupsService.GetAllTrainerGroups(trainerId);
             var viewModel = new LessonInputModel
             {
                 Groups = groups,

@@ -62,7 +62,6 @@
         public async Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
-
             var dbImage = new Image
             {
                 PuzzleId = puzzle.Id,

@@ -5,7 +5,6 @@
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.ViewModels.Trainers;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface ITrainersService
@@ -20,6 +19,6 @@
 
         int GetCount();
 
-        Task UpdateAsync(string id, TrainerInputModel input, string imagePath);
+        Task<Trainer> UpdateAsync(string id, TrainerInputModel input, string imagePath);
     }
 }

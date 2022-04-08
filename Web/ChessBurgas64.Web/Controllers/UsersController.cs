@@ -18,6 +18,7 @@
 
     public class UsersController : Controller
     {
+        private readonly IImagesService imagesService;
         private readonly ILessonsService lessonsService;
         private readonly IMembersService membersService;
         private readonly IPaymentsService paymentsService;
@@ -26,6 +27,7 @@
         private readonly IWebHostEnvironment environment;
 
         public UsersController(
+            IImagesService imagesService,
             ILessonsService lessonsService,
             IMembersService membersService,
             IPaymentsService paymentsService,
@@ -33,6 +35,7 @@
             IUsersService usersService,
             IWebHostEnvironment environment)
         {
+            this.imagesService = imagesService;
             this.lessonsService = lessonsService;
             this.membersService = membersService;
             this.paymentsService = paymentsService;
@@ -98,7 +101,11 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> EditTrainerInfo(string id, TrainerInputModel input)
         {
-            await this.trainersService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.TrainerImagesPath}");
+            var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.TrainerImagesPath}";
+            var trainer = await this.trainersService.UpdateAsync(id, input, webRootImagePath);
+
+            await this.imagesService.InitializeTrainerImage(input.ProfilePicture, trainer, webRootImagePath);
+
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 

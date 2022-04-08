@@ -12,23 +12,23 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="row text-center">
         <div class="form-group mb-5">
-            <label class="text-white" asp-for="@Model.ClubStatus">@GlobalConstants.ClubStatus: </label>
-            <select asp-for="@Model.ClubStatus" asp-items="Html.GetEnumSelectList<ClubStatus>()">
-                <option selected="selected" value="">(избор на статус)</option>
+            <label class="text-white" asp-for="ClubStatus">@GlobalConstants.ClubStatus: </label>
+            <select asp-for="ClubStatus" asp-items="Html.GetEnumSelectList<ClubStatus>()">
+                <option selected="selected" value="">@GlobalConstants.ClubStatusChoice</option>
             </select>
-            <span asp-validation-for="@Model.ClubStatus" class="text-danger"></span>
+            <span asp-validation-for="ClubStatus" class="text-danger"></span>
         </div>
         <div class="form-group mb-5">
-            <label class="text-white" asp-for="@Model.FideTitle">@GlobalConstants.FideTitle: </label>
-            <select asp-for="@Model.FideTitle" asp-items="Html.GetEnumSelectList<FideTitle>()">
-                <option selected="selected" value=""></option>
+            <label class="text-white" asp-for="FideTitle">@GlobalConstants.FideTitle: </label>
+            <select asp-for="FideTitle" asp-items="Html.GetEnumSelectList<FideTitle>()">
+                <option selected="selected" value="">@GlobalConstants.FideTitleChoice</option>
             </select>
-            <span asp-validation-for="@Model.FideTitle" class="text-danger"></span>
+            <span asp-validation-for="FideTitle" class="text-danger"></span>
         </div>
         <div class="form-group mb-5 col-2 offset-5">
-            <label class="text-white" asp-for="@Model.FideRating">@GlobalConstants.FideRating</label>
-            <input asp-for="@Model.FideRating" class="form-control" />
-            <span asp-validation-for="@Model.FideRating" class="text-danger"></span>
+            <label class="text-white" asp-for="FideRating">@GlobalConstants.FideRating</label>
+            <input asp-for="FideRating" class="form-control" />
+            <span asp-validation-for="FideRating" class="text-danger"></span>
         </div>
     </div>
     <button type="submit" class="btn-primary">@GlobalConstants.Refresh</button>

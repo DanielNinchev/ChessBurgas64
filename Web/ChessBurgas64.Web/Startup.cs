@@ -15,6 +15,7 @@
     using ChessBurgas64.Services.Messaging;
     using ChessBurgas64.Web.MappingProfiles;
     using ChessBurgas64.Web.ViewModels;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -68,6 +69,7 @@
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddSingleton(this.configuration);
+            services.AddSingleton<IHtmlSanitizer, HtmlSanitizer>();
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));

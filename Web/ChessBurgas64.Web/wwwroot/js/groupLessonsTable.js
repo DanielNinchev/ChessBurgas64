@@ -55,14 +55,14 @@
             { "data": "membersCount", "name": "Members.Count", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
+                    return "<button class='btn btn-info' id='groupLessonViewBtn' onclick=GoToLessonByIdView('" + full.id + "'); >Преглед</button> <button class='btn btn-danger' id='groupLessonDeleteBtn' onclick=DeleteData('" + full.id + "'); >Изтриване</button>";
                 },
             },
         ]
     });
 });
 
-function GoToByIdView(id) {
+function GoToLessonByIdView(id) {
     window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
 }
 

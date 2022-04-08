@@ -11,26 +11,24 @@
     public class HomeController : BaseController
     {
         private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
-        private readonly IDeletableEntityRepository<Category> categoriesRepository;
+        private readonly IDeletableEntityRepository<AnnouncementCategory> categoriesRepository;
         private readonly IDeletableEntityRepository<Group> groupsRepository;
         private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Lesson> lessonsRepository;
         private readonly IDeletableEntityRepository<Member> membersRepository;
         private readonly IDeletableEntityRepository<Payment> paymentsRepository;
         private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
-        private readonly IDeletableEntityRepository<Tournament> tournamentsRepository;
         private readonly IDeletableEntityRepository<Trainer> trainersRepository;
 
         public HomeController(
             IDeletableEntityRepository<Announcement> announcementsRepository,
-            IDeletableEntityRepository<Category> categoriesRepository,
+            IDeletableEntityRepository<AnnouncementCategory> categoriesRepository,
             IDeletableEntityRepository<Group> groupsRepository,
             IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<Lesson> lessonsRepository,
             IDeletableEntityRepository<Member> membersRepository,
             IDeletableEntityRepository<Payment> paymentsRepository,
             IDeletableEntityRepository<Puzzle> puzzlesRepository,
-            IDeletableEntityRepository<Tournament> tournamentsRepository,
             IDeletableEntityRepository<Trainer> trainersRepository)
         {
             this.announcementsRepository = announcementsRepository;
@@ -41,7 +39,6 @@
             this.membersRepository = membersRepository;
             this.paymentsRepository = paymentsRepository;
             this.puzzlesRepository = puzzlesRepository;
-            this.tournamentsRepository = tournamentsRepository;
             this.trainersRepository = trainersRepository;
         }
 

@@ -26,7 +26,7 @@
 
         public DbSet<Announcement> Announcements { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<AnnouncementCategory> AnnouncementCategories { get; set; }
 
         public DbSet<GroupMember> GroupMembers { get; set; }
 
@@ -44,11 +44,9 @@
 
         public DbSet<Puzzle> Puzzles { get; set; }
 
+        public DbSet<PuzzleCategory> PuzzleCategories { get; set; }
+
         public DbSet<PuzzleMember> PuzzleMembers { get; set; }
-
-        public DbSet<Tournament> Tournaments { get; set; }
-
-        public DbSet<TournamentMember> TournamentMembers { get; set; }
 
         public DbSet<Trainer> Trainers { get; set; }
 

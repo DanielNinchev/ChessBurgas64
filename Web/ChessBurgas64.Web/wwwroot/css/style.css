@@ -89,11 +89,11 @@
 
 .card-title {
     margin-bottom: 10px;
-    max-height: calc(1.4rem * var(--max-lines));
+    max-height: calc(1.5rem * var(--max-lines));
 }
 
 .card-text{
-    max-height: calc(1.4rem * var(--max-lines));
+    max-height: calc(1.5rem * var(--max-lines));
     overflow: hidden;
 }
 

@@ -171,6 +171,13 @@
             return membersData.To<T>().ToList();
         }
 
+        public async Task SaveMemberChangesAsync(Member member)
+        {
+            this.membersRepository.Update(member);
+            await this.membersRepository.SaveChangesAsync();
+            await this.usersRepository.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(string userId, MemberInputModel input)
         {
             var user = this.usersRepository.All().FirstOrDefault(x => x.Id == userId);

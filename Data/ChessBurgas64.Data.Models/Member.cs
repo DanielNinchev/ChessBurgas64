@@ -13,7 +13,6 @@
             this.Groups = new HashSet<GroupMember>();
             this.Lessons = new HashSet<LessonMember>();
             this.Puzzles = new HashSet<PuzzleMember>();
-            this.Tournaments = new HashSet<TournamentMember>();
         }
 
         public string Address { get; set; }
@@ -41,7 +40,5 @@
         public virtual ICollection<LessonMember> Lessons { get; set; }
 
         public virtual ICollection<PuzzleMember> Puzzles { get; set; }
-
-        public virtual ICollection<TournamentMember> Tournaments { get; set; }
     }
 }

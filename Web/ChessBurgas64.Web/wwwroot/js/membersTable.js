@@ -65,14 +65,14 @@
             { "data": "dateOfLastAttendance", "name": "DateOfLastAttendance", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteData('" + full.id + "'); >Премахване</a>";
+                    return "<a class='btn btn-info' id='memberViewBtn' onclick=GoToMemberByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' id='memberDeleteBtn' onclick=DeleteData('" + full.id + "'); >Премахване</a>";
                 },
             },
         ]
     });
 });
 
-function GoToByIdView(id) {
+function GoToMemberByIdView(id) {
     window.location.href = 'https://localhost:44319/Users/ByMemberId/' + id;
 }
 

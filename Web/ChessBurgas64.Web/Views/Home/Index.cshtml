@@ -8,17 +8,18 @@
 <div class="container-fluid">
     <div class="owl-carousel header-carousel position-relative">
         <div class="owl-carousel-item position-relative">
-            <img class="img-fluid rounded mx-auto d-block" src="~/images/homePage/beginning.jpg" alt="">
+            <img class="img-fluid rounded mx-auto d-block" src="~/images/homePage/homepage.png" alt="">
             <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row justify-content-center">
-                        <div class="col-12 col-lg-8 text-center">
-                            <img class="img-fluid img-logo-home rounded mx-auto d-block" src="~/images/homePage/burgas64-logo-300x300.png" alt="logo" />
-    
-                            <h5 class="text-white text-uppercase mb-3 animated slideInDown">Добре дошли!</h5>
-                            <h1 class="display-4 text-white animated slideInDown mb-4">ШАХМАТЕН КЛУБ "БУРГАС 64"</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">@GlobalConstants.RegistrationLabel</a>
-                            <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">@GlobalConstants.LoginNav</a>
+                        <div class="col-12 col-lg-8 text-center" style="margin-top: 220px;">
+                            <h5 class="text-white text-uppercase mb-4 animated slideInDown">@GlobalConstants.Welcome</h5>
+                            <h1 class="display-4 text-white text-uppercase animated slideInDown mb-3">@GlobalConstants.ClubName</h1>
+                            @if (!this.User.Identity.IsAuthenticated)
+                            {
+                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">@GlobalConstants.RegistrationLabel</a>
+                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">@GlobalConstants.LoginNav</a>
+                            }
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,8 @@
 
         public string Text { get; set; }
 
+        public string Description { get; set; }
+
         public string MainImageUrl { get; set; }
 
         public string AuthorId { get; set; }
@@ -26,7 +28,7 @@
 
         public int CategoryId { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual AnnouncementCategory Category { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
     }

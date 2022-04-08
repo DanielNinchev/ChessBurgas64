@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ChessBurgas64.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-
-namespace ChessBurgas64.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace ChessBurgas64.Web.Areas.Identity.Pages.Account.Manage
 {
-    public class ResetAuthenticatorModel : PageModel
+    using System.Threading.Tasks;
+
+    using ChessBurgas64.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.Extensions.Logging;
+
+    public class ResetAuthenticator : PageModel
     {
         UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        ILogger<ResetAuthenticatorModel> _logger;
+        ILogger<ResetAuthenticator> _logger;
 
-        public ResetAuthenticatorModel(
+        public ResetAuthenticator(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<ResetAuthenticatorModel> logger)
+            ILogger<ResetAuthenticator> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;

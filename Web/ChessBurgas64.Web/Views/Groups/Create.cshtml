@@ -1,5 +1,6 @@
 ﻿@model ChessBurgas64.Web.ViewModels.Groups.GroupInputModel
 @using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
 @{
     this.ViewData["Title"] = GlobalConstants.CreatingNewGroup;
 }
@@ -17,9 +18,9 @@
 
     <vc:trainers title="TrainerId"></vc:trainers>
 
-    <div class="form-group mb-5">
+    <div class="form-group my-5">
         <label class="text-white" asp-for="@Model.TrainingDay">@GlobalConstants.TrainingDay: </label>
-        <select asp-for="@Model.TrainingDay" asp-items="Html.GetEnumSelectList<DayOfWeek>()">
+        <select asp-for="@Model.TrainingDay" asp-items="Html.GetEnumSelectList<WeekDay>()">
             <option selected="selected" value="">@GlobalConstants.ChooseDay</option>
         </select>
         <span asp-validation-for="@Model.TrainingDay" class="text-danger"></span>

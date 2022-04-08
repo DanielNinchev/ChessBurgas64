@@ -65,12 +65,15 @@
                 <p>@GlobalConstants.LastAttendance: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfLastAttendance.ToShortDateString()</p>
                 <hr class="text-dark" />
 
-                @if (Model.Member.Group != null)
+                @if (Model.Member.Groups != null)
                 {
-                    <p>@GlobalConstants.Group: <i class="fa-solid fa-user-group"></i> @Model.Member.Group.Name</p>
-                    <hr class="text-dark" />
-                    <p>@GlobalConstants.DateOfJoiningCurrentGroup: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfJoiningCurrentGroup.ToShortDateString()</p>
-                    <hr class="text-dark" />
+                    foreach (var group in Model.Member.Groups)
+                    {
+                        <p>@GlobalConstants.Group: <i class="fa-solid fa-user-group"></i> @group.Group.Name</p>
+                        <hr class="text-dark" />
+                        <p>@GlobalConstants.DateOfJoiningCurrentGroup: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfJoiningCurrentGroup.ToShortDateString()</p>
+                        <hr class="text-dark" />
+                    }
                 }
                 else
                 {

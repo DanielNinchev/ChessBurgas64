@@ -34,6 +34,10 @@
                 "searchable": false,
                 "className": "dt-body-center",
             },
+            {
+                "targets": [5],
+                "orderable": false,
+            },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },

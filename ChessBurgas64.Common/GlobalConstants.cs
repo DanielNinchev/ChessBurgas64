@@ -5,6 +5,7 @@
         public const string SystemName = "ШК \"Бургас 64\"";
         public const string ClubName = "Шахматен клуб \"Бургас 64\"";
         public const string AdminEmail = "daniel.ninchev@gmail.com";
+        public const string Welcome = "Добре дошли!";
 
         // Groups
         public const string None = "Няма";
@@ -129,6 +130,8 @@
         public const int AddressMinLength = 10;
         public const int SchoolMaxLength = 100;
         public const int SchoolMinLength = 10;
+        public const string FideTitleChoice = "*избор на FIDE титла";
+        public const string ClubStatusChoice = "*избор на клубен статут";
 
         // Group view
         public const string LowestRating = "Най-ниско ЕЛО";
@@ -138,7 +141,7 @@
         public const string GroupMembers = "Членове на групата";
         public const string TrainingDay = "Тренировъчен ден";
         public const string TrainingHour = "Тренировъчен час";
-        public const string ChooseDay = "Избор на ден";
+        public const string ChooseDay = "*избор на ден";
         public const string GroupData = "Групови данни";
         public const string EditGroupData = "Промяна на групови данни";
         public const string AddMembersToGroup = "Добавяне членове към групата";
@@ -163,7 +166,7 @@
         public const string MemberStillNotAddedToTheSystem = "Потребителят все още не е въведен в системата като член на клуба.";
 
         // Registration view
-        public const string RegistrationLabel = "РЕГИСТРАЦИЯ";
+        public const string RegistrationLabel = "Регистрация";
 
         // Login view
         public const string RememberMe = "Запомни ме";
@@ -191,15 +194,32 @@
         // Announcements
         public const int AnnouncementsPerPage = 6;
         public const int AnnouncementTextRowCount = 30;
+        public const int AnnouncementDescriptionMinLength = 10;
+        public const int AnnouncementDescriptionMaxLength = 216;
+        public const int AnnouncementTextMinLength = 250;
+        public const int AnnouncementTitleMinLength = 4;
         public const string Author = "Автор";
-        public const string PublishedOn = "Публикувано на";
         public const string DeleteAnnouncementConfirmation = "Наистина ли искате да изтриете тази новина?";
+        public const string AnnouncementDescription = "Кратко описание";
+        public const string PublishedOn = "Публикувано на";
         public const string Photos = "Снимки";
 
-        // Categories
+        // AnnouncementCategories
         public const string AnnouncementsCategory = "Обяви";
         public const string NewsCategory = "Новини";
         public const string ArticlesCategory = "Статии";
+
+        // PuzzleCategories
+        public const string DrawIn1 = "Реми в 1 ход";
+        public const string DrawIn2 = "Реми в 2 хода";
+        public const string DrawIn3 = "Реми в 3 хода";
+        public const string FindBestContinuation = "Открийте най-доброто продължение";
+        public const string MateIn1 = "Мат в 1 ход";
+        public const string MateIn2 = "Мат в 2 хода";
+        public const string MateIn3 = "Мат в 3 хода";
+        public const string WinningMaterialIn1 = "Печалба на материал в 1 ход";
+        public const string WinningMaterialIn2 = "Печалба на материал в 2 хода";
+        public const string WinningMaterialIn3 = "Печалба на материал в 3 хода";
 
         // Payments
         public const string CreatePayment = "Отбелязване на плащане";
@@ -249,7 +269,6 @@
         public const string LoginNav = "Вход";
         public const string RegistrationNav = "Регистрация";
         public const string ProfileNav = "Профил";
-        public const string ScheduleNav = "График";
         public const string AdminTools = "Администратор";
         public const string Exit = "Изход";
         public const string WelcomeMsg = "Здравейте,";
@@ -264,6 +283,8 @@
         public const string Profile = "Профил";
         public const string PersonalData = "Лични данни";
         public const string ClubStatus = "Клубен статут";
+        public const string TrainingSchedule = "Тренировъчен график";
+        public const string PaymentsMade = "Направени плащания";
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";

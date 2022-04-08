@@ -1,6 +1,7 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
@@ -120,6 +121,43 @@
             await this.lessonsService.MarkLessonMemberAttendance(id, model);
 
             return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
+        }
+
+        [HttpPost]
+        public IActionResult GetLessons()
+        {
+            try
+            {
+                var draw = this.Request.Form["draw"].FirstOrDefault();
+                var start = this.Request.Form["start"].FirstOrDefault(); // paging first record indicator;
+                var length = this.Request.Form["length"].FirstOrDefault(); // number of displayable records;
+                var sortColumn = this.Request.Form["columns[" + this.Request.Form["order[0][column]"]
+                    .FirstOrDefault() + "][name]"]
+                    .FirstOrDefault(); // 
+                var sortColumnDirection = this.Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = this.Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                var lessonData = this.lessonsService.GetAllLessonsTableData<LessonViewModel>(sortColumn, sortColumnDirection, searchValue);
+
+                recordsTotal = lessonData.Count();
+
+                var data = lessonData.Skip(skip).Take(pageSize).ToList();
+                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
+
+                return this.Ok(jsonData);
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult ShowLessons()
+        {
+            return this.View();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace ChessBurgas64.Services.Data.Contracts
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Data.Models;
@@ -13,11 +14,13 @@
 
         Task DeleteAsync(string id);
 
-        IEnumerable<SelectListItem> GetAllTrainerGroups(string userId);
+        IEnumerable<SelectListItem> GetAllTrainerGroups(string trainerId);
 
         T GetById<T>(string id);
 
         IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
+
+        IQueryable<Group> GetUserGroupsTableData(string userId);
 
         Task InitializeGroupProperties(string groupId);
 

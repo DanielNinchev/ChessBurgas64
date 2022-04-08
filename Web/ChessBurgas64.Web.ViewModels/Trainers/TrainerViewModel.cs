@@ -11,6 +11,8 @@
 
     public class TrainerViewModel : IMapFrom<Trainer>
     {
+        public string Id { get; set; }
+
         public DateTime DateOfLastAttendance { get; set; }
 
         public string ImageImageUrl { get; set; }

@@ -121,6 +121,28 @@
             return lessonGroupMembers;
         }
 
+        public IEnumerable<T> GetAllLessonsTableData<T>(string sortColumn, string sortColumnDirection, string searchValue)
+        {
+            var lessons = this.lessonsRepository.AllAsNoTracking();
+            var lessonData = from lesson in lessons select lesson;
+
+            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+            {
+                lessonData = lessonData.OrderBy(sortColumn + " " + sortColumnDirection);
+            }
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                lessonData = lessonData.Where(l => l.Topic.Contains(searchValue)
+                                    || l.StartingTime.Equals(searchValue)
+                                    || l.Group.Name.Contains(searchValue)
+                                    || l.Trainer.User.FirstName.Contains(searchValue)
+                                    || l.Trainer.User.LastName.Contains(searchValue));
+            }
+
+            return lessonData.To<T>().ToList();
+        }
+
         public IEnumerable<T> GetGroupLessonsTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
         {
             var lessons = this.lessonsRepository.AllAsNoTracking().Where(x => x.GroupId == groupId);
@@ -133,7 +155,6 @@
 
             if (!string.IsNullOrEmpty(searchValue))
             {
-                // TODO: add search by date and amount
                 lessonData = lessonData.Where(l => l.Topic.Contains(searchValue)
                                     || l.StartingTime.Equals(searchValue)
                                     || l.Trainer.User.FirstName.Contains(searchValue)
@@ -148,7 +169,7 @@
             var user = this.usersRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == userId);
             IQueryable<Lesson> lessons;
 
-            if (user.ClubStatus == ClubStatus.Треньор)
+            if (user.ClubStatus == ClubStatus.Треньор.ToString())
             {
                 var trainer = this.trainersRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId);
                 lessons = this.lessonsRepository.AllAsNoTracking().Where(l => l.TrainerId == trainer.Id);
@@ -167,7 +188,6 @@
 
             if (!string.IsNullOrEmpty(searchValue))
             {
-                // TODO: add search by date and amount
                 lessonData = lessonData.Where(l => l.Topic.Contains(searchValue)
                                     || l.StartingTime.Equals(searchValue)
                                     || l.Group.Name.Contains(searchValue)
@@ -176,6 +196,15 @@
             }
 
             return lessonData.To<T>().ToList();
+        }
+
+        public IQueryable<Lesson> GetUserLessonsTableData(string userId)
+        {
+            var lesson = this.lessonsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Members.Any(m => m.Member.UserId == userId) || x.Trainer.UserId == userId);
+
+            return lesson;
         }
 
         public async Task MarkLessonMemberAttendance(int id, GroupMemberCheckboxModel model)

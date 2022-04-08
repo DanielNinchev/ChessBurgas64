@@ -8,7 +8,6 @@
 
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
-    using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Users;
@@ -23,19 +22,12 @@
             this.usersRepository = usersRepository;
         }
 
-        public async Task ChangeClubStatusAsync(string id, string clubStatus)
-        {
-            var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
-            user.ClubStatus = (ClubStatus)Enum.Parse(typeof(ClubStatus), clubStatus);
-
-            await this.usersRepository.SaveChangesAsync();
-        }
-
         public T GetById<T>(string id)
         {
             var user = this.usersRepository.AllAsNoTracking()
                 .Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
+                .To<T>()
+                .FirstOrDefault();
 
             return user;
         }
@@ -65,8 +57,8 @@
         public async Task UpdateAsync(string id, UserInputModel input)
         {
             var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
-            user.ClubStatus = (ClubStatus)Enum.Parse(typeof(ClubStatus), input.ClubStatus);
-            user.FideTitle = (FideTitle)Enum.Parse(typeof(FideTitle), input.FideTitle);
+            user.ClubStatus = input.ClubStatus.ToString();
+            user.FideTitle = input.FideTitle.ToString();
             user.FideRating = input.FideRating;
 
             await this.usersRepository.SaveChangesAsync();

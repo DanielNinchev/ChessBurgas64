@@ -5,7 +5,6 @@ namespace ChessBurgas64.Data.Models
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
-    using ChessBurgas64.Data.Models.Enums;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -49,13 +48,13 @@ namespace ChessBurgas64.Data.Models
 
         public DateTime BirthDate { get; set; }
 
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
-        public ClubStatus ClubStatus { get; set; }
+        public string ClubStatus { get; set; }
 
         public int FideRating { get; set; }
 
-        public FideTitle FideTitle { get; set; }
+        public string FideTitle { get; set; }
 
         public string MemberId { get; set; }
 

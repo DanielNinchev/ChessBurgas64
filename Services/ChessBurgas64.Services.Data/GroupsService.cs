@@ -9,6 +9,7 @@
     using AutoMapper;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
+    using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
@@ -19,20 +20,17 @@
         private readonly IRepository<GroupMember> groupMembersRepository;
         private readonly IDeletableEntityRepository<Group> groupsRepository;
         private readonly IDeletableEntityRepository<Member> membersRepository;
-        private readonly IDeletableEntityRepository<Trainer> trainersRepository;
         private readonly IMapper mapper;
 
         public GroupsService(
             IRepository<GroupMember> groupMembersRepository,
             IDeletableEntityRepository<Group> groupsRepository,
             IDeletableEntityRepository<Member> membersRepository,
-            IDeletableEntityRepository<Trainer> trainersRepository,
             IMapper mapper)
         {
             this.groupMembersRepository = groupMembersRepository;
             this.groupsRepository = groupsRepository;
             this.membersRepository = membersRepository;
-            this.trainersRepository = trainersRepository;
             this.mapper = mapper;
         }
 
@@ -50,13 +48,10 @@
             await this.groupsRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<SelectListItem> GetAllTrainerGroups(string userId)
+        public IEnumerable<SelectListItem> GetAllTrainerGroups(string trainerId)
         {
-            var trainer = this.trainersRepository.AllAsNoTracking()
-                .FirstOrDefault(x => x.UserId == userId);
-
             var trainerGroups = this.groupsRepository.AllAsNoTracking()
-                .Where(x => x.TrainerId == trainer.Id)
+                .Where(x => x.TrainerId == trainerId)
                 .OrderBy(x => x.Name)
                 .ToList()
                 .Select(x => new SelectListItem(x.Name, x.Id));
@@ -92,6 +87,15 @@
             }
 
             return groupData.To<T>().ToList();
+        }
+
+        public IQueryable<Group> GetUserGroupsTableData(string userId)
+        {
+            var groups = this.groupsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Members.Any(m => m.Member.UserId == userId) || x.Trainer.UserId == userId);
+
+            return groups;
         }
 
         public async Task InitializeGroupProperties(string groupId)
@@ -147,7 +151,7 @@
         public async Task UpdateAsync(string groupId, GroupInputModel input)
         {
             var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
-            group.TrainingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), input.TrainingDay);
+            group.TrainingDay = (WeekDay)Enum.Parse(typeof(WeekDay), input.TrainingDay);
             group.TrainingHour = DateTime.Parse(input.TrainingHour);
             group.TrainerId = input.TrainerId;
 

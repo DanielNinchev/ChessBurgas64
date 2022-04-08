@@ -10,6 +10,12 @@
 
         public static string ExternalLogins => "ExternalLogins";
 
+        public static string MyLessons => "MyLessons";
+
+        public static string MyPayments => "MyPayments";
+
+        public static string MySchedule => "MySchedule";
+
         public static string PersonalData => "PersonalData";
 
         public static string Privacy => "Privacy";
@@ -19,6 +25,12 @@
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string ExternalLoginsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExternalLogins);
+
+        public static string MyLessonsNavClass(ViewContext viewContext) => PageNavClass(viewContext, MyLessons);
+
+        public static string MyPaymentsNavClass(ViewContext viewContext) => PageNavClass(viewContext, MyPayments);
+
+        public static string MyScheduleNavClass(ViewContext viewContext) => PageNavClass(viewContext, MySchedule);
 
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 

@@ -10,11 +10,11 @@
 
     public class CategoriesService : ICategoriesService
     {
-        private readonly IDeletableEntityRepository<Category> categoriesRepository;
+        private readonly IDeletableEntityRepository<AnnouncementCategory> categoriesRepository;
         private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
 
         public CategoriesService(
-            IDeletableEntityRepository<Category> categoriesRepository,
+            IDeletableEntityRepository<AnnouncementCategory> categoriesRepository,
             IDeletableEntityRepository<Puzzle> puzzlesRepository)
         {
             this.categoriesRepository = categoriesRepository;

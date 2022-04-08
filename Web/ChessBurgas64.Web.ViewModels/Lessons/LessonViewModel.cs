@@ -2,7 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using AutoMapper;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
@@ -21,6 +22,11 @@
         public string GroupName { get; set; }
 
         public string GroupTrainerUserFirstName { get; set; }
+
+        public string GroupTrainerUserLastName { get; set; }
+
+        [NotMapped]
+        public string TrainerName => $"{this.GroupTrainerUserFirstName} {this.GroupTrainerUserLastName}";
 
         public GroupViewModel Group { get; set; }
 

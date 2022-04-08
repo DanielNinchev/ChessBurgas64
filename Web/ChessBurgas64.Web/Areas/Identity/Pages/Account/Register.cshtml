@@ -1,7 +1,7 @@
 ﻿@page
 @using ChessBurgas64.Common
 @using ChessBurgas64.Data.Models.Enums
-@model RegisterModel
+@model Register
 @{
     ViewData["Title"] = GlobalConstants.RegistrationLabel;
 }
@@ -80,16 +80,16 @@
 
             <div class="container-fluid mt-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="@Model.ClubStatus" value="@GlobalConstants.PendingApproval">
-                    <label class="form-check-label" asp-for="@Model.ClubStatus">@GlobalConstants.PendingApproval</label>
+                    <input class="form-check-input" type="radio" asp-for="@Model.Input.ClubStatus" value="@GlobalConstants.PendingApproval">
+                    <label class="form-check-label" asp-for="@Model.Input.ClubStatus">@GlobalConstants.PendingApproval</label>
                 </div>
                 <div class="mb-3">
                     @GlobalConstants.PendingApprovalInfo
                 </div>
                 <hr />
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="@Model.ClubStatus" value="@GlobalConstants.StudentStatus">
-                    <label class="form-check-label" asp-for="@Model.ClubStatus">@GlobalConstants.StudentStatus</label>
+                    <input class="form-check-input" type="radio" asp-for="@Model.Input.ClubStatus" value="@GlobalConstants.StudentStatus">
+                    <label class="form-check-label" asp-for="@Model.Input.ClubStatus">@GlobalConstants.StudentStatus</label>
                 </div>
                 <div class="mb-3">
                     @GlobalConstants.StudentStatusInfo
@@ -97,8 +97,8 @@
                 <hr />
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="@Model.ClubStatus" value="@GlobalConstants.CompetitorStatus">
-                    <label class="form-check-label" asp-for="@Model.ClubStatus">@GlobalConstants.CompetitorStatus</label>
+                    <input class="form-check-input" type="radio" asp-for="@Model.Input.ClubStatus" value="@GlobalConstants.CompetitorStatus">
+                    <label class="form-check-label" asp-for="@Model.Input.ClubStatus">@GlobalConstants.CompetitorStatus</label>
                 </div>
                 <div class="mb-3">
                     @GlobalConstants.CompetitorStatusInfo
@@ -106,8 +106,8 @@
                 <hr />
 
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="@Model.ClubStatus" value="@GlobalConstants.ChampionStatus">
-                    <label class="form-check-label" asp-for="@Model.ClubStatus">@GlobalConstants.ChampionStatus</label>
+                    <input class="form-check-input" type="radio" asp-for="@Model.Input.ClubStatus" value="@GlobalConstants.ChampionStatus">
+                    <label class="form-check-label" asp-for="@Model.Input.ClubStatus">@GlobalConstants.ChampionStatus</label>
                 </div>
                 <div class="mb-3">
                     @GlobalConstants.ChampionStatusInfo

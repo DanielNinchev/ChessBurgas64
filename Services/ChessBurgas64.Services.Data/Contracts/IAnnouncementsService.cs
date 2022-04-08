@@ -5,12 +5,11 @@
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using ChessBurgas64.Web.ViewModels.ViewComponents;
     using Microsoft.AspNetCore.Http;
 
     public interface IAnnouncementsService
     {
-        Task CreateAsync(CreateAnnouncementInputModel input, string userId, string imagePath);
+        Task CreateAsync(AnnouncementInputModel input, string userId, string imagePath);
 
         Task DeleteAsync(int id);
 
@@ -22,6 +21,6 @@
 
         Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string imagePath);
 
-        Task UpdateAsync(int id, EditAnnouncementInputModel input);
+        Task UpdateAsync(int id, AnnouncementInputModel input);
     }
 }

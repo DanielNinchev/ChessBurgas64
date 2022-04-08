@@ -32,8 +32,11 @@
 
         public IActionResult ById(string id)
         {
-            this.HttpContext.Session.SetString("groupId", id);
             var viewModel = this.groupsService.GetById<GroupViewModel>(id);
+
+            this.HttpContext.Session.SetString("groupId", id);
+            this.HttpContext.Session.SetString("trainerId", viewModel.Trainer.Id);
+
             return this.View(viewModel);
         }
 

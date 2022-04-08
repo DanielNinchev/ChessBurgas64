@@ -4,8 +4,6 @@
     {
         public string GroupId { get; set; }
 
-        public string GroupName { get; set; }
-
         public string TrainerId { get; set; }
 
         public string TrainerUserFirstName { get; set; }

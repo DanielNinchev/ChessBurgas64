@@ -23,7 +23,7 @@
 
         public int CategoryId { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual PuzzleCategory Category { get; set; }
 
         public string ImageId { get; set; }
 

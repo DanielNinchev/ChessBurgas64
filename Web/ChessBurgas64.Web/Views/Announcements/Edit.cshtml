@@ -1,4 +1,4 @@
-﻿@model ChessBurgas64.Web.ViewModels.Announcements.EditAnnouncementInputModel
+﻿@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementInputModel
 @using ChessBurgas64.Common
 @{
     ViewData["Title"] = "Обновяване на новина";
@@ -10,7 +10,6 @@
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
 <form method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group mb-3">
         <label class="text-white" asp-for="Title">@GlobalConstants.Title</label>

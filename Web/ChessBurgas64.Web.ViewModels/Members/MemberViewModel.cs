@@ -1,11 +1,12 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Members
 {
     using System;
+    using System.Collections.Generic;
 
     using AutoMapper;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
-    using ChessBurgas64.Web.ViewModels.Groups;
+    using ChessBurgas64.Web.ViewModels.GroupMembers;
 
     public class MemberViewModel : IMapFrom<Member>, IHaveCustomMappings
     {
@@ -27,7 +28,7 @@
 
         public DateTime DateOfJoiningCurrentGroup { get; set; }
 
-        public GroupViewModel Group { get; set; }
+        public ICollection<GroupMemberViewModel> Groups { get; set; }
 
         public string UserFirstName { get; set; }
 

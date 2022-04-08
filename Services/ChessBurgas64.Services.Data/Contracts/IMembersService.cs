@@ -28,6 +28,8 @@
 
         IEnumerable<T> GetTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
 
+        Task SaveMemberChangesAsync(Member member);
+
         Task UpdateAsync(string userId, MemberInputModel input);
     }
 }

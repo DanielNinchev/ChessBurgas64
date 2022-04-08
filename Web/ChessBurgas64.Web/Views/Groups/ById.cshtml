@@ -55,7 +55,7 @@
                 </thead>
             </table>
         </div>
-        <a class="btn btn-primary" asp-area="" asp-controller="Lessons" asp-action="Create" asp-route-id="@Model.Id">@GlobalConstants.AddLesson</a>
+        <a class="btn btn-primary" asp-area="" asp-controller="Lessons" asp-action="Create" asp-route-id="@Model.Trainer.User.Id">@GlobalConstants.AddLesson</a>
     </div>
     <!-- Lessons table end -->
     <!-- Members table start -->

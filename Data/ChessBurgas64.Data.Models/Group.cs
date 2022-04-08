@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
+    using ChessBurgas64.Data.Models.Enums;
 
     public class Group : BaseDeletableModel<string>
     {
@@ -20,7 +21,7 @@
 
         public int HighestRating { get; set; }
 
-        public DayOfWeek TrainingDay { get; set; }
+        public WeekDay TrainingDay { get; set; }
 
         public DateTime TrainingHour { get; set; }
 

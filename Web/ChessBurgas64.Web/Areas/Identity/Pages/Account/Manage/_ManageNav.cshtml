@@ -5,16 +5,14 @@
 }
 
 <form class="form-inline row mt-3">
-    <ul class="nav flex-column col-md-12 background-dragon-red border border-2 border-white py-5 text-center">
+    <ul class="nav flex-column col-md-12 background-dragon-red border border-2 border-white py-5 text-center px-1">
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">@GlobalConstants.Profile</button></li>
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">@GlobalConstants.PersonalData</button></li>
-        @if (hasExternalLogins)
-        {
-            <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
-        }
+        <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.MyScheduleNavClass(ViewContext)" id="my-schedule" asp-page="./MySchedule">@GlobalConstants.TrainingSchedule</button></li>
+        <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.MyLessonsNavClass(ViewContext)" id="personal-data" asp-page="./MyLessons">@GlobalConstants.ConductedLessons</button></li>
+        <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.MyPaymentsNavClass(ViewContext)" id="personal-data" asp-page="./MyPayments">@GlobalConstants.PaymentsMade</button></li>
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">@GlobalConstants.Authentication</button></li>
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.PrivacyNavClass(ViewContext)" id="privacy" asp-page="./Privacy">@GlobalConstants.Privacy</button></li>
-
     </ul>
 </form>
 

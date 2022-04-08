@@ -7,7 +7,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-    using ChessBurgas64.Common;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
@@ -18,18 +17,15 @@
 
     public class TrainersService : ITrainersService
     {
-        private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IDeletableEntityRepository<Trainer> trainersRepository;
         private readonly IMapper mapper;
 
         public TrainersService(
-            IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<ApplicationUser> usersRepository,
             IDeletableEntityRepository<Trainer> trainersRepository,
             IMapper mapper)
         {
-            this.imagesRepository = imagesRepository;
             this.usersRepository = usersRepository;
             this.trainersRepository = trainersRepository;
             this.mapper = mapper;
@@ -39,8 +35,6 @@
         {
             var trainer = this.mapper.Map<Trainer>(input);
             trainer.UserId = userId;
-
-            await this.trainersRepository.AddAsync(trainer);
 
             Directory.CreateDirectory(imagePath);
 
@@ -53,7 +47,7 @@
         public IEnumerable<SelectListItem> GetAllTrainersInSelectList()
         {
             var trainers = this.usersRepository.AllAsNoTracking()
-                .Where(u => u.ClubStatus.Equals(ClubStatus.Треньор) && u.TrainerId != null)
+                .Where(u => u.ClubStatus.Equals(ClubStatus.Треньор.ToString()) && u.TrainerId != null)
                 .ToList()
                 .Select(tr => new
                 {
@@ -92,24 +86,25 @@
             return this.trainersRepository.AllAsNoTracking().Count();
         }
 
-        public async Task UpdateAsync(string id, TrainerInputModel input, string imagePath)
+        public async Task<Trainer> UpdateAsync(string id, TrainerInputModel input, string imagePath)
         {
             var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
 
-            if (user.TrainerId == null)
+            if (user.TrainerId == null && !this.trainersRepository.AllAsNoTracking().Any(x => x.UserId == id))
             {
                 user.Trainer = await this.CreateAsync(input, id, imagePath);
             }
             else
             {
                 user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.UserId == id);
-                //user.Trainer.Image = await this.InitializeTrainerImage(input.ProfilePicture, user.Trainer, imagePath);
             }
 
             user.Trainer.DateOfLastAttendance = DateTime.Parse(input.DateOfLastAttendance);
 
             await this.trainersRepository.SaveChangesAsync();
             await this.usersRepository.SaveChangesAsync();
+
+            return user.Trainer;
         }
     }
 }

@@ -7,7 +7,7 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using ChessBurgas64.Web.ViewModels.ViewComponents;
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -17,17 +17,20 @@
     {
         private readonly IAnnouncementsService announcementsService;
         private readonly ICategoriesService categoriesService;
+        private readonly IHtmlSanitizer sanitizer;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
 
         public AnnouncementsController(
             IAnnouncementsService announcementsService,
             ICategoriesService categoriesService,
+            IHtmlSanitizer sanitizer,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment environment)
         {
             this.announcementsService = announcementsService;
             this.categoriesService = categoriesService;
+            this.sanitizer = sanitizer;
             this.userManager = userManager;
             this.environment = environment;
         }
@@ -53,6 +56,7 @@
         public IActionResult ById(int id)
         {
             var announcement = this.announcementsService.GetById<SingleAnnouncementViewModel>(id);
+            announcement.Text = this.sanitizer.Sanitize(announcement.Text);
 
             return this.View(announcement);
         }
@@ -65,7 +69,7 @@
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> Create(CreateAnnouncementInputModel input)
+        public async Task<IActionResult> Create(AnnouncementInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -99,7 +103,7 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Edit(int id)
         {
-            var inputModel = this.announcementsService.GetById<EditAnnouncementInputModel>(id);
+            var inputModel = this.announcementsService.GetById<AnnouncementInputModel>(id);
 
             inputModel.Categories = this.categoriesService.GetAnnouncementCategories();
 
@@ -108,7 +112,7 @@
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditAnnouncementInputModel input)
+        public async Task<IActionResult> Edit(int id, AnnouncementInputModel input)
         {
             if (!this.ModelState.IsValid)
             {

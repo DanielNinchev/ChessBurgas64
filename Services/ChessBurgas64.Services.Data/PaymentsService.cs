@@ -68,6 +68,15 @@
             return paymentData.To<T>().ToList();
         }
 
+        public IQueryable<Payment> GetUserPaymentsTableData(string userId)
+        {
+            var payment = this.paymentsRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId);
+
+            return payment;
+        }
+
         public async Task UpdateAsync(string id, PaymentInputModel input)
         {
             var payment = this.paymentsRepository.All().FirstOrDefault(x => x.Id == id);

@@ -41,6 +41,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -65,6 +68,35 @@ namespace ChessBurgas64.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("ChessBurgas64.Data.Models.AnnouncementCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("AnnouncementCategories");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.ApplicationRole", b =>
@@ -119,8 +151,8 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ClubStatus")
-                        .HasColumnType("int");
+                    b.Property<string>("ClubStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -145,14 +177,14 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<int>("FideRating")
                         .HasColumnType("int");
 
-                    b.Property<int>("FideTitle")
-                        .HasColumnType("int");
+                    b.Property<string>("FideTitle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageId")
                         .HasColumnType("nvarchar(450)");
@@ -231,35 +263,6 @@ namespace ChessBurgas64.Data.Migrations
                         .HasFilter("[TrainerId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Group", b =>
@@ -621,6 +624,35 @@ namespace ChessBurgas64.Data.Migrations
                     b.ToTable("Puzzles");
                 });
 
+            modelBuilder.Entity("ChessBurgas64.Data.Models.PuzzleCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("PuzzleCategories");
+                });
+
             modelBuilder.Entity("ChessBurgas64.Data.Models.PuzzleMember", b =>
                 {
                     b.Property<int>("Id")
@@ -655,85 +687,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.HasIndex("PuzzleId");
 
                     b.ToTable("PuzzleMembers");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Tournament", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rounds")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Tournaments");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.TournamentMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MemberId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("TournamentMembers");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Trainer", b =>
@@ -879,7 +832,7 @@ namespace ChessBurgas64.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("ChessBurgas64.Data.Models.Category", "Category")
+                    b.HasOne("ChessBurgas64.Data.Models.AnnouncementCategory", "Category")
                         .WithMany("Announcements")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1006,7 +959,7 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Puzzle", b =>
                 {
-                    b.HasOne("ChessBurgas64.Data.Models.Category", "Category")
+                    b.HasOne("ChessBurgas64.Data.Models.PuzzleCategory", "Category")
                         .WithMany("Puzzles")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1030,30 +983,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Puzzle");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Tournament", b =>
-                {
-                    b.HasOne("ChessBurgas64.Data.Models.Category", null)
-                        .WithMany("Tournaments")
-                        .HasForeignKey("CategoryId");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.TournamentMember", b =>
-                {
-                    b.HasOne("ChessBurgas64.Data.Models.Member", "Member")
-                        .WithMany("Tournaments")
-                        .HasForeignKey("MemberId");
-
-                    b.HasOne("ChessBurgas64.Data.Models.Tournament", "Tournament")
-                        .WithMany("Participants")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1112,6 +1041,11 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("ChessBurgas64.Data.Models.AnnouncementCategory", b =>
+                {
+                    b.Navigation("Announcements");
+                });
+
             modelBuilder.Entity("ChessBurgas64.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
@@ -1121,15 +1055,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Category", b =>
-                {
-                    b.Navigation("Announcements");
-
-                    b.Navigation("Puzzles");
-
-                    b.Navigation("Tournaments");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Group", b =>
@@ -1152,8 +1077,6 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Navigation("Puzzles");
 
-                    b.Navigation("Tournaments");
-
                     b.Navigation("User");
                 });
 
@@ -1164,9 +1087,9 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Members");
                 });
 
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Tournament", b =>
+            modelBuilder.Entity("ChessBurgas64.Data.Models.PuzzleCategory", b =>
                 {
-                    b.Navigation("Participants");
+                    b.Navigation("Puzzles");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Trainer", b =>

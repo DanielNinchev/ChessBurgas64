@@ -7,8 +7,6 @@
 
     public interface IUsersService
     {
-        Task ChangeClubStatusAsync(string id, string clubStatus);
-
         T GetById<T>(string id);
 
         IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
