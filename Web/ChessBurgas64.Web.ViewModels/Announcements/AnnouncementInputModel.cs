@@ -1,40 +1,42 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Announcements
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
+    using ChessBurgas64.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class AnnouncementInputModel : IMapFrom<Announcement>
+    public class AnnouncementInputModel : CategoryInputModel, IMapFrom<Announcement>
     {
-        [Required]
-        [MinLength(GlobalConstants.AnnouncementTitleMinLength)]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        [StringLength(
+            GlobalConstants.AnnouncementTitleMaxLength,
+            ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters,
+            MinimumLength = GlobalConstants.AnnouncementTitleMinLength)]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [MinLength(GlobalConstants.AnnouncementTextMinLength)]
         public string Text { get; set; }
 
-        [Required]
-        [MinLength(GlobalConstants.AnnouncementDescriptionMinLength)]
-        [MaxLength(GlobalConstants.AnnouncementDescriptionMaxLength)]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        [StringLength(
+            GlobalConstants.AnnouncementDescriptionMaxLength,
+            ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters,
+            MinimumLength = GlobalConstants.AnnouncementDescriptionMinLength)]
         public string Description { get; set; }
 
-        [Required]
-        public int CategoryId { get; set; }
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
 
-        [Required]
-        public string Date { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public IFormFile MainImage { get; set; }
 
         public IEnumerable<IFormFile> AdditionalImages { get; set; }
-
-        public IEnumerable<SelectListItem> Categories { get; set; }
     }
 }

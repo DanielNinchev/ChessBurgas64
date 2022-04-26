@@ -1,0 +1,15 @@
+﻿@model ChessBurgas64.Web.ViewModels.Videos.VideoInputModel
+@using ChessBurgas64.Common
+
+@{
+    this.ViewData["Title"] = GlobalConstants.CreateVideo;
+}
+
+<h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+
+<form method="post" enctype="multipart/form-data" id="form-element">
+    <partial name="_VideoInputPartial" model="@Model"/>
+    <div class="container-fluid text-center">
+        <button type="submit" class="btn-primary px-2 py-2 fw-bold">@GlobalConstants.Publish</button>
+    </div>
+</form>

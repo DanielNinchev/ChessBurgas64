@@ -7,5 +7,7 @@
         Състезател = 2, // Competitor
         Шампион = 3, // Champion
         Треньор = 4, // Trainer
+        Председател = 5, // Chairman
+        Собственик = 6, // Owner
     }
 }

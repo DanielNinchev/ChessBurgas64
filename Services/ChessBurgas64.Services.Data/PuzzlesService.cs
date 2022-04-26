@@ -82,6 +82,55 @@
             return this.puzzlesRepository.AllAsNoTracking().Count();
         }
 
+        public IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText)
+        {
+            var puzzles = this.puzzlesRepository.All()
+                .OrderByDescending(x => x.CreatedOn)
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+
+            if (categoryIds != null && searchText != null)
+            {
+                foreach (var categoryId in categoryIds)
+                {
+                    puzzles = puzzles.Where(x => categoryIds.Any(id => id == x.CategoryId)
+                                                        && (x.Number.Equals(searchText)
+                                                            || searchText.ToLower().Contains(x.Category.Name.ToLower())
+                                                            || searchText.ToLower().Contains(x.Difficulty.ToLower())
+                                                            || searchText.ToLower().Contains(x.Objective.ToLower())
+                                                            || searchText.ToLower().Contains(x.Solution.ToLower())
+                                                            || x.Category.Name.ToLower().Contains(searchText.ToLower())
+                                                            || x.Difficulty.ToLower().Contains(searchText.ToLower())
+                                                            || x.Objective.ToLower().Contains(searchText.ToLower())
+                                                            || x.Solution.ToLower().Contains(searchText.ToLower())));
+                }
+            }
+            else if (categoryIds == null && searchText != null)
+            {
+                puzzles = puzzles.Where(x => x.Number.Equals(searchText)
+                                                           || searchText.ToLower().Contains(x.Category.Name.ToLower())
+                                                           || searchText.ToLower().Contains(x.Difficulty.ToLower())
+                                                           || searchText.ToLower().Contains(x.Objective.ToLower())
+                                                           || searchText.ToLower().Contains(x.Solution.ToLower())
+                                                           || x.Category.Name.ToLower().Contains(searchText.ToLower())
+                                                           || x.Difficulty.ToLower().Contains(searchText.ToLower())
+                                                           || x.Objective.ToLower().Contains(searchText.ToLower())
+                                                           || x.Solution.ToLower().Contains(searchText.ToLower()));
+            }
+            else if (categoryIds != null && searchText == null)
+            {
+                foreach (var categoryId in categoryIds)
+                {
+                    puzzles = puzzles.Where(x => categoryIds.Any(id => id == x.CategoryId));
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return puzzles.To<T>().ToList();
+        }
+
         public void InitializePuzzlePoints(Puzzle puzzle)
         {
             var puzzlePoints = (PuzzleDifficulty)Enum.Parse(typeof(PuzzleDifficulty), puzzle.Difficulty);

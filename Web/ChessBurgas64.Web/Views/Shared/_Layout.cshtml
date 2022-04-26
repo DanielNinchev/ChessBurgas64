@@ -7,9 +7,10 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/animate/animate.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/owlcarousel/assets/owl.carousel.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="~/burgas64.ico" />
 </head>
@@ -27,7 +28,7 @@
                             <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.TrainersNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.ManagementNav</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
@@ -39,7 +40,7 @@
                             <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Contacts" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
+                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Home" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
                         </li>
                     </ul>
                 </div>
@@ -65,12 +66,12 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/lib/wow/wow.min.js" asp-append-version="true"></script>
-    <script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>
-    <script src="~/lib/waypoints/waypoints.min.js" asp-append-version="true"></script>
+    @*<script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>*@
+    @*<script src="~/lib/waypoints/waypoints.min.js" asp-append-version="true"></script>*@
     <script src="~/lib/counterup/counterup.min.js" asp-append-version="true"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js" asp-append-version="true"></script>
-    <script src="~/lib/isotope/isotope.pkgd.min.js" asp-append-version="true"></script>
-    <script src="~/lib/lightbox/js/lightbox.min.js" asp-append-version="true"></script>
+    @*<script src="~/lib/isotope/isotope.pkgd.min.js" asp-append-version="true"></script>*@
+    @*<script src="~/lib/lightbox/js/lightbox.min.js" asp-append-version="true"></script>*@
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)

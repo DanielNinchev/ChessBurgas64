@@ -1,7 +1,6 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Puzzles
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using AutoMapper;
@@ -9,35 +8,28 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Mapping;
+    using ChessBurgas64.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class PuzzleInputModel : IMapFrom<Puzzle>, IHaveCustomMappings
+    public class PuzzleInputModel : CategoryInputModel, IMapFrom<Puzzle>, IHaveCustomMappings
     {
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Range(1, int.MaxValue)]
         public int Number { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [MinLength(GlobalConstants.PuzzleObjectiveMinLength)]
         [MaxLength(GlobalConstants.PuzzleObjectiveMaxLength)]
         public string Objective { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [MinLength(GlobalConstants.PuzzleSolutionMinLength)]
         public string Solution { get; set; }
 
-        public int Points { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public PuzzleDifficulty Difficulty { get; set; }
 
-        [Required]
-        public int CategoryId { get; set; }
-
-        public IEnumerable<SelectListItem> Categories { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public IFormFile PositionImage { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

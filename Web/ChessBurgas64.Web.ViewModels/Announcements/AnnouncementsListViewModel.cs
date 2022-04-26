@@ -4,6 +4,6 @@
 
     public class AnnouncementsListViewModel : EntityInListViewModel
     {
-        public IEnumerable<AnnouncementInCardViewModel> Announcements { get; set; }
+        public ICollection<AnnouncementInCardViewModel> Announcements { get; set; }
     }
 }

@@ -6,6 +6,8 @@
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
+    using ChessBurgas64.Web.ViewModels;
+    using ChessBurgas64.Web.ViewModels.Categories;
     using ChessBurgas64.Web.ViewModels.Puzzles;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -122,6 +124,31 @@
             await this.imagesService.InitializePuzzleImage(input.PositionImage, puzzle, webRootImagePath);
 
             return this.RedirectToAction(nameof(this.All));
+        }
+
+        public IActionResult Search()
+        {
+            var viewModel = new SearchViewModel
+            {
+                Categories = this.categoriesService.GetAllPuzzleCategories<PuzzleCategoryViewModel>(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Searched(SearchInputModel input, int id = 1)
+        {
+            var viewModel = new PuzzleListViewModel
+            {
+                ItemsPerPage = GlobalConstants.PuzzlesPerPage,
+                PageNumber = id,
+                Count = this.puzzlesService.GetCount(),
+                Puzzles = this.puzzlesService.GetSearched<PuzzleViewModel>(
+                    id, GlobalConstants.PuzzlesPerPage, input.Categories, input.SearchText),
+            };
+
+            return this.View(viewModel);
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@model ChessBurgas64.Web.ViewModels.Videos.VideosListViewModel
+@using ChessBurgas64.Common
+@{
+    this.ViewData["Title"] = GlobalConstants.VideosNav;
+}
+
+<div class="container page-header backround-header-image-container"></div>
+<div class="title-container border border-3 border-white mb-3">
+    <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+</div>
+
+<div class="text-center my-5">
+    <a asp-action="Search" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> @GlobalConstants.SearchBtn</a>
+</div>
+
+<div class="container-xxl">
+    <div class="container">
+        <div class="row g-4">
+            @if (this.Model.Videos != null && this.Model.Videos.Count() > 0)
+            {
+                <partial name="_VideosInCardsPartial" model="@Model" />
+                <hr />
+                <partial name="_PagingPartial" model="@Model" />
+            }
+            else
+            {
+                <p class="display-6 text-white text-center">@GlobalConstants.NoMatchesFound</p>
+            }
+        </div>
+    </div>
+</div>

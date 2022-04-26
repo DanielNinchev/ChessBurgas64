@@ -7,23 +7,7 @@
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
 <form method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="UserId" />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label class="text-white" asp-for="DateOfPayment">@GlobalConstants.DateOfPayment</label>
-        <input asp-for="DateOfPayment" class="form-control" />
-        <span asp-validation-for="DateOfPayment" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label class="text-white" asp-for="Amount">@GlobalConstants.PaidAmount</label>
-        <input asp-for="Amount" class="form-control" />
-        <span asp-validation-for="Amount" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label class="text-white" asp-for="Description">@GlobalConstants.PaidFor</label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+    <partial name="_PaymentInputPartial" model="@Model" />
     <button type="submit" class="btn-primary" data-toggle="modal" data-target="#modalEdit">@GlobalConstants.Save</button>
 </form>
 

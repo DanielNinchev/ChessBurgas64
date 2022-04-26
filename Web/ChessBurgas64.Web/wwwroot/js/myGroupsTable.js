@@ -45,11 +45,11 @@
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "name", "name": "name", "autoWidth": true },
+            { "data": "name", "name": "Name", "autoWidth": true },
             { "data": "membersCount", "name": "Members.Count", "autoWidth": true, },
             { "data": "trainingDay", "name": "TrainingDay", "autoWidth": true },
             { "data": "trainingHour", "name": "TrainingHour", "autoWidth": true },
-            { "data": "trainerName", "name": "Trainer.FirstName", "autoWidth": true },
+            { "data": "trainerName", "name": "Trainer.User.FirstName", "autoWidth": true },
             { "data": "lowestRating", "name": "LowestRating", "autoWidth": true },
             { "data": "highestRating", "name": "HighestRating", "autoWidth": true },
         ],

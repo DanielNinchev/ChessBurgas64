@@ -8,17 +8,17 @@
 
     public class PaymentInputModel : IMapFrom<Payment>
     {
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public decimal Amount { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.DateOfPayment)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public string DateOfPayment { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.PaidFor)]
-        // [StringLength(GlobalConstants.PaidForMinLength, ErrorMessage = "Основанието трябва да бъде с дължина между {1} и {2} символа.", MinimumLength = GlobalConstants.PaidForMaxLength)]
+        [StringLength(GlobalConstants.PaidForMaxLength, ErrorMessage = "Основанието трябва да бъде с дължина между {1} и {2} символа.", MinimumLength = GlobalConstants.PaidForMinLength)]
         public string Description { get; set; }
 
         public string UserId { get; set; }

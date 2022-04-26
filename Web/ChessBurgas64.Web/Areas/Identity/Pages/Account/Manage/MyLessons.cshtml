@@ -5,11 +5,13 @@
     ViewData["ActivePage"] = ManageNavPages.MyLessons;
 }
 
+<link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
 <div class="container-fluid text-center">
     <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.ConductedLessons</h4>
     <hr class="border border-5 border-white text-white" />
     <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
-        <table id="myLessonsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
+        <table id="myLessonsTable" class="bg-dark table-bordered table-responsive text-white compact border border-3 text-center" width="100%" cellspacing="0">
             <thead class="dt-head-center">
                 <tr>
                     <th class="dt-head-center">@GlobalConstants.Id</th>

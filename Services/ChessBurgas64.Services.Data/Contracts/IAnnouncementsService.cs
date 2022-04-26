@@ -5,7 +5,6 @@
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using Microsoft.AspNetCore.Http;
 
     public interface IAnnouncementsService
     {
@@ -13,14 +12,16 @@
 
         Task DeleteAsync(int id);
 
-        IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
+        ICollection<T> GetAll<T>(int page, int itemsPerPage);
 
         T GetById<T>(int id);
 
         int GetCount();
 
-        Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string imagePath);
+        ICollection<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);
 
-        Task UpdateAsync(int id, AnnouncementInputModel input);
+        Task InitializeAnnouncementImages(AnnouncementInputModel input, Announcement announcement, string imagePath);
+
+        Task UpdateAsync(int id, AnnouncementInputModel input, string imagePath);
     }
 }

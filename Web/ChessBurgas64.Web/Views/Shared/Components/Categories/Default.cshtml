@@ -1,8 +1,11 @@
-﻿@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementInputModel
+﻿@model ChessBurgas64.Web.ViewModels.Categories.CategoryInputModel
+@using ChessBurgas64.Common
 
 <div class="form-group">
-    <label class="text-white" asp-for="CategoryId">Категория</label>
-    <select asp-for="CategoryId" . class="form-control" asp-items="@Model.Categories"></select>
+    <label class="text-white" asp-for="CategoryId">@GlobalConstants.Category*</label>
+    <select asp-for="CategoryId" class="form-control" asp-items="@Model.Categories">
+        <option selected="selected" hidden value="">@GlobalConstants.ChooseCategory</option>
+    </select>
     <span asp-validation-for="CategoryId" class="text-danger"></span>
 </div>
 

@@ -3,8 +3,6 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
-
 <div class="container-fluid">
     <div class="owl-carousel header-carousel position-relative">
         <div class="owl-carousel-item position-relative">
@@ -13,8 +11,8 @@
                 <div class="container-fluid">
                     <div class="row justify-content-center">
                         <div class="col-12 col-lg-8 text-center" style="margin-top: 220px;">
-                            <h5 class="text-white text-uppercase mb-4 animated slideInDown">@GlobalConstants.Welcome</h5>
-                            <h1 class="display-4 text-white text-uppercase animated slideInDown mb-3">@GlobalConstants.ClubName</h1>
+                            <h5 class="text-white fw-bold text-uppercase mb-4 animated slideInDown">@GlobalConstants.Welcome</h5>
+                            <h1 class="display-3 fw-bold text-white animated slideInDown mb-3">@GlobalConstants.ClubName</h1>
                             @if (!this.User.Identity.IsAuthenticated)
                             {
                                 <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">@GlobalConstants.RegistrationLabel</a>

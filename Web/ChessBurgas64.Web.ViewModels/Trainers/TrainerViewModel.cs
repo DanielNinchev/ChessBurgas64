@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
@@ -19,8 +20,15 @@
 
         public UserTableViewModel User { get; set; }
 
+        public string UserDescription { get; set; }
+
+        public int UserFideRating { get; set; }
+
         public virtual ICollection<GroupViewModel> Groups { get; set; }
 
         public virtual ICollection<MemberViewModel> IndividualStudents { get; set; }
+
+        [NotMapped]
+        public string TrainerName => $"{this.User.FirstName} {this.User.LastName}";
     }
 }

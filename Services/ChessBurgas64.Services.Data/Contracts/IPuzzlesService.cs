@@ -18,6 +18,8 @@
 
         Puzzle GetById(int id);
 
+        IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);
+
         int GetCount();
 
         void InitializePuzzlePoints(Puzzle puzzle);

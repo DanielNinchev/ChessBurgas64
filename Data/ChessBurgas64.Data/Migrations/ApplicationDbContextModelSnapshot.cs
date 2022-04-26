@@ -522,17 +522,12 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("School")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TrainerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("TrainerId");
 
                     b.ToTable("Members");
                 });
@@ -720,6 +715,80 @@ namespace ChessBurgas64.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("ChessBurgas64.Data.Models.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("ChessBurgas64.Data.Models.VideoCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("VideoCategories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -941,13 +1010,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("ChessBurgas64.Data.Models.Member", b =>
-                {
-                    b.HasOne("ChessBurgas64.Data.Models.Trainer", null)
-                        .WithMany("IndividualStudents")
-                        .HasForeignKey("TrainerId");
-                });
-
             modelBuilder.Entity("ChessBurgas64.Data.Models.Payment", b =>
                 {
                     b.HasOne("ChessBurgas64.Data.Models.ApplicationUser", "User")
@@ -983,6 +1045,23 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Member");
 
                     b.Navigation("Puzzle");
+                });
+
+            modelBuilder.Entity("ChessBurgas64.Data.Models.Video", b =>
+                {
+                    b.HasOne("ChessBurgas64.Data.Models.VideoCategory", "Category")
+                        .WithMany("Videos")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChessBurgas64.Data.Models.Trainer", "Trainer")
+                        .WithMany("Videos")
+                        .HasForeignKey("TrainerId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1098,11 +1177,16 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.Navigation("Image");
 
-                    b.Navigation("IndividualStudents");
-
                     b.Navigation("Lessons");
 
                     b.Navigation("User");
+
+                    b.Navigation("Videos");
+                });
+
+            modelBuilder.Entity("ChessBurgas64.Data.Models.VideoCategory", b =>
+                {
+                    b.Navigation("Videos");
                 });
 #pragma warning restore 612, 618
         }

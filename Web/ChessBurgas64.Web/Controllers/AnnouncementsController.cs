@@ -1,12 +1,15 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
+    using ChessBurgas64.Web.ViewModels;
     using ChessBurgas64.Web.ViewModels.Announcements;
+    using ChessBurgas64.Web.ViewModels.Categories;
     using Ganss.XSS;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -88,7 +91,7 @@
                 return this.View(input);
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.All));
         }
 
         [HttpPost]
@@ -105,7 +108,7 @@
         {
             var inputModel = this.announcementsService.GetById<AnnouncementInputModel>(id);
 
-            inputModel.Categories = this.categoriesService.GetAnnouncementCategories();
+            inputModel.Categories = this.categoriesService.GetAnnouncementCategoriesInSelectList();
 
             return this.View(inputModel);
         }
@@ -116,14 +119,40 @@
         {
             if (!this.ModelState.IsValid)
             {
-                input.Categories = this.categoriesService.GetAnnouncementCategories();
+                input.Categories = this.categoriesService.GetAnnouncementCategoriesInSelectList();
 
                 return this.View(input);
             }
 
-            await this.announcementsService.UpdateAsync(id, input);
+            await this.announcementsService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.AnnouncementImagesPath}");
 
             return this.RedirectToAction(nameof(this.ById), new { id });
+        }
+
+        public IActionResult Search()
+        {
+            var viewModel = new SearchViewModel
+            {
+                Categories = this.categoriesService.GetAllAnnouncementCategories<AnnouncementCategoryViewModel>(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Searched(SearchInputModel input, int id = 1)
+        {
+            var viewModel = new AnnouncementsListViewModel
+            {
+                ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
+                PageNumber = id,
+                Announcements = this.announcementsService.GetSearched<AnnouncementInCardViewModel>(
+                    id, GlobalConstants.AnnouncementsPerPage, input.Categories, input.SearchText),
+            };
+
+            viewModel.Count = viewModel.Announcements.Count;
+
+            return this.View(viewModel);
         }
     }
 }

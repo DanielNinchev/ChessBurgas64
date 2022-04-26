@@ -1,0 +1,21 @@
+﻿@model ChessBurgas64.Web.ViewModels.Videos.VideoInputModel
+@using ChessBurgas64.Common
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="Title">@GlobalConstants.Title*</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<vc:categories title="VideoCategory"></vc:categories>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="Description">@GlobalConstants.VideoDescription*</label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<vc:trainers title="TrainerId"></vc:trainers>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="Url">@GlobalConstants.VideoUrl*</label>
+    <input asp-for="Url" class="form-control" />
+    <span asp-validation-for="Url" class="text-danger"></span>
+</div>

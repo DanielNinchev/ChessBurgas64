@@ -2,7 +2,9 @@
 @using ChessBurgas64.Common
 
 <div class="form-group">
-    <label class="text-white" asp-for="TrainerId">@GlobalConstants.TrainerRoleName</label>
-    <select asp-for="TrainerId" . class="form-control" asp-items="@Model.Trainers"></select>
+    <label class="text-white" asp-for="TrainerId">@GlobalConstants.TrainerRoleName*</label>
+    <select asp-for="TrainerId" class="form-control" asp-items="@Model.Trainers">
+        <option selected="selected" hidden value="">@GlobalConstants.ChooseTrainer</option>
+    </select>
     <span asp-validation-for="TrainerId" class="text-danger"></span>
 </div>

@@ -1,6 +1,5 @@
 ﻿@model ChessBurgas64.Web.ViewModels.Groups.GroupInputModel
 @using ChessBurgas64.Common
-@using ChessBurgas64.Data.Models.Enums
 @{
     this.ViewData["Title"] = GlobalConstants.CreatingNewGroup;
 }
@@ -9,28 +8,7 @@
 <hr class="text-white border border-5"/>
 
 <form method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group my-5">
-        <label class="text-white" asp-for="@Model.Name">@GlobalConstants.GroupName</label>
-        <input asp-for="@Model.Name" class="form-control" />
-        <span asp-validation-for="@Model.Name" class="text-danger"></span>
-    </div>
-
-    <vc:trainers title="TrainerId"></vc:trainers>
-
-    <div class="form-group my-5">
-        <label class="text-white" asp-for="@Model.TrainingDay">@GlobalConstants.TrainingDay: </label>
-        <select asp-for="@Model.TrainingDay" asp-items="Html.GetEnumSelectList<WeekDay>()">
-            <option selected="selected" value="">@GlobalConstants.ChooseDay</option>
-        </select>
-        <span asp-validation-for="@Model.TrainingDay" class="text-danger"></span>
-    </div>
-
-    <div class="form-group my-5">
-        <label class="text-white" asp-for="@Model.TrainingHour">@GlobalConstants.TrainingHour</label>
-        <input asp-for="@Model.TrainingHour" class="form-control" />
-        <span asp-validation-for="@Model.TrainingHour" class="text-danger"></span>
-    </div>
+    <partial name="_GroupInputPartial" model="@Model" />
 
     <div class="container-fluid text-center">
         <button type="submit" class="btn btn-primary">@GlobalConstants.Create</button>

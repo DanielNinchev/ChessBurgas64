@@ -13,9 +13,10 @@
 
         Task DeleteAsync(string id);
 
+        Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string webRootImagePath);
+
         Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath);
 
         Task<Image> InitializeTrainerImage(IFormFile image, Trainer trainer, string webRootImagePath);
-
     }
 }

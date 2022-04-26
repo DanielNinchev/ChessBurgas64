@@ -10,9 +10,9 @@
         public Trainer()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Lessons = new HashSet<Lesson>();
             this.Groups = new HashSet<Group>();
-            this.IndividualStudents = new HashSet<Member>();
+            this.Lessons = new HashSet<Lesson>();
+            this.Videos = new HashSet<Video>();
         }
 
         public DateTime DateOfLastAttendance { get; set; }
@@ -29,6 +29,6 @@
 
         public virtual ICollection<Lesson> Lessons { get; set; }
 
-        public virtual ICollection<Member> IndividualStudents { get; set; }
+        public virtual ICollection<Video> Videos { get; set; }
     }
 }

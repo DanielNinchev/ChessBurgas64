@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChessBurgas64.Common\ChessBurgas64.Common.csproj" />
+  </ItemGroup>
+
 </Project>

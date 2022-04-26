@@ -11,6 +11,7 @@
     using ChessBurgas64.Web.ViewModels.Puzzles;
     using ChessBurgas64.Web.ViewModels.Trainers;
     using ChessBurgas64.Web.ViewModels.Users;
+    using ChessBurgas64.Web.ViewModels.Videos;
 
     public class MappingProfile : Profile
     {
@@ -24,6 +25,7 @@
             this.CreateMap<Payment, PaymentInputModel>().ReverseMap();
             this.CreateMap<Puzzle, PuzzleInputModel>().ReverseMap();
             this.CreateMap<Trainer, TrainerInputModel>().ReverseMap();
+            this.CreateMap<Video, VideoInputModel>().ReverseMap();
             this.CreateMap<ApplicationUser, UserInputModel>().ReverseMap();
             this.CreateMap<ApplicationUser, Register.InputModel>().ReverseMap()
                 .ForMember(apu => apu.UserName, rm => rm.MapFrom(apu => apu.Email));

@@ -1,9 +1,9 @@
 /********** Template CSS **********/
 :root {
-    --primary: #da251d;
-    --light: #F5F5F5;
-    --dark: #353535;
-    --max-lines: 3;
+    --bs-primary: #AB7442;
+    --bs-light: #F5F5F5;
+    --bs-dark: #353535;
+    --bs-max-lines: 3;
 }
 
 .img-logo-home{
@@ -31,7 +31,8 @@
     }
 
     .dropdown-menu > li:hover > .dropdown-item{
-        background-color: #AB7442
+        background-color: #AB7442;
+        border-color: black;
     }
 
     .dropdown-menu > li:hover > .submenu {
@@ -52,27 +53,28 @@
 
 .pagination > li > a {
     background-color: white;
-    color: var(--primary);
+    color: black;
 }
 
 .pagination > li > a:focus,
 .pagination > li > a:hover,
 .pagination > li > span:focus,
 .pagination > li > span:hover {
-    color: #5a5a5a;
-    background-color: #eee;
+    color: white;
+    background-color: var(--bs-primary);
     border-color: #ddd;
 }
 
+.pagination > .active > span,
 .pagination > .active > a {
     color: white;
-    background-color: var(--primary) !Important;
-    border: solid 1px #5A4181 !Important;
+    background-color: #da251d !Important;
+    border: solid 1px #da251d !Important;
 }
 
 .pagination > .active > a:hover {
-    background-color: #5A4181 !Important;
-    border: solid 1px #5A4181;
+    background-color: #da251d !Important;
+    border: solid 1px #da251d;
 }
 
 .backround-header-image-container{
@@ -87,12 +89,37 @@
     background-color: #da251d;
 }
 
-.card-title {
-    margin-bottom: 10px;
-    max-height: calc(1.5rem * var(--max-lines));
+.announcement-card-title {
+    margin-bottom: auto;
+    height: 4.5rem;
+    display: block;
+    /*max-height: calc(1.5rem * var(--max-lines));*/
 }
 
-.card-text{
+.trainer-card-title {
+    margin-bottom: auto;
+    height: 3.0rem;
+}
+
+.video-card-title{
+    margin-bottom: auto;
+    height: 4.5rem;
+}
+
+.announcement-card-text{
+    height: 4.5rem;
+    max-height: calc(1.5rem * var(--max-lines));
+    overflow: hidden;
+}
+
+.trainer-card-text {
+    height: 4.5rem;
+    max-height: calc(1.5rem * var(--max-lines));
+    overflow: hidden;
+}
+
+.video-card-text {
+    height: 4.5rem;
     max-height: calc(1.5rem * var(--max-lines));
     overflow: hidden;
 }
@@ -103,20 +130,28 @@
 }
 
 .image-announcement-card {
-    height: 487px;
-    width: 602px;
-    position: center;
+    height: 205px;
+    width: fit-content;
+    margin-inline: auto;
 }
 
 .image-trainer-card {
     height: 350px;
-    width: 398px;
+    width: fit-content;
+    margin-inline: auto;
 }
 
 .image-announcement {
     display: block;
     max-width: 100%;
     max-height: 400px;
+}
+
+.image-trainer {
+    display: block;
+    height: 500px;
+    width: fit-content;
+    margin-inline: auto;
 }
 
 .announcement-title-container {

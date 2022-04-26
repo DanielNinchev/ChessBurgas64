@@ -1,0 +1,19 @@
+﻿@model ChessBurgas64.Web.ViewModels.Payments.PaymentInputModel
+@using ChessBurgas64.Common
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label class="text-white" asp-for="DateOfPayment">@GlobalConstants.DateOfPayment</label>
+    <input asp-for="DateOfPayment" class="form-control" />
+    <span asp-validation-for="DateOfPayment" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="text-white" asp-for="Amount">@GlobalConstants.PaidAmount</label>
+    <input asp-for="Amount" class="form-control" />
+    <span asp-validation-for="Amount" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="text-white" asp-for="Description">@GlobalConstants.PaidFor</label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>

@@ -100,6 +100,7 @@
             }
 
             user.Trainer.DateOfLastAttendance = DateTime.Parse(input.DateOfLastAttendance);
+            user.Description = input.UserDescription;
 
             await this.trainersRepository.SaveChangesAsync();
             await this.usersRepository.SaveChangesAsync();

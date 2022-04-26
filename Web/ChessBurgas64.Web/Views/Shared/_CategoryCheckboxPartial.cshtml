@@ -1,0 +1,39 @@
+﻿@model ChessBurgas64.Web.ViewModels.SearchViewModel
+@using ChessBurgas64.Common
+
+<div class="container page-header backround-header-image-container"></div>
+<div class="title-container border border-3 border-white mb-3">
+    <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+</div>
+
+<div class="text-white justify-content-center my-5">
+    <form asp-action="Searched" method="get">
+        <div class="row">
+            <div class="col-6 offset-4">
+                <div class="col-8">
+                    <h5 class="display-6 text-center">@GlobalConstants.Categories</h5>
+                    <hr />
+                </div>
+                
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="col-12 my-3" id="checkboxDiv">
+                        <label class="checkboxLabel" for="category_@category.Id">
+                            @category.Name
+                            <input id="category_@category.Id"
+                                   type="checkbox"
+                                   name="Categories"
+                                   value="@category.Id" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="col-4 input-group offset-4 my-5 text-center">
+                <span class="input-group-text" id="magnifying-glass"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input asp-for="SearchText" name="SearchText" aria-describedby="magnifying-glass" />
+                <button type="submit" class="btn btn-primary mx-1">@GlobalConstants.Search</button>
+            </div>
+        </div>
+    </form>
+</div>

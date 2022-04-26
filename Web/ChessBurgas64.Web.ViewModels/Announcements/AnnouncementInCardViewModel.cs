@@ -5,10 +5,8 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
 
-    public class AnnouncementInCardViewModel : IMapFrom<Announcement>
+    public class AnnouncementInCardViewModel : NumericIdHoldingModel, IMapFrom<Announcement>
     {
-        public int Id { get; set; }
-
         public string MainImageUrl { get; set; }
 
         public string Title { get; set; }

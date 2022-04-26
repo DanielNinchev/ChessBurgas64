@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using AutoMapper;
+    using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
@@ -13,7 +14,10 @@
     {
         public string DateOfLastAttendance { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        public string UserDescription { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public IFormFile ProfilePicture { get; set; }
 
         public ICollection<Lesson> Lessons { get; set; }

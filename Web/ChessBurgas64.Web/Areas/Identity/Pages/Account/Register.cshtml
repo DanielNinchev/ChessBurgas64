@@ -10,9 +10,9 @@
 <hr class="text-white border border-5 border-white" />
 <div class="text-white">
     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
-            <div class="col-md-4 mt-5">
+            <div class="col-xl-4 mt-5">
                 <div class="form-group my-3">
                     <label asp-for="Input.FirstName"></label>
                     <input asp-for="Input.FirstName" class="form-control" />
@@ -43,10 +43,10 @@
                     <label class="form-check-label" asp-for="Input.Gender">@Gender.Мъжки.ToString()</label>
                 </div>
             </div>
-            <div class="col-md-4 mt-2">
-                <img class="rounded mx-auto d-block mb-5" src="~/images/homePage/burgas64-logo.png" style="height: 420px; width: 420px;" alt="" />
+            <div class="col-xl-4 mt-5">
+                <img class="rounded mx-auto d-block mb-5" src="~/images/homePage/burgas64-logo.png" style="height: 360px; width: 360px;" alt="" />
             </div>
-            <div class="col-md-4 mt-5">
+            <div class="col-xl-4 mt-5">
                 <div class="form-group my-3">
                     <label asp-for="Input.PhoneNumber"></label>
                     <input asp-for="Input.PhoneNumber" class="form-control" />

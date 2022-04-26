@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using ChessBurgas64.Common;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.Extensions.Options;
     using SendGrid;
@@ -15,7 +15,7 @@
             this.Options = optionsAccessor.Value;
         }
 
-        public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
+        public AuthMessageSenderOptions Options { get; } // set only via Secret Manager
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
@@ -27,7 +27,7 @@
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("daniel.ninchev@gmail.com", "Password Recovery"),
+                From = new EmailAddress(GlobalConstants.AdminEmail),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message,

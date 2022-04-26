@@ -1,6 +1,7 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Groups
 {
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
@@ -21,10 +22,11 @@
 
         public int MembersCount { get; set; }
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration.CreateMap<Group, GroupTableViewModel>()
-        //        .ForMember(gr => gr.MembersCount, grtvm => grtvm.MapFrom(gr => gr.Members.Count));
-        //}
+        public string TrainerUserFirstName { get; set; }
+
+        public string TrainerUserLastName { get; set; }
+
+        [NotMapped]
+        public string TrainerName => $"{this.TrainerUserFirstName} {this.TrainerUserLastName}";
     }
 }

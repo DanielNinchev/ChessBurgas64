@@ -3,6 +3,8 @@
 
 <div class="form-group">
     <label class="text-white" asp-for="GroupId">@GlobalConstants.Group</label>
-    <select asp-for="GroupId" . class="form-control" asp-items="@Model.Groups"></select>
+    <select asp-for="GroupId" class="form-control" asp-items="@Model.Groups">
+        <option selected="selected" hidden value="">@GlobalConstants.ChooseGroup</option>
+    </select>
     <span asp-validation-for="GroupId" class="text-danger"></span>
 </div>

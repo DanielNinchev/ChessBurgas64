@@ -5,52 +5,22 @@
 }
 
 <div class="container page-header backround-header-image-container"></div>
-<div class="title-container">
+<div class="title-container border border-3 border-white mb-3">
     <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+</div>
+
+<div class="text-center my-5">
+    <a asp-action="Search" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> @GlobalConstants.SearchBtn</a>
 </div>
 
 <div class="container-xxl">    
     <div class="container">
         <div class="row g-4">
-           @foreach (var announcement in this.Model.Announcements)
-            {
-                <div class="card-deck col-md-6 col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="card border border-white border-5">
-                        <img class="image-announcement-card img-fluid" src="@announcement.MainImageUrl" alt="">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text">@announcement.Title</h5>
-                            <small>Публикувано на @announcement.Date.ToShortDateString()</small>
-                            <hr />
-                            <p class="card-text">@announcement.Text</p>
-                        </div>
-                        <a class="btn btn-primary" asp-action="ById" asp-route-id="@announcement.Id">@GlobalConstants.View</a>
-                    </div>
-                </div>
-            }
+            <partial name="_AnnouncementsInCardsPartial" model="@Model" />
         </div>
     </div>
 </div>
 <hr />
-<nav aria-label="..."> 
-    <ul class="pagination justify-content-center">
-        <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>} ">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">@GlobalConstants.Previous</a>
-        </li>
-       @if (Model.PageNumber - 1 > 0)
-        {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@(Model.PageNumber - 1)">@(Model.PageNumber - 1)</a></li>
-        }
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.PageNumber">@Model.PageNumber</a>
-        </li>
-       @if (Model.PageNumber + 1 <= Model.PagesCount)
-        {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@(Model.PageNumber + 1)">@(Model.PageNumber + 1)</a></li>
-        }
-        <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>} ">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">@GlobalConstants.Next</a>
-        </li>
-    </ul>
-</nav>
+<partial name="_PagingPartial" model="@Model" />
 
 

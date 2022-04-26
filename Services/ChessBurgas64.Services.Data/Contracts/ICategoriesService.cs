@@ -6,6 +6,16 @@
 
     public interface ICategoriesService
     {
-        IEnumerable<SelectListItem> GetAnnouncementCategories();
+        IEnumerable<T> GetAllAnnouncementCategories<T>();
+
+        IEnumerable<T> GetAllPuzzleCategories<T>();
+
+        IEnumerable<T> GetAllVideoCategories<T>();
+
+        IEnumerable<SelectListItem> GetAnnouncementCategoriesInSelectList();
+
+        IEnumerable<SelectListItem> GetPuzzleCategoriesInSelectList();
+
+        IEnumerable<SelectListItem> GetVideoCategoriesInSelectList();
     }
 }

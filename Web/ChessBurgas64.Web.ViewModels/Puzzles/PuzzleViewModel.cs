@@ -3,10 +3,8 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
 
-    public class PuzzleViewModel : IMapFrom<Puzzle>
+    public class PuzzleViewModel : NumericIdHoldingModel, IMapFrom<Puzzle>
     {
-        public int Id { get; set; }
-
         public int Number { get; set; }
 
         public string Objective { get; set; }

@@ -1,0 +1,73 @@
+﻿@model ChessBurgas64.Web.ViewModels.SendEmailInputModel
+@using ChessBurgas64.Common
+@{
+    this.ViewData["Title"] = GlobalConstants.ContactsNav;
+}
+
+<div class="container page-header backround-header-image-container"></div>
+<div class="title-container border border-3 border-white mb-3">
+    <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
+</div>
+
+@if (Model.StatusMessage != null)
+{
+    <partial name="_StatusMessage" model="Model.StatusMessage"/>
+}
+
+<div class="row justify-content-center text-white">
+    <div id="someMap" class="col-md-7 text-center animated slideInUp">
+        <iframe class="border border-3" width="600" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=27.464833259582523%2C42.51085785981971%2C27.471731901168827%2C42.51349141939854&amp;layer=mapnik&amp;marker=42.51217465348022%2C27.46828258037567" style="border: 1px solid black"></iframe>
+        <br />
+        <small><a class="btn btn-primary" href="https://www.openstreetmap.org/?mlat=42.51217&amp;mlon=27.46828#map=18/42.51217/27.46828&amp;layers=N">@GlobalConstants.ViewLargerMap</a></small>
+    </div>
+    <div class="col-md-5 text-justify animated slideInRight">
+        <p>@GlobalConstants.ClubLocationDescription</p>
+        <hr />
+        <h5 class="text-center text-white">@GlobalConstants.ContactUs</h5>
+        <hr />
+        <div class="text-center">
+            <p><i class="fa-solid fa-envelope"></i> chessburgas64@@gmail.com</p>
+            <p><i class="fa-solid fa-phone"></i> 0899 941 257 - Желчо Желев</p>
+            <p><i class="fa-solid fa-phone"></i> 0888 454 034 - Живко Жеков</p>
+        </div>
+        <hr />
+        <div class="text-center container-fluid">
+            <a class="display-6 text-white mx-2" href="https://www.facebook.com/chessburgas/"><i class="fa-brands fa-facebook"></i></a>
+            <a class="display-6 text-white mx-2" href="https://www.facebook.com/chessburgas/"><i class="fab fa-youtube"></i></a>
+            <a class="display-6 text-white mx-2" href="https://www.facebook.com/chessburgas/"><i class="fa-solid fa-chess-pawn"></i></a>
+        </div>
+    </div>
+    <hr class="my-2" />
+    <div class="col-md-8 text-white justify-content-center animated slideInUp">
+        <form asp-action="SendEmail" method="post">
+            <div class="form-group my-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Phone"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Topic"></label>
+                <input asp-for="Topic" class="form-control" />
+                <span asp-validation-for="Topic" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Message"></label>
+                <textarea asp-for="Message" class="form-control" rows="@GlobalConstants.EmailFormTextAreaRowCount"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">@GlobalConstants.Send</button>
+            </div>
+        </form>
+    </div>
+</div>

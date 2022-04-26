@@ -1,0 +1,20 @@
+﻿@model ChessBurgas64.Web.ViewModels.Lessons.LessonInputModel
+@using ChessBurgas64.Common
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group my-5">
+    <label class="text-white" asp-for="@Model.Topic">@GlobalConstants.Topic</label>
+    <input asp-for="@Model.Topic" class="form-control" />
+    <span asp-validation-for="@Model.Topic" class="text-danger"></span>
+</div>
+<vc:groups title="GroupId"></vc:groups>
+<div class="form-group my-5">
+    <label class="text-white" asp-for="@Model.StartingTime">@GlobalConstants.DateAndTime</label>
+    <input asp-for="@Model.StartingTime" class="form-control" />
+    <span asp-validation-for="@Model.StartingTime" class="text-danger"></span>
+</div>
+<div class="form-group my-2">
+    <label class="text-white" asp-for="@Model.Notes">@GlobalConstants.AdditionalNotes</label>
+    <textarea asp-for="@Model.Notes" class="form-control" rows="@GlobalConstants.NotesTextAreaRowCount"></textarea>
+    <span asp-validation-for="@Model.Notes" class="text-danger"></span>
+</div>

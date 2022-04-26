@@ -11,11 +11,11 @@
 
     public class LessonInputModel : IMapFrom<Lesson>
     {
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [MaxLength(GlobalConstants.TopicMaxLength)]
         public string Topic { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.DateAndTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public string StartingTime { get; set; }

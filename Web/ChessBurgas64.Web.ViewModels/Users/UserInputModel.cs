@@ -2,20 +2,21 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+
     using AutoMapper;
+    using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Mapping;
 
     public class UserInputModel : IMapFrom<ApplicationUser>, IHaveCustomMappings
     {
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public ClubStatus ClubStatus { get; set; }
 
         public int FideRating { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public FideTitle FideTitle { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

@@ -10,5 +10,12 @@
         public const string UsernameChangeError = "Възникна проблем при промяната на Вашето потребителско име.";
 
         public const string InvalidLoginAttempt = "Грешно потребителско име или парола!";
+
+        // Input errors ====================================================================================================
+        public const string InvalidEmail = "Невалиден email! Моля, поставяйте действителен такъв.";
+        public const string InvalidPhoneNumber = "Невалиден телефонен номер! Моля, поставяйте действителен такъв.";
+        public const string InvalidUrl = "Невалиден линк! Моля, поставете действителен такъв.";
+        public const string ThatFieldIsRequired = "Това поле е задължително!";
+        public const string ThatFieldRequiresNumberOfCharacters = "Това поле трябва да бъде с дължина между {2} и {1} символа.";
     }
 }

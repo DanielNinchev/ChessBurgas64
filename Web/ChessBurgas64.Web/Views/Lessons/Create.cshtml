@@ -8,17 +8,6 @@
 <hr class="text-white border border-5" />
 
 <form method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group my-5">
-        <label class="text-white" asp-for="@Model.Topic">@GlobalConstants.Topic</label>
-        <input asp-for="@Model.Topic" class="form-control" />
-        <span asp-validation-for="@Model.Topic" class="text-danger"></span>
-    </div>
-    <vc:groups title="GroupId"></vc:groups>
-    <div class="form-group my-5">
-        <label class="text-white" asp-for="@Model.StartingTime">@GlobalConstants.DateAndTime</label>
-        <input asp-for="@Model.StartingTime" class="form-control" />
-        <span asp-validation-for="@Model.StartingTime" class="text-danger"></span>
-    </div>
+    <partial name="_LessonInputPartial" model="@Model" />
     <button type="submit" class="btn btn-primary">@GlobalConstants.CreateLesson</button>
 </form>

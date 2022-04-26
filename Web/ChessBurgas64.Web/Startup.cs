@@ -91,6 +91,7 @@
             services.AddTransient<IPuzzlesService, PuzzlesService>();
             services.AddTransient<ITrainersService, TrainersService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IVideosService, VideosService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

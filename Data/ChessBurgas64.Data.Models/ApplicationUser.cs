@@ -3,7 +3,7 @@ namespace ChessBurgas64.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using ChessBurgas64.Data.Common.Models;
     using Microsoft.AspNetCore.Identity;
 
@@ -39,6 +39,12 @@ namespace ChessBurgas64.Data.Models
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
+
+        [NotMapped]
+        public string FullName => $"{this.FirstName} {this.MiddleName} {this.LastName}";
+
+        [NotMapped]
+        public string Name => $"{this.FirstName} {this.LastName}";
 
         public string Description { get; set; }
 

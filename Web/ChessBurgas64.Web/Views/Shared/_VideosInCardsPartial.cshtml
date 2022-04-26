@@ -1,0 +1,24 @@
+﻿@model ChessBurgas64.Web.ViewModels.Videos.VideosListViewModel
+@using ChessBurgas64.Common
+
+@foreach (var video in this.Model.Videos)
+{
+    <div class="card-deck col-md-6 col-lg-4 wow fadeInUp text-center text-white my-5" data-wow-delay="0.1s">
+        <div class="embed-responsive embed-responsive-16by9 text-center">
+            <iframe class="embed-responsive-item border" src="@video.Url" allowfullscreen></iframe>
+        </div>
+        <h6 class="title-container video-card-title text-center text-white border p-2">@video.Title</h6>
+        <p class="text-white mt-2">
+            <small><i class="fa-solid fa-user"></i> @video.Trainer.TrainerName</small>
+            <hr />
+            <small><i class="fa-solid fa-calendar-days"></i> @video.CreatedOn.ToShortDateString()</small>
+            <hr />
+            <small><i class="fa-solid fa-list"></i> @video.CategoryName</small>
+        </p>
+        <hr />
+        <p class="text-white video-card-text"><i class="fa-solid fa-file-lines"></i> @video.Description</p>
+        <hr />
+        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@video.Id">@GlobalConstants.Edit</a>
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@video.Id">@GlobalConstants.Delete</a>
+    </div>
+}

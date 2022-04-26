@@ -13,13 +13,16 @@
 
     public class ImagesService : IImagesService
     {
+        private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
         private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
 
         public ImagesService(
+            IDeletableEntityRepository<Announcement> announcementsRepository,
             IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<Puzzle> puzzlesRepository)
         {
+            this.announcementsRepository = announcementsRepository;
             this.imagesRepository = imagesRepository;
             this.puzzlesRepository = puzzlesRepository;
         }
@@ -59,6 +62,21 @@
             return extension;
         }
 
+        public async Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string webRootImagePath)
+        {
+            var extension = this.GetImageExtension(image);
+            var dbImage = new Image
+            {
+                AnnouncementId = announcement.Id,
+                Announcement = announcement,
+                Extension = extension,
+            };
+
+            var newImage = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.AnnouncementImagesPath);
+
+            return newImage;
+        }
+
         public async Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
@@ -69,9 +87,10 @@
                 Extension = extension,
             };
 
-            if (puzzle.ImageId != null)
+            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.PuzzleId == puzzle.Id);
+
+            if (oldImage != null)
             {
-                var oldImage = this.imagesRepository.All().FirstOrDefault(x => x.Id == puzzle.ImageId);
                 this.imagesRepository.HardDelete(oldImage);
             }
 
@@ -94,9 +113,10 @@
                 Extension = extension,
             };
 
-            if (trainer.ImageId != null)
+            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.TrainerId == trainer.Id);
+
+            if (oldImage != null)
             {
-                var oldImage = this.imagesRepository.All().FirstOrDefault(x => x.Id == trainer.ImageId);
                 this.imagesRepository.HardDelete(oldImage);
             }
 

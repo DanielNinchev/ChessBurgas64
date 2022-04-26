@@ -1,45 +1,34 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
-    using ChessBurgas64.Data.Common.Repositories;
-    using ChessBurgas64.Data.Models;
+    using ChessBurgas64.Common;
     using ChessBurgas64.Web.ViewModels;
-
+    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
-        private readonly IDeletableEntityRepository<AnnouncementCategory> categoriesRepository;
-        private readonly IDeletableEntityRepository<Group> groupsRepository;
-        private readonly IDeletableEntityRepository<Image> imagesRepository;
-        private readonly IDeletableEntityRepository<Lesson> lessonsRepository;
-        private readonly IDeletableEntityRepository<Member> membersRepository;
-        private readonly IDeletableEntityRepository<Payment> paymentsRepository;
-        private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
-        private readonly IDeletableEntityRepository<Trainer> trainersRepository;
+        private readonly IEmailSender emailSender;
 
-        public HomeController(
-            IDeletableEntityRepository<Announcement> announcementsRepository,
-            IDeletableEntityRepository<AnnouncementCategory> categoriesRepository,
-            IDeletableEntityRepository<Group> groupsRepository,
-            IDeletableEntityRepository<Image> imagesRepository,
-            IDeletableEntityRepository<Lesson> lessonsRepository,
-            IDeletableEntityRepository<Member> membersRepository,
-            IDeletableEntityRepository<Payment> paymentsRepository,
-            IDeletableEntityRepository<Puzzle> puzzlesRepository,
-            IDeletableEntityRepository<Trainer> trainersRepository)
+        public HomeController(IEmailSender emailSender)
         {
-            this.announcementsRepository = announcementsRepository;
-            this.categoriesRepository = categoriesRepository;
-            this.groupsRepository = groupsRepository;
-            this.imagesRepository = imagesRepository;
-            this.lessonsRepository = lessonsRepository;
-            this.membersRepository = membersRepository;
-            this.paymentsRepository = paymentsRepository;
-            this.puzzlesRepository = puzzlesRepository;
-            this.trainersRepository = trainersRepository;
+            this.emailSender = emailSender;
+        }
+
+        public IActionResult Contacts(string statusMessage, SendEmailInputModel input)
+        {
+            input.StatusMessage = statusMessage;
+
+            return this.View(input);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return this.View(
+                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
 
         public IActionResult Index()
@@ -52,11 +41,17 @@
             return this.View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public async Task<IActionResult> SendEmail(SendEmailInputModel input)
         {
-            return this.View(
-                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            await this.emailSender.SendEmailAsync(
+                        GlobalConstants.AdminEmail,
+                        input.Topic,
+                        $"{input.Name}, {input.Email}, {input.Phone} {GlobalConstants.SendsTheFollowingMessage} {input.Message}");
+
+            string statusMessage = GlobalConstants.ThankYouForYourMessage;
+
+            return this.RedirectToAction(nameof(this.Contacts), new { statusMessage });
         }
     }
 }
