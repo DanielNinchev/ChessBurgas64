@@ -7,6 +7,48 @@ for details on configuring this project to bundle and minify static web assets. 
     --bs-max-lines: 3;
 }
 
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    background-color: #da251d;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #da251d;
+    border-color: #da251d;
+}
+
+.btn-primary.disabled {
+    background-color: var(--bs-primary);
+}
+
+.nav-item .active,
+.btn:hover, .btn-primary:hover,
+.btn:active, .btn-primary:active,
+.btn:focus, .btn-primary:focus,
+{
+    color: white;
+    background-color: var(--bs-primary);
+    border-top-color: white;
+    border-left-color: white;
+    border-bottom-color: black;
+    border-right-color: black;
+}
+
+.btn:active {
+    border-top-color: black;
+    border-left-color: black;
+    border-bottom-color: var(--bs-primary);
+    border-right-color: var(--bs-primary);
+}
+
 /* Customize the label (the container) */
 .checkboxLabel {
     display: block;
@@ -75,18 +117,6 @@ for details on configuring this project to bundle and minify static web assets. 
     transform: rotate(45deg);
 }
 
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-    background-color: #da251d;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
-}
-
 input[type="radio"]:checked {
     color: #fff;
     background-color: #da251d;
@@ -95,31 +125,6 @@ input[type="radio"]:checked {
 
 input[type="radio"]:hover {
     background-color: var(--bs-primary);
-}
-
-.btn-primary{
-    color: #fff;
-    background-color: #da251d;
-    border-color: #da251d;
-}
-
-.nav-item .active,
-.btn:hover, .btn-primary:hover,
-.btn:active, .btn-primary:active,
-.btn:focus, .btn-primary:focus {
-    color: white;
-    background-color: var(--bs-primary);
-    border-top-color: white;
-    border-left-color: white;
-    border-bottom-color: black;
-    border-right-color: black;
-}
-
-.btn:active {
-    border-top-color: black;
-    border-left-color: black;
-    border-bottom-color: var(--bs-primary);
-    border-right-color: var(--bs-primary);
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {

@@ -31,6 +31,11 @@
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
 
+        public IActionResult History()
+        {
+            return this.View();
+        }
+
         public IActionResult Index()
         {
             return this.View();
