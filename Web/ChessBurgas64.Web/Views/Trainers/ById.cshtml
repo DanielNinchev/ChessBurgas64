@@ -6,13 +6,13 @@
 
 <div class="row">
     <div class="col-md-4 my-3">
-        <img class="img-fluid image-trainer my-3" src="@Model.ImageImageUrl" alt="@GlobalConstants.Photos">
+        <img class="img-fluid rounded-pill border border-white border-3 image-trainer my-3" src="@Model.ImageImageUrl" alt="@GlobalConstants.Photos">
         <div class="container-fluid bg-dark text-white py-3 border border-2 border-secondary">
-            <p><i class="fa-solid fa-cake-candles"></i> @Model.User.BirthDate.ToShortDateString()</p>
+            <p class="px-3"><i class="fa-solid fa-cake-candles"></i> @Model.User.BirthDate.ToShortDateString()</p>
             <hr />
-            <p> <i class="fa-solid fa-phone"></i> @Model.User.PhoneNumber</p>
+            <p class="px-3"> <i class="fa-solid fa-phone"></i> @Model.User.PhoneNumber</p>
             <hr />
-            <p><i class="fa-solid fa-envelope"></i> @Model.User.Email</p>
+            <p class="px-3"><i class="fa-solid fa-envelope"></i> @Model.User.Email</p>
         </div>
     </div>
     <div class="col-md-8 my-3">

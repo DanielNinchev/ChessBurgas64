@@ -10,10 +10,8 @@
     using ChessBurgas64.Web.ViewModels.Members;
     using ChessBurgas64.Web.ViewModels.Users;
 
-    public class TrainerViewModel : IMapFrom<Trainer>
+    public class TrainerViewModel : IdHoldingModel, IMapFrom<Trainer>
     {
-        public string Id { get; set; }
-
         public DateTime DateOfLastAttendance { get; set; }
 
         public string ImageImageUrl { get; set; }

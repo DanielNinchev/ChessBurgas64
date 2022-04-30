@@ -8,7 +8,7 @@
    @if (this.SignInManager.IsSignedIn(this.User))
     {
         <li class="nav-item">
-            <a class="nav-link btn btn-primary text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@GlobalConstants.WelcomeMsg @this.User.Identity.Name!</a>
+            <a class="nav-link btn btn-primary text-white mx-1" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@GlobalConstants.WelcomeMsg @this.User.Identity.Name!</a>
         </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
         {
@@ -36,7 +36,7 @@
 
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
-                <button type="submit" class="nav-link btn btn-primary text-white">@GlobalConstants.Exit</button>
+                <button type="submit" class="nav-link btn btn-primary text-white mx-1">@GlobalConstants.Exit</button>
             </form>
         </li>
     }

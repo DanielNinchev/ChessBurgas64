@@ -110,10 +110,11 @@
         {
             var video = this.videosRepository.All().FirstOrDefault(x => x.Id == id);
 
-            video.Title = input.Title;
             video.Description = input.Description;
-            video.Url = input.Url;
+            video.CategoryId = input.CategoryId;
+            video.Title = input.Title;
             video.TrainerId = input.TrainerId;
+            video.Url = input.Url;
 
             await this.videosRepository.SaveChangesAsync();
         }

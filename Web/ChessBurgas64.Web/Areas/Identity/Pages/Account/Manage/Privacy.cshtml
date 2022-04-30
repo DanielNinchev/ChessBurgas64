@@ -6,33 +6,13 @@
     ViewData["ActivePage"] = ManageNavPages.Privacy;
 }
 
-<h5 class="text-white px-3 offset-2">@ViewData["Title"]</h5>
+<h4 class="display-6 text-white text-center mt-3">@ViewData["Title"]</h4>
+<hr class="border border-5 border-white text-white" />
 
-<div class="row">
-    <div class="col-md-12 text-white">
-        <p>@GlobalConstants.PersonalDataPolicyInfo</p>
-        <p>
-            <strong>@GlobalConstants.PersonalDataDeleteWarning</strong>
-        </p>
-
-        <ul>
-            <li>
-                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-                    <button class="btn btn-primary mb-2" type="submit">@GlobalConstants.DownloadPersonalData</button>
-                </form>
-            </li>
-            <li>
-                <p>
-                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warning">@GlobalConstants.DeleteAccount</a>
-                </p>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <h5 class="text-white px-3 offset-3 text-decoration-underline">@GlobalConstants.ForWhatDoWeUseYourData</h5>
-    <div id="accordion" class="col-md-10 mx-5">
+<div class="row justify-content-center">
+    <p class="text-white text-justify my-3">@GlobalConstants.PersonalDataPolicyInfo</p>
+    <h5 class="text-white text-center text-decoration-underline mt-4">@GlobalConstants.ForWhatDoWeUseYourData</h5>
+    <div id="accordion" class="col-md-10">
         <div class="card">
             <div class="card-header background-dragon-red border border-1 border-white" id="headingOne">
                 <h5 class="mb-0 text-center">
@@ -76,6 +56,24 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-12 text-white">
+        <p class="my-3"><strong>@GlobalConstants.PersonalDataDeleteWarning</strong></p>
+        <ul>
+            <li>
+                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+                    <button class="btn btn-primary mb-2" type="submit">@GlobalConstants.DownloadPersonalData</button>
+                </form>
+            </li>
+            <li>
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warning">@GlobalConstants.DeleteAccount</a>
+                </p>
+            </li>
+        </ul>
     </div>
 </div>
 

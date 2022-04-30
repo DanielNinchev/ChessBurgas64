@@ -18,7 +18,10 @@
         <hr />
         <p class="text-white video-card-text"><i class="fa-solid fa-file-lines"></i> @video.Description</p>
         <hr />
-        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@video.Id">@GlobalConstants.Edit</a>
-        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@video.Id">@GlobalConstants.Delete</a>
+        <form method="post" asp-action="Delete" id="deleteForm_@video.Id" asp-route-id="@video.Id">
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@video.Id">@GlobalConstants.Edit</a>
+            <button class="btn btn-danger" type="button" id="delete_@video.Id" data-bs-toggle="modal" data-bs-target="#deleteModal_@video.Id">@GlobalConstants.Delete</button>
+        </form>
     </div>
+    <partial name="_DeleteModalPartial" model="@video" />
 }

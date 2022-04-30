@@ -16,7 +16,7 @@
         public string Email { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
-        [Phone(ErrorMessage = ErrorMessages.InvalidPhoneNumber)]
+        [RegularExpression(@"^([0-9])$", ErrorMessage = ErrorMessages.InvalidPhoneNumber)]
         [Display(Name = GlobalConstants.PhoneNumber)]
         public string Phone { get; set; }
 

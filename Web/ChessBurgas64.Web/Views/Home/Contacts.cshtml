@@ -1,4 +1,5 @@
 ﻿@model ChessBurgas64.Web.ViewModels.SendEmailInputModel
+@using AspNetCore.ReCaptcha
 @using ChessBurgas64.Common
 @{
     this.ViewData["Title"] = GlobalConstants.ContactsNav;
@@ -14,13 +15,13 @@
     <partial name="_StatusMessage" model="Model.StatusMessage"/>
 }
 
-<div class="row justify-content-center text-white">
-    <div id="someMap" class="col-md-7 text-center animated slideInUp">
-        <iframe class="border border-3" width="600" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=27.464833259582523%2C42.51085785981971%2C27.471731901168827%2C42.51349141939854&amp;layer=mapnik&amp;marker=42.51217465348022%2C27.46828258037567" style="border: 1px solid black"></iframe>
+<div class="row justify-content-center text-white" id="mapHolder">
+    <div id="clubMap" class="col-md-7 my-3 text-center animated slideInUp">
+        <iframe class="responsive-iframe border border-3" width="600" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=27.464833259582523%2C42.51085785981971%2C27.471731901168827%2C42.51349141939854&amp;layer=mapnik&amp;marker=42.51217465348022%2C27.46828258037567" style="border: 1px solid black"></iframe>
         <br />
-        <small><a class="btn btn-primary" href="https://www.openstreetmap.org/?mlat=42.51217&amp;mlon=27.46828#map=18/42.51217/27.46828&amp;layers=N">@GlobalConstants.ViewLargerMap</a></small>
+        <a class="btn btn-primary my-3" href="https://www.openstreetmap.org/?mlat=42.51217&amp;mlon=27.46828#map=18/42.51217/27.46828&amp;layers=N">@GlobalConstants.ViewLargerMap</a>
     </div>
-    <div class="col-md-5 text-justify animated slideInRight">
+    <div class="col-md-5 text-center animated slideInRight my-5">
         <p>@GlobalConstants.ClubLocationDescription</p>
         <hr />
         <h5 class="text-center text-white">@GlobalConstants.ContactUs</h5>
@@ -39,6 +40,8 @@
     </div>
     <hr class="my-2" />
     <div class="col-md-8 text-white justify-content-center animated slideInUp">
+        <h6 class="display-6 fw-bold text-center pt-5">@GlobalConstants.SendUsAMessage</h6>
+        <hr />
         <form asp-action="SendEmail" method="post">
             <div class="form-group my-3">
                 <label asp-for="Name"></label>
@@ -65,9 +68,17 @@
                 <textarea asp-for="Message" class="form-control" rows="@GlobalConstants.EmailFormTextAreaRowCount"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <div class="text-center">
+            <div class="form-group mt-5">
+                <recaptcha class="mx-5 offset-4"></recaptcha>
+            </div>
+            <div class="text-center mt-5">
                 <button type="submit" class="btn btn-primary">@GlobalConstants.Send</button>
             </div>
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <script src="https://www.google.com/recaptcha/api.js?hl=bg" async defer></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+}

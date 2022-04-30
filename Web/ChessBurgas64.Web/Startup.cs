@@ -2,6 +2,7 @@
 {
     using System.Reflection;
 
+    using AspNetCore.ReCaptcha;
     using AutoMapper;
     using ChessBurgas64.Data;
     using ChessBurgas64.Data.Common;
@@ -45,6 +46,7 @@
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             services.AddAutoMapper(typeof(Startup));
+            services.AddReCaptcha(this.configuration.GetSection("ReCaptcha"));
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)

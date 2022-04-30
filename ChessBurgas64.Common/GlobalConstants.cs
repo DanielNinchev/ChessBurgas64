@@ -119,7 +119,7 @@
         public const int NameMaxLength = 20;
         public const int NameMinLength = 2;
         public const string Password = "Парола";
-        public const int PasswordMaxLength = 100;
+        public const int PasswordMaxLength = 20;
         public const int PasswordMinLength = 6;
         public const string PhoneNumber = "Телефон за връзка";
         public const string RepeatPass = "Повторете паролата";
@@ -149,7 +149,6 @@
         public const string EmailConfirmationMsg = "Моля, потвърдете Вашия email, натискайки върху този линк: ";
         public const string EmailConfirmationTopic = "Потвърждаване на email";
         public const int EmailFormTextAreaRowCount = 10;
-        public const string EmailResetFailed = "Вашият email не е променен.";
         public const string NewEmail = "Нов email";
         public const string RegistrationConfirmationMsg = "Моля, потвърдете Вашата регистрация, натискайки върху този линк: ";
         public const string RegistrationConfirmationTopic = "Потвърждаване на регистрация";
@@ -251,6 +250,7 @@
         public const string Message = "Съобщение";
         public const string ViewLargerMap = "Разгледайте картата в уголемен размер";
         public const string ThankYouForYourMessage = "Благодарим Ви, че се свързахте с нас. Ще разгледаме съобщението Ви и ще Ви отговорим възможно най-скоро.";
+        public const string SendUsAMessage = "Оставете ни съобщение";
 
         // Edit users view
         public const string EditUsersClubData = "Промяна на клубни данни";
@@ -309,7 +309,7 @@
         public const string AddressDataUsageInfo = "Адресът Ви ни е нужен, за да знаем местоживеенето Ви, като по този начин ще имаме по-добра организация при пътувания за извънградски турнири.";
         public const string BirthDateDataUsageInfo = "Датите на раждане са ни необходими, за да можем да разпределяме учениците по възрастови групи при тренировки, както и за записване в състезания, в които възрастовата група е от значение.";
         public const string ForWhatDoWeUseYourData = "За какво използваме Вашите данни?";
-        public const string PersonalDataDeleteWarning = "Изтриването на данните Ви е необратимо - те никога няма да могат да бъдат възстановени.";
+        public const string PersonalDataDeleteWarning = "Изтриването на данните Ви е необратимо - те никога няма да могат да бъдат възстановени!";
         public const string PersonalDataPolicyInfo = "Профилът Ви съдържа лични данни, които Вие сте ни предоставили. От текущата страница можете да ги изтеглите, както и да ги изтриете безвъзвратно. Всичката Ваша информация, която сте ни поверили, се използва единствено за определените цели, описани по-долу.";
         public const string PersonalDataPolicyTitle = "Политика за поверителност на личните Ви данни";
         public const string SchoolDataUsageInfo = "Информацията за училището, в което съответният ученик школува, ни дава възможност да разпределяме отбори за ученически първенства, както и да издаваме извинителни бележки за отсъствие от учебни часове при участия в състезания.";

@@ -29,31 +29,27 @@ a {
     background-color: var(--bs-primary);
 }
 
+    .btn:hover, .btn-primary:hover {
+        color: white;
+        background-color: var(--bs-primary);
+        border-top-color: var(--bs-primary);
+        border-left-color: var(--bs-primary);
+        border-bottom-color: black;
+        border-right-color: black;
+    }
+
 .nav-item .active,
-.btn:hover, .btn-primary:hover,
-.btn:active, .btn-primary:active,
-.btn:focus, .btn-primary:focus,
-{
+.btn:active, .btn-primary:active, .btn:focus, .btn-primary:focus {
+    border-color: var(--bs-primary);
     color: white;
     background-color: var(--bs-primary);
-    border-top-color: white;
-    border-left-color: white;
-    border-bottom-color: black;
-    border-right-color: black;
-}
-
-.btn:active {
-    border-top-color: black;
-    border-left-color: black;
-    border-bottom-color: var(--bs-primary);
-    border-right-color: var(--bs-primary);
 }
 
 /* Customize the label (the container) */
 .checkboxLabel {
     display: block;
     position: relative;
-    padding-left: 30px;
+    padding-left: 40px;
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 22px;

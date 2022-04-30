@@ -42,6 +42,10 @@
                         : null;
                 }
             },
+            {
+                "targets": 9,
+                "orderable": false,
+            },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
@@ -54,7 +58,7 @@
             { "data": "email", "name": "Email", "autoWidth": true },
             { "data": "clubStatus", "name": "ClubStatus", "autoWidth": true },
             {
-                "render": function (data, type, full, meta) { return "<a class='btn btn-primary border border-white' onclick=GoToProfile('" + full.id + "'); >Профил</a>" }
+                "render": function (data, type, full, meta) { return "<a class='btn btn-secondary border border-white' onclick=GoToProfile('" + full.id + "'); >Профил</a>" }
             },
         ]
     });

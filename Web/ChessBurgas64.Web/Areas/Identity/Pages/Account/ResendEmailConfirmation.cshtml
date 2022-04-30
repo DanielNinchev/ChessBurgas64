@@ -1,13 +1,15 @@
 ﻿@page
+@using AspNetCore.ReCaptcha
 @using ChessBurgas64.Common
 @model ResendEmailConfirmation
 @{
     ViewData["Title"] = GlobalConstants.ResendEmailConfirmation;
 }
 
-<h1 class="text-white text-center">@ViewData["Title"]</h1>
-<h4 class="text-white text-center">@GlobalConstants.EnterEmailLabel</h4>
+<h1 class="display-6 fw-bold text-white text-center mt-3">@ViewData["Title"]</h1>
 <hr class="text-white"/>
+
+<h4 class="text-white text-center my-3">@GlobalConstants.EnterEmailLabel</h4>
 <div class="row">
     <div class="col-md-6 text-center offset-3">
         <form method="post" class="text-center text-white">
@@ -15,7 +17,12 @@
             <div class="form-group py-3">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-warning"></span>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group offset-2">
+                <div class="mx-4 my-3">
+                    <recaptcha></recaptcha>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">@GlobalConstants.Resend</button>
         </form>
@@ -24,4 +31,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=bg" async defer></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
 }

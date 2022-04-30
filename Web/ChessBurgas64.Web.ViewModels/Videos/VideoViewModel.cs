@@ -6,10 +6,8 @@
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Trainers;
 
-    public class VideoViewModel : IMapFrom<Video>
+    public class VideoViewModel : IdHoldingModel, IMapFrom<Video>
     {
-        public int Id { get; set; }
-
         public string Title { get; set; }
 
         public string CategoryName { get; set; }

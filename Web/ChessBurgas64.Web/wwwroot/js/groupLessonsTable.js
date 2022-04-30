@@ -55,7 +55,7 @@
             { "data": "membersCount", "name": "Members.Count", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<button class='btn btn-info' id='groupLessonViewBtn' onclick=GoToLessonByIdView('" + full.id + "'); >Преглед</button> <button class='btn btn-danger' id='groupLessonDeleteBtn' onclick=DeleteData('" + full.id + "'); >Изтриване</button>";
+                    return "<button class='btn btn-secondary' id='groupLessonViewBtn' onclick=GoToLessonByIdView('" + full.id + "'); >Преглед</button> <button class='btn btn-danger' id='groupLessonDeleteBtn' onclick=DeleteLessonData('" + full.id + "'); >Изтриване</button>";
                 },
             },
         ]
@@ -66,15 +66,15 @@ function GoToLessonByIdView(id) {
     window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
 }
 
-function DeleteData(id) {
+function DeleteLessonData(id) {
     if (confirm("Наистина ли желаете да изтриете данните за това занятие?")) {
-        Delete(id);
+        DeleteLesson(id);
     } else {
         return false;
     }
 }
 
-function Delete(id) {
+function DeleteLesson(id) {
     $.ajax({
         type: 'POST',
         url: "/Lessons/DeleteUserLesson",

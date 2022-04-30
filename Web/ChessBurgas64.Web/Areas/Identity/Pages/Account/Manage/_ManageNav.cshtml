@@ -4,8 +4,8 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 
-<form class="form-inline row mt-3">
-    <ul class="nav flex-column col-md-12 background-dragon-red border border-2 border-white py-5 text-center px-1">
+<form class="form-control bg-transparent border-0 px-1 row my-5">
+    <ul class="nav rounded-3 flex-column col-xl-12 background-dragon-red border border-2 border-white py-5 text-center px-1">
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">@GlobalConstants.Profile</button></li>
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">@GlobalConstants.PersonalData</button></li>
         <li class="nav-item"><button class="btn btn-primary my-1 @ManageNavPages.MyScheduleNavClass(ViewContext)" id="my-schedule" asp-page="./MySchedule">@GlobalConstants.TrainingSchedule</button></li>

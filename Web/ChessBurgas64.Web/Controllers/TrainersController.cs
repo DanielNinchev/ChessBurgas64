@@ -4,26 +4,19 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels.Trainers;
     using Ganss.XSS;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     public class TrainersController : Controller
     {
         private readonly IHtmlSanitizer sanitizer;
         private readonly ITrainersService trainersService;
-        private readonly IUsersService usersService;
-        private readonly IWebHostEnvironment environment;
 
         public TrainersController(
             IHtmlSanitizer sanitizer,
-            ITrainersService trainersService,
-            IUsersService usersService,
-            IWebHostEnvironment environment)
+            ITrainersService trainersService)
         {
             this.sanitizer = sanitizer;
             this.trainersService = trainersService;
-            this.usersService = usersService;
-            this.environment = environment;
         }
 
         public IActionResult All(int id = 1)

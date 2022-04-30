@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using ChessBurgas64.Common;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.Extensions.Options;

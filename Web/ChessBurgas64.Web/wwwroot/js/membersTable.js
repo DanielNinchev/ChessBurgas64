@@ -65,7 +65,7 @@
             { "data": "dateOfLastAttendance", "name": "DateOfLastAttendance", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' id='memberViewBtn' onclick=GoToMemberByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' id='memberDeleteBtn' onclick=DeleteData('" + full.id + "'); >Премахване</a>";
+                    return "<a class='btn btn-secondary' id='memberViewBtn' onclick=GoToMemberByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' id='memberDeleteBtn' onclick=DeleteMemberData('" + full.id + "'); >Премахване</a>";
                 },
             },
         ]
@@ -76,15 +76,15 @@ function GoToMemberByIdView(id) {
     window.location.href = 'https://localhost:44319/Users/ByMemberId/' + id;
 }
 
-function DeleteData(id) {
+function DeleteMemberData(id) {
     if (confirm("Наистина ли желаете да изтриете данните за това занятие?")) {
-        Delete(id);
+        DeleteMember(id);
     } else {
         return false;
     }
 }
 
-function Delete(id) {
+function DeleteMember(id) {
     $.ajax({
         type: 'POST',
         url: "/Members/Delete",

@@ -1,4 +1,5 @@
 ﻿@page
+@using AspNetCore.ReCaptcha
 @using ChessBurgas64.Common
 @using ChessBurgas64.Data.Models.Enums
 @model Register
@@ -8,6 +9,8 @@
 
 <h1 class="text-center text-white display-5">@GlobalConstants.RegistrationLabel</h1>
 <hr class="text-white border border-5 border-white" />
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
 <div class="text-white">
     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -41,6 +44,9 @@
                 <div class="form-check form-check-inline m-3">
                     <input class="form-check-input" type="radio" asp-for="Input.Gender" id="inlineRadio1" value="@Gender.Мъжки.ToString()">
                     <label class="form-check-label" asp-for="Input.Gender">@Gender.Мъжки.ToString()</label>
+                </div>
+                <div class="my-1">
+                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-xl-4 mt-5">
@@ -113,6 +119,14 @@
                     @GlobalConstants.ChampionStatusInfo
                 </div>
                 <hr />
+                <div class="my-1">
+                    <span asp-validation-for="Input.ClubStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group offset-4">
+                    <div class="mx-4 my-5">
+                        <recaptcha></recaptcha>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="text-center">
@@ -121,8 +135,8 @@
     </form>
 </div>
 
-
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js?hl=bg" async defer></script>
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
 }

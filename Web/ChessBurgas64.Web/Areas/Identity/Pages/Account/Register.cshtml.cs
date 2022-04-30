@@ -9,6 +9,7 @@
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
+    using AspNetCore.ReCaptcha;
     using AutoMapper;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
@@ -23,6 +24,7 @@
     using Microsoft.Extensions.Logging;
 
     [AllowAnonymous]
+    [ValidateReCaptcha]
     public class Register : PageModel
     {
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -43,10 +45,14 @@
             this.logger = logger;
             this.emailSender = emailSender;
             this.mapper = mapper;
+            this.StatusMessage = null;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -54,53 +60,54 @@
 
         public class InputModel
         {
-            [Required]
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters, MinimumLength = GlobalConstants.NameMinLength)]
             [Display(Name = GlobalConstants.FirstName)]
             public string FirstName { get; set; }
 
-            [Required]
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters, MinimumLength = GlobalConstants.NameMinLength)]
             [Display(Name = GlobalConstants.MiddleName)]
             public string MiddleName { get; set; }
 
-            [Required]
-            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters, MinimumLength = GlobalConstants.NameMinLength)]
             [Display(Name = GlobalConstants.LastName)]
             public string LastName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [EmailAddress]
             [Display(Name = GlobalConstants.Email)]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(GlobalConstants.PasswordMaxLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = GlobalConstants.PasswordMinLength)]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [StringLength(GlobalConstants.PasswordMaxLength, ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters, MinimumLength = GlobalConstants.PasswordMinLength)]
             [DataType(DataType.Password)]
             [Display(Name = GlobalConstants.Password)]
             public string Password { get; set; }
 
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [DataType(DataType.Password)]
             [Display(Name = GlobalConstants.RepeatPass)]
             [Compare("Password", ErrorMessage = ErrorMessages.PasswordsDoNotMatch)]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [Phone]
             [Display(Name = GlobalConstants.PhoneNumber)]
             public string PhoneNumber { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [Display(Name = GlobalConstants.BirthDate)]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
             [DataType(DataType.Date)]
             public DateTime BirthDate { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [Display(Name = GlobalConstants.Gender)]
             public string Gender { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
             [NotMapped]
             [Display(Name = GlobalConstants.ClubStatus)]
             public string ClubStatus { get; set; }
@@ -116,6 +123,7 @@
         {
             returnUrl ??= this.Url.Content("~/");
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (this.ModelState.IsValid)
             {
                 var user = this.mapper.Map<ApplicationUser>(this.Input);
@@ -163,6 +171,7 @@
             }
 
             // If we got this far, something failed, redisplay form
+            this.StatusMessage = ErrorMessages.InvalidCaptcha;
             return this.Page();
         }
     }

@@ -42,6 +42,10 @@
                         : null;
                 }
             },
+            {
+                "targets": 4,
+                "orderable": false,
+            },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
@@ -50,26 +54,26 @@
             { "data": "amount", "name": "Amount", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-secondary border border-white' onclick=GoToEditView('" + full.id + "'); >Промяна</a> <a class='btn btn-danger border border-white' onclick=DeleteData('" + full.id + "'); >Изтриване</a>";
+                    return "<a class='btn btn-secondary border border-white' onclick=GoToPaymentEditView('" + full.id + "'); >Промяна</a> <a class='btn btn-danger border border-white' onclick=DeletePaymentData('" + full.id + "'); >Изтриване</a>";
                 },
             },
         ]
     });
 });
 
-function GoToEditView(id) {
+function GoToPaymentEditView(id) {
     window.location.href = 'https://localhost:44319/Payments/Edit/' + id;
 }
 
-function DeleteData(id) {
+function DeletePaymentData(id) {
     if (confirm("Наистина ли желаете да изтриете данните за това разплащане?")) {
-        Delete(id);
+        DeletePayment(id);
     } else {
         return false;
     }
 }
 
-function Delete(id) {
+function DeletePayment(id) {
     $.ajax({
         type: 'POST',
         url: "/Payments/Delete",

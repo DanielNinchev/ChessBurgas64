@@ -4,6 +4,7 @@ namespace ChessBurgas64.Data.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using ChessBurgas64.Data.Common.Models;
     using Microsoft.AspNetCore.Identity;
 

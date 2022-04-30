@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
 
+    using AspNetCore.ReCaptcha;
     using ChessBurgas64.Common;
     using ChessBurgas64.Web.ViewModels;
     using Microsoft.AspNetCore.Identity.UI.Services;
@@ -47,14 +48,21 @@
         }
 
         [HttpPost]
+        [ValidateReCaptcha(ErrorMessage=ErrorMessages.InvalidCaptcha)]
         public async Task<IActionResult> SendEmail(SendEmailInputModel input)
         {
+            string statusMessage = GlobalConstants.ThankYouForYourMessage;
+
+            if (!this.ModelState.IsValid)
+            {
+                statusMessage = ErrorMessages.InvalidCaptcha;
+                return this.RedirectToAction(nameof(this.Contacts), new { statusMessage, input });
+            }
+
             await this.emailSender.SendEmailAsync(
                         GlobalConstants.AdminEmail,
                         input.Topic,
                         $"{input.Name}, {input.Email}, {input.Phone} {GlobalConstants.SendsTheFollowingMessage} {input.Message}");
-
-            string statusMessage = GlobalConstants.ThankYouForYourMessage;
 
             return this.RedirectToAction(nameof(this.Contacts), new { statusMessage });
         }

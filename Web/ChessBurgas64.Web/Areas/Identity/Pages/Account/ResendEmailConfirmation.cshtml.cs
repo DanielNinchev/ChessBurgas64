@@ -5,6 +5,7 @@
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
+    using AspNetCore.ReCaptcha;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@
     using Microsoft.AspNetCore.WebUtilities;
 
     [AllowAnonymous]
+    [ValidateReCaptcha(ErrorMessage = ErrorMessages.InvalidCaptcha)]
     public class ResendEmailConfirmation : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -31,8 +33,8 @@
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [EmailAddress(ErrorMessage = ErrorMessages.InvalidEmail)]
             public string Email { get; set; }
         }
 

@@ -6,8 +6,12 @@
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="container-fluid">
+    <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.PersonalData</h4>
+    <hr class="border border-5 border-white text-white" />
+
+    <partial name="_StatusMessage" model="Model.StatusMessage" />
+
     <form id="profile-form" method="post" class="text-white">
         <div asp-validation-summary="ModelOnly" class="text-warning"></div>
 

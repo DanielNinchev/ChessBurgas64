@@ -5,6 +5,7 @@
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
+    using AspNetCore.ReCaptcha;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
     using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
 
+    [ValidateReCaptcha(ErrorMessage = ErrorMessages.InvalidCaptcha)]
     public partial class Index : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -44,22 +46,22 @@
 
         public class InputModel
         {
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = ErrorMessages.InvalidEmail)]
             [Display(Name = GlobalConstants.NewEmail)]
             public string NewEmail { get; set; }
 
-            [DataType(DataType.Password)]
+            [DataType(DataType.Password, ErrorMessage = ErrorMessages.InvalidPassword)]
             [Display(Name = GlobalConstants.CurrentPassword)]
             public string OldPassword { get; set; }
 
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(GlobalConstants.PasswordMaxLength, ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters, MinimumLength = GlobalConstants.PasswordMinLength)]
             [DataType(DataType.Password)]
             [Display(Name = GlobalConstants.NewPassword)]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = GlobalConstants.ConfirmNewPassword)]
-            [Compare("NewPassword", ErrorMessage = ErrorMessages.PasswordsDoNotMatch)]
+            [Compare(nameof(NewPassword), ErrorMessage = ErrorMessages.PasswordsDoNotMatch)]
             public string ConfirmPassword { get; set; }
         }
 
@@ -100,7 +102,7 @@
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.ValidateUser(user);
+            await this.ValidateModel(user);
 
             if (this.Input.OldPassword != null && this.Input.NewPassword != null)
             {
@@ -112,26 +114,27 @@
                         this.ModelState.AddModelError(string.Empty, error.Description);
                     }
 
+                    await this.LoadAsync(user);
+
                     return this.Page();
                 }
+
+                await this.userManager.UpdateAsync(user);
+                await this.signInManager.RefreshSignInAsync(user);
+
+                this.StatusMessage = GlobalConstants.ProfileDataUpdatedMsg;
             }
 
-            await this.userManager.UpdateAsync(user);
-            await this.signInManager.RefreshSignInAsync(user);
-
-            this.StatusMessage = GlobalConstants.ProfileDataUpdatedMsg;
+            await this.ChangeEmailAsync(user);
 
             return this.RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostChangeEmailAsync()
+        public async Task<IActionResult> ChangeEmailAsync(ApplicationUser user)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
             var email = await this.userManager.GetEmailAsync(user);
 
-            await this.ValidateUser(user);
-
-            if (this.Input.NewEmail != email)
+            if (this.Input.NewEmail != email && this.Input.NewEmail != null)
             {
                 var userId = await this.userManager.GetUserIdAsync(user);
                 var code = await this.userManager.GenerateChangeEmailTokenAsync(user, this.Input.NewEmail);
@@ -146,11 +149,16 @@
                     GlobalConstants.EmailConfirmationTopic,
                     $"{GlobalConstants.EmailConfirmationMsg} <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>{GlobalConstants.EmailConfirmationTopic}</a>.");
 
-                this.StatusMessage = GlobalConstants.ResendEmailConfirmationInstructions;
-                return this.RedirectToPage();
+                if (this.StatusMessage == GlobalConstants.ProfileDataUpdatedMsg)
+                {
+                    this.StatusMessage = $"{GlobalConstants.ProfileDataUpdatedMsg} {GlobalConstants.ResendEmailConfirmationInstructions}";
+                }
+                else
+                {
+                    this.StatusMessage = GlobalConstants.ResendEmailConfirmationInstructions;
+                }
             }
 
-            this.StatusMessage = GlobalConstants.EmailResetFailed;
             return this.RedirectToPage();
         }
 
@@ -158,7 +166,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.ValidateUser(user);
+            await this.ValidateModel(user);
 
             var userId = await this.userManager.GetUserIdAsync(user);
             var email = await this.userManager.GetEmailAsync(user);
@@ -178,7 +186,7 @@
             return this.RedirectToPage();
         }
 
-        public async Task<IActionResult> ValidateUser(ApplicationUser user)
+        public async Task<IActionResult> ValidateModel(ApplicationUser user)
         {
             if (user == null)
             {
@@ -187,6 +195,7 @@
 
             if (!this.ModelState.IsValid)
             {
+                this.StatusMessage = ErrorMessages.InvalidInputData;
                 await this.LoadAsync(user);
                 return this.Page();
             }
