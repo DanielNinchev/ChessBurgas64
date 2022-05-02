@@ -5,10 +5,7 @@
     this.ViewData["Title"] = GlobalConstants.ContactsNav;
 }
 
-<div class="container page-header backround-header-image-container"></div>
-<div class="title-container border border-3 border-white mb-3">
-    <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
-</div>
+<partial name="_PageHeaderContainerPartial" />
 
 @if (Model.StatusMessage != null)
 {

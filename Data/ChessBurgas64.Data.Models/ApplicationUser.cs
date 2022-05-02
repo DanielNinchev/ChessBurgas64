@@ -35,10 +35,13 @@ namespace ChessBurgas64.Data.Models
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
+        [PersonalData]
         public string FirstName { get; set; }
 
+        [PersonalData]
         public string MiddleName { get; set; }
 
+        [PersonalData]
         public string LastName { get; set; }
 
         [NotMapped]
@@ -49,6 +52,7 @@ namespace ChessBurgas64.Data.Models
 
         public string Description { get; set; }
 
+        [PersonalData]
         public DateTime BirthDate { get; set; }
 
         public string Gender { get; set; }

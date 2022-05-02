@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using ChessBurgas64.Data.Common.Models;
+    using Microsoft.AspNetCore.Identity;
 
     public class Member : BaseDeletableModel<string>
     {
@@ -15,10 +16,13 @@
             this.Puzzles = new HashSet<PuzzleMember>();
         }
 
+        [PersonalData]
         public string Address { get; set; }
 
+        [PersonalData]
         public string School { get; set; }
 
+        [PersonalData]
         public DateTime DateOfJoiningTheClub { get; set; }
 
         public DateTime DateOfLastAttendance { get; set; }
