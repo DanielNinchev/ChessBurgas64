@@ -60,6 +60,11 @@
         margin-right: 0.7rem;
         margin-bottom: .5rem;
     }
+
+    .dropdown-menu > li:hover > .submenu {
+        display: block;
+        right: 100%;
+    }
 }
 
 .pagination > li > a {
@@ -187,7 +192,7 @@ span > img {
 }
 
 .background-theme {
-    background: url(../images/homePage/dark-wooden-wallpaper.jpg);
+    background-image: url(../images/homePage/dark-wooden-wallpaper.jpg);
 }
 
 .fw-medium {
@@ -416,7 +421,7 @@ span > img {
 
 
 /*** Contact ***/
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
     .container.contact {
         max-width: 100% !important;
     }
@@ -436,7 +441,7 @@ span > img {
     .contact-text  {
         padding-left: calc(((100% - 1320px) / 2) + .75rem);
     }
-}
+}*/
 
 
 /*** Footer ***/

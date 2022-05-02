@@ -54,14 +54,14 @@
             return this.View(viewModel);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Create(PuzzleInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -85,7 +85,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -102,7 +102,7 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public IActionResult Edit(int id)
         {
             var inputModel = this.puzzlesService.GetById<PuzzleInputModel>(id);
@@ -110,8 +110,8 @@
             return this.View(inputModel);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Edit(int id, PuzzleInputModel input)
         {
             if (!this.ModelState.IsValid)

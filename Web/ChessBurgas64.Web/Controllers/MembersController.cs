@@ -3,11 +3,14 @@
     using System;
     using System.Threading.Tasks;
 
+    using ChessBurgas64.Common;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels.GroupMembers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
     public class MembersController : Controller
     {
         private readonly IGroupsService groupsService;
@@ -21,7 +24,7 @@
             this.membersService = membersService;
         }
 
-        public IActionResult AddToGroup(string id)
+        public IActionResult AddToGroup()
         {
             return this.View();
         }
@@ -57,29 +60,7 @@
             return this.Redirect("/Groups/ById/" + groupId);
         }
 
-        //public IActionResult Edit(string id)
-        //{
-        //    var inputModel = this.membersService.GetById<PaymentInputModel>(id);
-
-        //    return this.View(inputModel);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(string id, PaymentInputModel input)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return this.View(input);
-        //    }
-
-        //    await this.membersService.UpdateAsync(id, input);
-
-        //    id = input.UserId;
-
-        //    return this.RedirectToAction(nameof(UsersController.ById), "Users", new { id });
-        //}
-
-        public IActionResult MarkMemberAttendanceToLesson(string id)
+        public IActionResult MarkMemberAttendanceToLesson()
         {
             return this.View();
         }

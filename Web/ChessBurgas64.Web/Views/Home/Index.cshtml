@@ -1,7 +1,4 @@
 ﻿@using ChessBurgas64.Common
-@{
-    this.ViewData["Title"] = "Home Page";
-}
 
 <div class="container-fluid">
     <div class="owl-carousel header-carousel position-relative">
@@ -12,11 +9,12 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-lg-8 text-center" style="margin-top: 220px;">
                             <h5 class="text-white fw-bold text-uppercase mb-4 animated slideInDown">@GlobalConstants.Welcome</h5>
-                            <h1 class="display-3 fw-bold text-white animated slideInDown mb-3">@GlobalConstants.ClubName</h1>
+                            <h3 class="display-3 fw-bold text-white animated slideInDown">@GlobalConstants.ChessClub.ToUpper()</h3>
+                            <h1 class="display-3 fw-bold text-white animated slideInDown mb-3">@GlobalConstants.ClubName.ToUpper()</h1>
                             @if (!this.User.Identity.IsAuthenticated)
                             {
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">@GlobalConstants.RegistrationLabel</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">@GlobalConstants.LoginNav</a>
+                                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">@GlobalConstants.RegistrationLabel</a>
+                                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-light py-md-3 px-md-5 animated slideInRight">@GlobalConstants.LoginNav</a>
                             }
                         </div>
                     </div>

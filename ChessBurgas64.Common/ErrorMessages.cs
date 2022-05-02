@@ -15,7 +15,7 @@
         public const string InvalidCaptcha = "Грешка! Моля, потвърдете, че не сте робот!";
         public const string InvalidInputData = "Грешка! Неправилно попълнени данни! Изписвайте новия си email правилно и потвърдете, че не сте робот.";
         public const string InvalidEmail = "Грешка! Невалиден email! Моля, поставете действителен такъв.";
-        public const string InvalidPassword = "Грешка! Невалидна парола!.";
+        public const string InvalidPassword = "Грешка! Невалидна парола!";
         public const string InvalidPhoneNumber = "Грешка! Невалиден телефонен номер! Моля, поставете действителен такъв.";
         public const string InvalidUrl = "Грешка! Невалиден линк! Моля, поставете действителен такъв.";
         public const string ThatFieldIsRequired = "Това поле е задължително!";

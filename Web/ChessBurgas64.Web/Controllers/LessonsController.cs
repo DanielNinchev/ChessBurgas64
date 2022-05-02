@@ -12,7 +12,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
     public class LessonsController : Controller
     {
         private readonly ILessonsService lessonsService;
@@ -133,7 +133,7 @@
                 var length = this.Request.Form["length"].FirstOrDefault(); // number of displayable records;
                 var sortColumn = this.Request.Form["columns[" + this.Request.Form["order[0][column]"]
                     .FirstOrDefault() + "][name]"]
-                    .FirstOrDefault(); // 
+                    .FirstOrDefault();
                 var sortColumnDirection = this.Request.Form["order[0][dir]"].FirstOrDefault();
                 var searchValue = this.Request.Form["search[value]"].FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;

@@ -8,6 +8,7 @@
     using ChessBurgas64.Web.ViewModels;
     using ChessBurgas64.Web.ViewModels.Categories;
     using ChessBurgas64.Web.ViewModels.Videos;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class VideosController : Controller
@@ -48,12 +49,14 @@
             return this.View(video);
         }
 
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Create(VideoInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -75,12 +78,14 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Delete(int id)
         {
             await this.videosService.DeleteAsync(id);
             return this.RedirectToAction(nameof(this.All));
         }
 
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public IActionResult Edit(int id)
         {
             var inputModel = this.videosService.GetById<VideoInputModel>(id);
@@ -89,6 +94,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Edit(int id, VideoInputModel input)
         {
             if (!this.ModelState.IsValid)

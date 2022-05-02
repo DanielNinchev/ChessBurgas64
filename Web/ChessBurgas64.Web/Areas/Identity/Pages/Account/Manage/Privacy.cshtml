@@ -16,43 +16,85 @@
         <div class="card">
             <div class="card-header background-dragon-red border border-1 border-white" id="headingOne">
                 <h5 class="mb-0 text-center">
-                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        @GlobalConstants.BirthDate
+                    <button class="btn btn-link collapsed btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        @GlobalConstants.Address
                     </button>
                 </h5>
             </div>
-
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
-                    @GlobalConstants.BirthDateDataUsageInfo
+                   @GlobalConstants.AddressDataUsageInfo
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header background-dragon-red border border-1 border-white" id="headingTwo">
                 <h5 class="mb-0 text-center">
-                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        @GlobalConstants.School
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        @GlobalConstants.BirthDate
                     </button>
                 </h5>
             </div>
+
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                 <div class="card-body">
-                    @GlobalConstants.SchoolDataUsageInfo
+                    @GlobalConstants.BirthDateDataUsageInfo
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-header background-dragon-red border border-1 border-white" id="headingThree">
                 <h5 class="mb-0 text-center">
-                    <button class="btn btn-link collapsed btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        @GlobalConstants.Address
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        @GlobalConstants.DateOfJoiningTheClub
                     </button>
                 </h5>
             </div>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                 <div class="card-body">
-                   @GlobalConstants.AddressDataUsageInfo
+                    @GlobalConstants.DateOfJoiningTheClubInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingFour">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        @GlobalConstants.Email
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.EmailDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingFive">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        @GlobalConstants.PhoneNumber
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.PhoneDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingSix">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        @GlobalConstants.School
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.SchoolDataUsageInfo
                 </div>
             </div>
         </div>
@@ -61,19 +103,11 @@
 
 <div class="row text-center">
     <div class="col-md-12 text-white">
-        <p class="my-3"><strong>@GlobalConstants.PersonalDataDeleteWarning</strong></p>
-        <ul>
-            <li>
-                <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-                    <button class="btn btn-primary mb-2" type="submit">@GlobalConstants.DownloadPersonalData</button>
-                </form>
-            </li>
-            <li>
-                <p>
-                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warning">@GlobalConstants.DeleteAccount</a>
-                </p>
-            </li>
-        </ul>
+        <hr />
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group mt-2">
+             <button class="btn btn-secondary" type="submit">@GlobalConstants.DownloadPersonalData</button>
+             <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@GlobalConstants.DeleteAccount</a>
+        </form>
     </div>
 </div>
 

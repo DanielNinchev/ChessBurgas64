@@ -7,36 +7,61 @@
 <ul class="navbar-nav">
    @if (this.SignInManager.IsSignedIn(this.User))
     {
-        <li class="nav-item">
-            <a class="nav-link btn btn-primary text-white mx-1" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@GlobalConstants.WelcomeMsg @this.User.Identity.Name!</a>
-        </li>
-        if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-        {
-            <li class="nav-item dropdown">
-                <button class="btn btn-primary nav-link dropdown-toggle text-white" id="nav-dropdown" type="button" title="Admin" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.AdminTools</button>
-                <ul class="dropdown-menu background-dragon-red">
+        <li class="nav-item dropdown">
+            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                <a class="btn btn-primary nav-link dropdown-toggle text-white" id="nav-dropdown" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.AdministratorRoleName</a>
+                <ul class="dropdown-menu background-dragon-red border text-center">
                     <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Users" asp-action="ShowUsers">@GlobalConstants.MembersNav</a></li>
                     <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Groups" asp-action="ShowGroups">@GlobalConstants.GroupsNav</a></li>
                     <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Lessons" asp-action="ShowLessons">@GlobalConstants.ConductedLessons</a></li>
                     <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="All">@GlobalConstants.PuzzlesNav</a></li>
                     <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Videos" asp-action="All">@GlobalConstants.VideosNav</a></li>
-
                     <li class="dropstart text-white">
                         <a class="btn btn-primary dropdown-item dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.Publish</a>
-
-                        <ul class="submenu dropdown-menu background-dragon-red">
+                        <ul id="publishSubmenu" class="submenu dropdown-menu background-dragon-red border text-center">
                             <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Announcements" asp-action="Create">@GlobalConstants.CreateAnnouncementNav</a></li>
-                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
                             <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Videos" asp-action="Create">@GlobalConstants.CreateVideoLessonNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
                         </ul>
                     </li>
                 </ul>
-            </li>
-        }
+            }
+            else if (this.User.IsInRole(GlobalConstants.TrainerRoleName))
+            {
+                <button class="btn btn-primary nav-link dropdown-toggle text-white" id="nav-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.TrainerRoleName</button>
+                <ul class="dropdown-menu background-dragon-red">
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Users" asp-action="ShowUsers">@GlobalConstants.MembersNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Groups" asp-action="ShowGroups">@GlobalConstants.GroupsNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Lessons" asp-action="ShowLessons">@GlobalConstants.ConductedLessons</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Videos" asp-action="All">@GlobalConstants.VideosNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="All">@GlobalConstants.PuzzlesNav</a></li>
+                    <li class="dropstart text-white">
+                        <a class="btn btn-primary dropdown-item dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.Publish</a>
+                        <ul class="submenu dropdown-menu background-dragon-red">
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Videos" asp-action="Create">@GlobalConstants.CreateVideoLessonNav</a></li>
+                            <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="Create">@GlobalConstants.CreatePuzzleNav</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            }
+            else
+            {
+                <button class="btn btn-primary nav-link dropdown-toggle text-white" id="nav-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">@GlobalConstants.MemberRoleName</button>               
+                <ul class="dropdown-menu background-dragon-red">
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Videos" asp-action="All">@GlobalConstants.VideosNav</a></li>
+                    <li><a class="btn btn-primary dropdown-item text-white" asp-area="" asp-controller="Puzzles" asp-action="All">@GlobalConstants.PuzzlesNav</a></li>
+                </ul>
+            }
+        </li>
 
         <li class="nav-item">
+            <a class="nav-link btn btn-primary text-white mx-1" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@GlobalConstants.Profile</a>
+        </li>
+
+        <li class="nav-item text-center justify-content-center">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
-                <button type="submit" class="nav-link btn btn-primary text-white mx-1">@GlobalConstants.Exit</button>
+                <a role="button" id="exitBtn" class="nav-link btn btn-primary text-white" onclick="this.parentNode.submit()">@GlobalConstants.Exit</a>
             </form>
         </li>
     }

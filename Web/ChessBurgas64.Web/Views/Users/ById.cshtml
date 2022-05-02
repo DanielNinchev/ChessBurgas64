@@ -14,9 +14,9 @@
     <h3 class="display-6 text-white text-center">@this.ViewData["Title"]</h3>
 </div>
 
-<div class="row container-fluid">
+<div class="row container-fluid justify-content-center">
     <!-- Personal and FIDE data info start -->
-    <div class="col-md-8 offset-2 text-center">
+    <div class="col-md-8 text-center">
         <h4 class="display-6 text-white text-center">@GlobalConstants.PersonalData</h4>
         <hr class="border border-5 border-white text-white" />
 
@@ -51,7 +51,7 @@
     </div>
     <!-- Personal and FIDE data info end -->
     <!-- Club data info start -->
-    <div class="col-md-8 my-5 offset-2 text-center">
+    <div class="col-md-8 my-5 text-center">
         <h4 class="display-6 text-white text-center">@GlobalConstants.ClubData</h4>
         <hr class="border border-5 border-white text-white" />
 
@@ -92,7 +92,7 @@
             }
 
             <div class="container-fluid text-center my-3">
-                @if (Model.Member == null)
+                @if (Model.ClubStatus == ClubStatus.Треньор.ToString())
                 {
                     <a class="btn btn-primary" asp-action="EditTrainerInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
                 }

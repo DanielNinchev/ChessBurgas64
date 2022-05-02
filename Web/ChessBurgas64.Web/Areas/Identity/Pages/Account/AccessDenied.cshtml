@@ -1,10 +1,14 @@
 ﻿@page
+@using ChessBurgas64.Common
 @model AccessDenied
 @{
-    ViewData["Title"] = "Access denied";
+    ViewData["Title"] = GlobalConstants.AccessDenied;
 }
 
 <header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
+    <div class="text-center my-3">
+        <h1 class="display-4 text-white fw-bold">@ViewData["Title"]</h1>
+        <hr class="text-white"/>
+        <h4 class="text-white">@GlobalConstants.YouDoNotHavePermissionForThisResource</h4>
+    </div>
 </header>

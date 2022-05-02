@@ -221,7 +221,8 @@
 
         // ============= SYSTEM AND ADMINISTRATION ====================================================================
         public const string AdminEmail = "daniel.ninchev@gmail.com";
-        public const string ClubName = "Шахматен клуб \"Бургас 64\"";
+        public const string ChessClub = "Шахматен клуб";
+        public const string ClubName = "\"Бургас 64\"";
         public const string SystemName = "ШК \"Бургас 64\"";
         public const string Welcome = "Добре дошли!";
 
@@ -308,13 +309,15 @@
         // Personal data view
         public const string AddressDataUsageInfo = "Адресът Ви ни е нужен, за да знаем местоживеенето Ви, като по този начин ще имаме по-добра организация при пътувания за извънградски турнири.";
         public const string BirthDateDataUsageInfo = "Датите на раждане са ни необходими, за да можем да разпределяме учениците по възрастови групи при тренировки, както и за записване в състезания, в които възрастовата група е от значение.";
+        public const string DateOfJoiningTheClubInfo = "Датата на записване в клуба ни дава възможност да проследяваме напредъка на учениците.";
+        public const string EmailDataUsageInfo = "Чрез електронната Ви поща можем да комуникираме и да Ви изпращаме информация, свързана с турнири, задачи, обяви и други клубни дейности. Тя е задължителна за управлението на Вашия потребителски профил. Ние не предоставяме Вашия email на трети лица.";
         public const string ForWhatDoWeUseYourData = "За какво използваме Вашите данни?";
         public const string PersonalDataDeleteWarning = "Изтриването на данните Ви е необратимо - те никога няма да могат да бъдат възстановени!";
         public const string PersonalDataPolicyInfo = "Профилът Ви съдържа лични данни, които Вие сте ни предоставили. От текущата страница можете да ги изтеглите, както и да ги изтриете безвъзвратно. Всичката Ваша информация, която сте ни поверили, се използва единствено за определените цели, описани по-долу.";
         public const string PersonalDataPolicyTitle = "Политика за поверителност на личните Ви данни";
+        public const string PhoneDataUsageInfo = "Телефонът Ви е задължителен за регистрацията, тъй като за нас е изключително важно да имаме контакт с родител на всяко дете, посещаващо занятия, както и с всеки член на клуба. Не предоставяме телефона Ви на трети лица.";
         public const string SchoolDataUsageInfo = "Информацията за училището, в което съответният ученик школува, ни дава възможност да разпределяме отбори за ученически първенства, както и да издаваме извинителни бележки за отсъствие от учебни часове при участия в състезания.";
 
-        // Profile navigation
         public const string Authentication = "Разпознаване";
         public const string ClubStatus = "Клубен статут";
         public const string PaymentsMade = "Направени плащания";

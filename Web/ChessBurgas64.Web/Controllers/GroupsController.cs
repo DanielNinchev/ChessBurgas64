@@ -13,7 +13,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
     public class GroupsController : Controller
     {
         private readonly IGroupsService groupsService;
@@ -40,14 +40,12 @@
             return this.View(viewModel);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Create(GroupInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -75,7 +73,6 @@
             return this.Redirect("/Groups");
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Edit(string id)
         {
             var viewModel = this.groupsService.GetById<GroupInputModel>(id);
@@ -83,7 +80,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(string id, GroupInputModel input)
         {
             await this.groupsService.UpdateAsync(id, input);

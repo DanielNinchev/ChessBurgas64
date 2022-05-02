@@ -1,7 +1,6 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
@@ -113,8 +112,8 @@
             return this.View(inputModel);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id, AnnouncementInputModel input)
         {
             if (!this.ModelState.IsValid)

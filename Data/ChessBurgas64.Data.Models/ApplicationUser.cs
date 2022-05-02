@@ -49,10 +49,6 @@ namespace ChessBurgas64.Data.Models
 
         public string Description { get; set; }
 
-        public string ImageId { get; set; }
-
-        public virtual Image Image { get; set; }
-
         public DateTime BirthDate { get; set; }
 
         public string Gender { get; set; }

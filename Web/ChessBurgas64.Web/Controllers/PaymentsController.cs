@@ -21,7 +21,7 @@
             this.paymentsService = paymentsService;
         }
 
-        public IActionResult Create(string id)
+        public IActionResult Create()
         {
             return this.View();
         }

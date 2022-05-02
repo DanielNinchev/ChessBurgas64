@@ -15,38 +15,44 @@
     <link rel="shortcut icon" href="~/burgas64.ico" />
 </head>
 <body class="container-fluid background-theme">
-    <header>
-        <nav class="navbar navbar-expand-sm border-bottom border-3 mb-3">
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mr-1" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.ManagementNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Home" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
-                        </li>
-                    </ul>
+    <div class="wrapper" id="wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg border-bottom border-3 mb-3">
+                <div class="container-fluid">
+                    <button class="navbar-toggler border" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars text-white"></i>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mr-1" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.HomeNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Announcements" asp-action="All">@GlobalConstants.AnnouncementsNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Trainers" asp-action="All">@GlobalConstants.ManagementNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Competitors" asp-action="Competitors">@GlobalConstants.CompetitorsNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Home" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
+    </div>
 
     <div class="container">
         <partial name="_CookieConsentPartial" />
@@ -57,7 +63,7 @@
 
     <footer class="footer text-white border-top border-3 border-white">
         <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.ClubName
+            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName
         </div>
     </footer>
 

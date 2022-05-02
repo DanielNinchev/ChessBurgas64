@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
     public class UsersController : Controller
     {
         private readonly IImagesService imagesService;
@@ -44,7 +45,6 @@
             this.environment = environment;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult ById(string id)
         {
             this.HttpContext.Session.SetString("userId", id);
@@ -52,7 +52,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult ByMemberId(string id)
         {
             var member = this.membersService.GetMemberById(id);
@@ -75,7 +74,6 @@
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult EditMemberInfo(string id)
         {
             var viewModel = this.membersService.GetByUserId<MemberInputModel>(id);
@@ -83,7 +81,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> EditMemberInfo(string id, MemberInputModel input)
         {
             await this.membersService.UpdateAsync(id, input);
