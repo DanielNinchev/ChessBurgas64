@@ -4,6 +4,7 @@ using ChessBurgas64.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChessBurgas64.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220503203727_AddClubPlayerIdToImage")]
+    partial class AddClubPlayerIdToImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,9 +287,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<string>("FideTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -430,9 +429,7 @@ namespace ChessBurgas64.Data.Migrations
 
                     b.HasIndex("AnnouncementId");
 
-                    b.HasIndex("ClubPlayerId")
-                        .IsUnique()
-                        .HasFilter("[ClubPlayerId] IS NOT NULL");
+                    b.HasIndex("ClubPlayerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -1014,8 +1011,8 @@ namespace ChessBurgas64.Data.Migrations
                         .HasForeignKey("AnnouncementId");
 
                     b.HasOne("ChessBurgas64.Data.Models.ClubPlayer", "ClubPlayer")
-                        .WithOne("Image")
-                        .HasForeignKey("ChessBurgas64.Data.Models.Image", "ClubPlayerId");
+                        .WithMany("Images")
+                        .HasForeignKey("ClubPlayerId");
 
                     b.HasOne("ChessBurgas64.Data.Models.Puzzle", "Puzzle")
                         .WithOne("Image")
@@ -1194,7 +1191,7 @@ namespace ChessBurgas64.Data.Migrations
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.ClubPlayer", b =>
                 {
-                    b.Navigation("Image");
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Group", b =>

@@ -4,6 +4,7 @@ using ChessBurgas64.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChessBurgas64.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220502213614_AddClubPlayers")]
+    partial class AddClubPlayers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,45 +267,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ChessBurgas64.Data.Models.ClubPlayer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FideTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("ClubPlayers");
-                });
-
             modelBuilder.Entity("ChessBurgas64.Data.Models.Group", b =>
                 {
                     b.Property<string>("Id")
@@ -393,9 +356,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Property<int?>("AnnouncementId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ClubPlayerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -429,10 +389,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnnouncementId");
-
-                    b.HasIndex("ClubPlayerId")
-                        .IsUnique()
-                        .HasFilter("[ClubPlayerId] IS NOT NULL");
 
                     b.HasIndex("IsDeleted");
 
@@ -1013,10 +969,6 @@ namespace ChessBurgas64.Data.Migrations
                         .WithMany("Images")
                         .HasForeignKey("AnnouncementId");
 
-                    b.HasOne("ChessBurgas64.Data.Models.ClubPlayer", "ClubPlayer")
-                        .WithOne("Image")
-                        .HasForeignKey("ChessBurgas64.Data.Models.Image", "ClubPlayerId");
-
                     b.HasOne("ChessBurgas64.Data.Models.Puzzle", "Puzzle")
                         .WithOne("Image")
                         .HasForeignKey("ChessBurgas64.Data.Models.Image", "PuzzleId");
@@ -1026,8 +978,6 @@ namespace ChessBurgas64.Data.Migrations
                         .HasForeignKey("ChessBurgas64.Data.Models.Image", "TrainerId");
 
                     b.Navigation("Announcement");
-
-                    b.Navigation("ClubPlayer");
 
                     b.Navigation("Puzzle");
 
@@ -1190,11 +1140,6 @@ namespace ChessBurgas64.Data.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("ChessBurgas64.Data.Models.ClubPlayer", b =>
-                {
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("ChessBurgas64.Data.Models.Group", b =>

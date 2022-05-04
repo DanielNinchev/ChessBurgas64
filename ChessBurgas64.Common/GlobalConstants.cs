@@ -11,6 +11,7 @@
         public const int AnnouncementTextRowCount = 30;
         public const int AnnouncementTitleMaxLength = 90;
         public const int AnnouncementTitleMinLength = 4;
+        public const int AnnouncementsInRow = 3;
         public const int AnnouncementsPerPage = 12;
         public const string Author = "Автор";
         public const string ChooseCategory = "*изберете категория";
@@ -22,6 +23,17 @@
         public const string AnnouncementsCategory = "Обяви";
         public const string NewsCategory = "Новини";
         public const string ArticlesCategory = "Статии";
+
+        // ClubPlayers
+        public const string AddClubPlayer = "Добавяне на състезател";
+        public const string ClubPlayers = "Наши настоящи и бивши състезатели";
+        public const string EditClubPlayer = "Промяна на данните за състезател";
+        public const string NameAndSurname = "Име и фамилия";
+        public const int ClubPlayersDescriptionMaxLength = 2000;
+        public const int ClubPlayersDescriptionMinLength = 1000;
+        public const int ClubPlayersNameMaxLength = 100;
+        public const int ClubPlayersNameMinLength = 2;
+        public const int ClubPlayersPerPage = 10;
 
         // Enums
         public const string Male = "Мъжки";
@@ -199,7 +211,7 @@
         // Navigation
         public const string AdminTools = "Администратор";
         public const string AnnouncementsNav = "Новини";
-        public const string CompetitorsNav = "Състезатели";
+        public const string ClubPlayersNav = "Състезатели";
         public const string ContactsNav = "Контакти";
         public const string CreateAnnouncementNav = "Новина";
         public const string CreatePuzzleNav = "Шахматна задача";
@@ -210,7 +222,7 @@
         public const string HistoryNav = "История";
         public const string HomeNav = "Начало";
         public const string LoginNav = "Вход";
-        public const string MembersNav = "Членове на клуба";
+        public const string RegisteredUsers = "Регистрирани потребители";
         public const string ProfileNav = "Профил";
         public const string Publish = "Публикувай";
         public const string PuzzlesNav = "Шахматни задачи";
@@ -228,6 +240,7 @@
 
         // File paths
         public const string AnnouncementImagesPath = "/images/announcements/";
+        public const string ClubPlayerImagesPath = "/images/clubPlayers/";
         public const string PuzzleImagesPath = "/images/puzzles/";
         public const string TrainerImagesPath = "/images/trainers/";
 

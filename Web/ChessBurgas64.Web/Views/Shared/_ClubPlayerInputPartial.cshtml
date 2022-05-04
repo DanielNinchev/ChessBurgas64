@@ -1,0 +1,27 @@
+﻿@model ChessBurgas64.Web.ViewModels.ClubPlayers.ClubPlayerInputModel
+@using ChessBurgas64.Common
+@using ChessBurgas64.Data.Models.Enums
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="Name">@GlobalConstants.NameAndSurname*</label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group my-3">
+        <label class="text-white" asp-for="FideTitle">@GlobalConstants.FideTitle: </label>
+        <select asp-for="FideTitle" asp-items="Html.GetEnumSelectList<FideTitle>()">
+            <option selected="selected" hidden value="">@GlobalConstants.FideTitleChoice</option>
+        </select>
+        <span asp-validation-for="FideTitle" class="text-danger"></span>
+    </div>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="ProfileImage">@GlobalConstants.AddProfilePicture*</label>
+    <input asp-for="ProfileImage" class="form-control" />
+    <span asp-validation-for="ProfileImage" class="text-danger"></span>
+</div>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="Description">@GlobalConstants.Description*</label>
+    <textarea id="editor" asp-for="Description" class="form-control"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>

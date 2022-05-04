@@ -28,6 +28,8 @@
 
         public DbSet<AnnouncementCategory> AnnouncementCategories { get; set; }
 
+        public DbSet<ClubPlayer> ClubPlayers { get; set; }
+
         public DbSet<GroupMember> GroupMembers { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -79,6 +81,11 @@
             base.OnModelCreating(builder);
 
             this.ConfigureUserIdentityRelations(builder);
+
+            builder.Entity<ClubPlayer>()
+                .HasOne(m => m.Image)
+                .WithOne(i => i.ClubPlayer)
+                .HasForeignKey<Image>(i => i.ClubPlayerId);
 
             builder.Entity<Member>()
                 .HasOne(m => m.User)

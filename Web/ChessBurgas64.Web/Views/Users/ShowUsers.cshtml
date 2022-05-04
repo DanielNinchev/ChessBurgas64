@@ -1,9 +1,12 @@
 ﻿@using ChessBurgas64.Common
 @{
-    this.ViewData["Title"] = "Home Page";
+    this.ViewData["Title"] = GlobalConstants.RegisteredUsers;
 }
 
 <link href="~/lib/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+<h4 class="display-5 text-white text-center">@this.ViewData["Title"]</h4>
+<hr class="border border-5 border-white text-white" />
 
 <div class="container-fluid">
     <br />

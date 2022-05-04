@@ -13,16 +13,16 @@
 
     public class ImagesService : IImagesService
     {
-        private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
+        private readonly IDeletableEntityRepository<ClubPlayer> clubPlayersRepository;
         private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
 
         public ImagesService(
-            IDeletableEntityRepository<Announcement> announcementsRepository,
+            IDeletableEntityRepository<ClubPlayer> clubPlayersRepository,
             IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<Puzzle> puzzlesRepository)
         {
-            this.announcementsRepository = announcementsRepository;
+            this.clubPlayersRepository = clubPlayersRepository;
             this.imagesRepository = imagesRepository;
             this.puzzlesRepository = puzzlesRepository;
         }
@@ -75,6 +75,31 @@
             var newImage = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.AnnouncementImagesPath);
 
             return newImage;
+        }
+
+        public async Task<Image> InitializeClubPlayerImage(IFormFile image, ClubPlayer clubPlayer, string webRootImagePath)
+        {
+            var extension = this.GetImageExtension(image);
+            var dbImage = new Image
+            {
+                ClubPlayerId = clubPlayer.Id,
+                ClubPlayer = clubPlayer,
+                Extension = extension,
+            };
+
+            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.ClubPlayerId == clubPlayer.Id);
+
+            if (oldImage != null)
+            {
+                this.imagesRepository.HardDelete(oldImage);
+            }
+
+            clubPlayer.Image = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.ClubPlayerImagesPath);
+            clubPlayer.ImageId = dbImage.Id;
+
+            await this.clubPlayersRepository.SaveChangesAsync();
+
+            return clubPlayer.Image;
         }
 
         public async Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath)

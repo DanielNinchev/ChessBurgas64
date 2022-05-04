@@ -20,20 +20,17 @@
         private readonly IImagesService imagesService;
         private readonly IPuzzlesService puzzlesService;
         private readonly IWebHostEnvironment environment;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public PuzzlesController(
             ICategoriesService categoriesService,
             IImagesService imagesService,
             IPuzzlesService puzzlesService,
-            IWebHostEnvironment environment,
-            UserManager<ApplicationUser> userManager)
+            IWebHostEnvironment environment)
         {
             this.categoriesService = categoriesService;
             this.imagesService = imagesService;
             this.puzzlesService = puzzlesService;
             this.environment = environment;
-            this.userManager = userManager;
         }
 
         public IActionResult All(int id = 1)

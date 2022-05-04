@@ -27,6 +27,10 @@
 
         public virtual Announcement Announcement { get; set; }
 
+        public int? ClubPlayerId { get; set; }
+
+        public virtual ClubPlayer ClubPlayer { get; set; }
+
         public int? PuzzleId { get; set; }
 
         public virtual Puzzle Puzzle { get; set; }

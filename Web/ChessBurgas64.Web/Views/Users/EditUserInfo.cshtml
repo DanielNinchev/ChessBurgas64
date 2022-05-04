@@ -21,7 +21,7 @@
         <div class="form-group mb-5">
             <label class="text-white" asp-for="FideTitle">@GlobalConstants.FideTitle: </label>
             <select asp-for="FideTitle" asp-items="Html.GetEnumSelectList<FideTitle>()">
-                <option selected="selected" value="">@GlobalConstants.FideTitleChoice</option>
+                <option selected="selected" hidden value="">@GlobalConstants.FideTitleChoice</option>
             </select>
             <span asp-validation-for="FideTitle" class="text-danger"></span>
         </div>

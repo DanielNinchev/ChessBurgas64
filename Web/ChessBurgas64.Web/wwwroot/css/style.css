@@ -155,6 +155,12 @@
     margin-inline: auto;
 }
 
+.image-clubPlayer {
+    height: 350px;
+    width: fit-content;
+    margin-inline: auto;
+}
+
 .image-trainer-card {
     height: 350px;
     width: fit-content;
