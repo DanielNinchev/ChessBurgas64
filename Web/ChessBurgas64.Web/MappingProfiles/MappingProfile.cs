@@ -4,7 +4,7 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.Areas.Identity.Pages.Account;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using ChessBurgas64.Web.ViewModels.ClubPlayers;
+    using ChessBurgas64.Web.ViewModels.NotableMembers;
     using ChessBurgas64.Web.ViewModels.Groups;
     using ChessBurgas64.Web.ViewModels.Lessons;
     using ChessBurgas64.Web.ViewModels.Members;
@@ -19,7 +19,7 @@
         public MappingProfile()
         {
             this.CreateMap<Announcement, AnnouncementInputModel>().ReverseMap();
-            this.CreateMap<ClubPlayer, ClubPlayerInputModel>().ReverseMap();
+            this.CreateMap<NotableMember, NotableMemberInputModel>().ReverseMap();
             this.CreateMap<Group, GroupInputModel>().ReverseMap();
             this.CreateMap<Lesson, LessonInputModel>().ReverseMap();
             this.CreateMap<Member, MemberInputModel>().ReverseMap();

@@ -14,7 +14,7 @@
         <div class="form-group mb-5">
             <label class="text-white" asp-for="ClubStatus">@GlobalConstants.ClubStatus: </label>
             <select asp-for="ClubStatus" asp-items="Html.GetEnumSelectList<ClubStatus>()">
-                <option selected="selected" value="">@GlobalConstants.ClubStatusChoice</option>
+                <option selected="selected" hidden value="">@GlobalConstants.ClubStatusChoice</option>
             </select>
             <span asp-validation-for="ClubStatus" class="text-danger"></span>
         </div>

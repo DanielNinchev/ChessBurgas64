@@ -77,7 +77,7 @@ function GoToMemberByIdView(id) {
 }
 
 function DeleteMemberData(id) {
-    if (confirm("Наистина ли желаете да изтриете данните за това занятие?")) {
+    if (confirm("Наистина ли желаете да премахнете този член от групата?")) {
         DeleteMember(id);
     } else {
         return false;

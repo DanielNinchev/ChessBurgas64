@@ -1,7 +1,8 @@
-﻿namespace ChessBurgas64.Web.ViewModels.ClubPlayers
+﻿namespace ChessBurgas64.Web.ViewModels.NotableMembers
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using AutoMapper;
     using ChessBurgas64.Common;
     using ChessBurgas64.Data.Models;
@@ -9,23 +10,26 @@
     using ChessBurgas64.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public class ClubPlayerInputModel : IMapFrom<ClubPlayer>, IHaveCustomMappings
+    public class NotableMemberInputModel : IMapFrom<NotableMember>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [StringLength(
-            GlobalConstants.ClubPlayersNameMaxLength,
+            GlobalConstants.NotableMembersNameMaxLength,
             ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters,
-            MinimumLength = GlobalConstants.ClubPlayersNameMinLength)]
+            MinimumLength = GlobalConstants.NotableMembersNameMinLength)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
-        [StringLength(
-            GlobalConstants.ClubPlayersDescriptionMaxLength,
-            ErrorMessage = ErrorMessages.ThatFieldRequiresNumberOfCharacters,
-            MinimumLength = GlobalConstants.ClubPlayersDescriptionMinLength)]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        public bool IsPartOfGovernance { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        [Range(1, int.MaxValue, ErrorMessage = ErrorMessages.ThatNumberMustBeGreaterThanOne)]
+        public int ListIndex { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public FideTitle FideTitle { get; set; }
@@ -35,11 +39,11 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            var clubPlayerFideTitleType = typeof(FideTitle);
+            var notableMemberFideTitleType = typeof(FideTitle);
 
-            configuration.CreateMap<ClubPlayer, ClubPlayerInputModel>()
+            configuration.CreateMap<NotableMember, NotableMemberInputModel>()
                 .ForMember(x => x.FideTitle, opt => opt
-                .MapFrom(cp => (FideTitle)Enum.Parse(clubPlayerFideTitleType, cp.FideTitle)));
+                .MapFrom(nm => (FideTitle)Enum.Parse(notableMemberFideTitleType, nm.FideTitle)));
         }
     }
 }

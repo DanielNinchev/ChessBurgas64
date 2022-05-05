@@ -28,8 +28,6 @@
 
         public DbSet<AnnouncementCategory> AnnouncementCategories { get; set; }
 
-        public DbSet<ClubPlayer> ClubPlayers { get; set; }
-
         public DbSet<GroupMember> GroupMembers { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -37,6 +35,8 @@
         public DbSet<Image> Images { get; set; }
 
         public DbSet<Member> Members { get; set; }
+
+        public DbSet<NotableMember> NotableMembers { get; set; }
 
         public DbSet<Lesson> Lessons { get; set; }
 
@@ -82,10 +82,10 @@
 
             this.ConfigureUserIdentityRelations(builder);
 
-            builder.Entity<ClubPlayer>()
+            builder.Entity<NotableMember>()
                 .HasOne(m => m.Image)
-                .WithOne(i => i.ClubPlayer)
-                .HasForeignKey<Image>(i => i.ClubPlayerId);
+                .WithOne(i => i.NotableMember)
+                .HasForeignKey<Image>(i => i.NotableMemberId);
 
             builder.Entity<Member>()
                 .HasOne(m => m.User)
@@ -101,11 +101,6 @@
                 .HasOne(m => m.User)
                 .WithOne(u => u.Trainer)
                 .HasForeignKey<ApplicationUser>(i => i.TrainerId);
-
-            builder.Entity<Trainer>()
-                .HasOne(m => m.Image)
-                .WithOne(u => u.Trainer)
-                .HasForeignKey<Image>(i => i.TrainerId);
 
             EntityIndexesConfiguration.Configure(builder);
 

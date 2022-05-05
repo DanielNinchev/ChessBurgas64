@@ -6,6 +6,7 @@
 
     using ChessBurgas64.Common;
     using ChessBurgas64.Services.Data.Contracts;
+    using ChessBurgas64.Web.ViewModels.Groups;
     using ChessBurgas64.Web.ViewModels.Lessons;
     using ChessBurgas64.Web.ViewModels.Members;
     using ChessBurgas64.Web.ViewModels.Payments;
@@ -20,6 +21,7 @@
     public class UsersController : Controller
     {
         private readonly IImagesService imagesService;
+        private readonly IGroupsService groupsService;
         private readonly ILessonsService lessonsService;
         private readonly IMembersService membersService;
         private readonly IPaymentsService paymentsService;
@@ -29,6 +31,7 @@
 
         public UsersController(
             IImagesService imagesService,
+            IGroupsService groupsService,
             ILessonsService lessonsService,
             IMembersService membersService,
             IPaymentsService paymentsService,
@@ -37,6 +40,7 @@
             IWebHostEnvironment environment)
         {
             this.imagesService = imagesService;
+            this.groupsService = groupsService;
             this.lessonsService = lessonsService;
             this.membersService = membersService;
             this.paymentsService = paymentsService;
@@ -87,25 +91,6 @@
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public IActionResult EditTrainerInfo(string id)
-        {
-            var viewModel = this.trainersService.GetById<TrainerInputModel>(id);
-            return this.View(viewModel);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> EditTrainerInfo(string id, TrainerInputModel input)
-        {
-            var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.TrainerImagesPath}";
-            var trainer = await this.trainersService.UpdateAsync(id, input, webRootImagePath);
-
-            await this.imagesService.InitializeTrainerImage(input.ProfilePicture, trainer, webRootImagePath);
-
-            return this.RedirectToAction(nameof(this.ById), new { id });
-        }
-
         [HttpPost]
         public IActionResult GetUsers()
         {
@@ -152,11 +137,11 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var paymentData = this.paymentsService.GetTableData<PaymentViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
+                var groupData = this.groupsService.GetUserGroupsTableData<GroupTableViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
 
-                recordsTotal = paymentData.Count();
+                recordsTotal = groupData.Count();
 
-                var data = paymentData.Skip(skip).Take(pageSize).ToList();
+                var data = groupData.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
 
                 return this.Ok(jsonData);

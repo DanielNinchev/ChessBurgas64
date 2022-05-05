@@ -1,6 +1,5 @@
 ﻿namespace ChessBurgas64.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Dynamic.Core;
@@ -8,6 +7,7 @@
 
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
+    using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Users;
@@ -15,7 +15,6 @@
     public class UsersService : IUsersService
     {
         private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
-        private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Group> groupsRepository;
         private readonly IDeletableEntityRepository<GroupMember> groupMembersRepository;
         private readonly IDeletableEntityRepository<Lesson> lessonsRepository;
@@ -27,7 +26,6 @@
 
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> usersRepository,
-            IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<Group> groupsRepository,
             IDeletableEntityRepository<GroupMember> groupMembersRepository,
             IDeletableEntityRepository<Lesson> lessonsRepository,
@@ -38,7 +36,6 @@
             IDeletableEntityRepository<Video> videosRepository)
         {
             this.usersRepository = usersRepository;
-            this.imagesRepository = imagesRepository;
             this.groupsRepository = groupsRepository;
             this.groupMembersRepository = groupMembersRepository;
             this.lessonsRepository = lessonsRepository;
@@ -101,13 +98,6 @@
             {
                 user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.Id == user.TrainerId);
 
-                var userImages = this.imagesRepository.All().Where(x => x.TrainerId == user.TrainerId);
-                foreach (var image in userImages)
-                {
-                    image.TrainerId = null;
-                    this.imagesRepository.HardDelete(image);
-                }
-
                 var userGroups = this.groupsRepository.All().Where(x => x.TrainerId == user.TrainerId);
                 foreach (var group in userGroups)
                 {
@@ -131,7 +121,6 @@
                 user.TrainerId = null;
                 this.trainersRepository.HardDelete(user.Trainer);
 
-                await this.imagesRepository.SaveChangesAsync();
                 await this.groupsRepository.SaveChangesAsync();
                 await this.lessonsRepository.SaveChangesAsync();
                 await this.videosRepository.SaveChangesAsync();
@@ -177,6 +166,13 @@
             user.ClubStatus = input.ClubStatus.ToString();
             user.FideTitle = input.FideTitle.ToString();
             user.FideRating = input.FideRating;
+
+            if (input.ClubStatus == ClubStatus.Треньор)
+            {
+                user.Trainer = new Trainer();
+
+                await this.trainersRepository.SaveChangesAsync();
+            }
 
             await this.usersRepository.SaveChangesAsync();
         }

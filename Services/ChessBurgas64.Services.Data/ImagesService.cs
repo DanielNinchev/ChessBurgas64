@@ -13,16 +13,16 @@
 
     public class ImagesService : IImagesService
     {
-        private readonly IDeletableEntityRepository<ClubPlayer> clubPlayersRepository;
+        private readonly IDeletableEntityRepository<NotableMember> notableMembersRepository;
         private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<Puzzle> puzzlesRepository;
 
         public ImagesService(
-            IDeletableEntityRepository<ClubPlayer> clubPlayersRepository,
+            IDeletableEntityRepository<NotableMember> notableMembersRepository,
             IDeletableEntityRepository<Image> imagesRepository,
             IDeletableEntityRepository<Puzzle> puzzlesRepository)
         {
-            this.clubPlayersRepository = clubPlayersRepository;
+            this.notableMembersRepository = notableMembersRepository;
             this.imagesRepository = imagesRepository;
             this.puzzlesRepository = puzzlesRepository;
         }
@@ -77,29 +77,29 @@
             return newImage;
         }
 
-        public async Task<Image> InitializeClubPlayerImage(IFormFile image, ClubPlayer clubPlayer, string webRootImagePath)
+        public async Task<Image> InitializeNotableMemberImage(IFormFile image, NotableMember notableMember, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
             var dbImage = new Image
             {
-                ClubPlayerId = clubPlayer.Id,
-                ClubPlayer = clubPlayer,
+                NotableMemberId = notableMember.Id,
+                NotableMember = notableMember,
                 Extension = extension,
             };
 
-            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.ClubPlayerId == clubPlayer.Id);
+            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.NotableMemberId == notableMember.Id);
 
             if (oldImage != null)
             {
                 this.imagesRepository.HardDelete(oldImage);
             }
 
-            clubPlayer.Image = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.ClubPlayerImagesPath);
-            clubPlayer.ImageId = dbImage.Id;
+            notableMember.Image = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.NotableMembersImagesPath);
+            notableMember.ImageId = dbImage.Id;
 
-            await this.clubPlayersRepository.SaveChangesAsync();
+            await this.notableMembersRepository.SaveChangesAsync();
 
-            return clubPlayer.Image;
+            return notableMember.Image;
         }
 
         public async Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath)
@@ -125,27 +125,6 @@
             await this.puzzlesRepository.SaveChangesAsync();
 
             return puzzle.Image;
-        }
-
-        public async Task<Image> InitializeTrainerImage(IFormFile image, Trainer trainer, string webRootImagePath)
-        {
-            var extension = this.GetImageExtension(image);
-
-            var dbImage = new Image
-            {
-                TrainerId = trainer.Id,
-                Trainer = trainer,
-                Extension = extension,
-            };
-
-            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.TrainerId == trainer.Id);
-
-            if (oldImage != null)
-            {
-                this.imagesRepository.HardDelete(oldImage);
-            }
-
-            return await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.TrainerImagesPath);
         }
     }
 }

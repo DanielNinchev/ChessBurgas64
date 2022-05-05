@@ -42,7 +42,7 @@
             {
                 var user = this.userManager.GetUserAsync(this.User).Result;
 
-                var groupsQuery = this.groupsService.GetUserGroupsTableData(user.Id);
+                var groupsQuery = this.groupsService.GetUserGroups(user.Id);
                 var recordsTotal = groupsQuery.Count();
 
                 var searchText = this.DataTablesRequest.Search.Value?.ToUpper();

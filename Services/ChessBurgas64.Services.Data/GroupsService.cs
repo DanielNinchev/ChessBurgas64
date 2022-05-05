@@ -89,13 +89,35 @@
             return groupData.To<T>().ToList();
         }
 
-        public IQueryable<Group> GetUserGroupsTableData(string userId)
+        public IQueryable<Group> GetUserGroups(string userId)
         {
             var groups = this.groupsRepository
                 .AllAsNoTracking()
                 .Where(x => x.Members.Any(m => m.Member.UserId == userId) || x.Trainer.UserId == userId);
 
             return groups;
+        }
+
+        public IEnumerable<T> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
+        {
+            var groups = this.GetUserGroups(userId);
+            var groupData = from studentGroup in groups select studentGroup;
+
+            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+            {
+                groupData = groupData.OrderBy(sortColumn + " " + sortColumnDirection);
+            }
+
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                groupData = groupData.Where(g => g.Name.Contains(searchValue)
+                                    || g.TrainingHour.Equals(searchValue)
+                                    || g.LowestRating.Equals(searchValue)
+                                    || g.HighestRating.Equals(searchValue)
+                                    || g.Members.Count.Equals(searchValue));
+            }
+
+            return groupData.To<T>().ToList();
         }
 
         public async Task InitializeGroupProperties(string groupId)

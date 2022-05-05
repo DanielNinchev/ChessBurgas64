@@ -19,6 +19,7 @@
         public const string InvalidPhoneNumber = "Грешка! Невалиден телефонен номер! Моля, поставете действителен такъв.";
         public const string InvalidUrl = "Грешка! Невалиден линк! Моля, поставете действителен такъв.";
         public const string ThatFieldIsRequired = "Това поле е задължително!";
+        public const string ThatNumberMustBeGreaterThanOne = "Този номер трябва да бъде по-голям от 1.";
         public const string ThatFieldRequiresNumberOfCharacters = "Това поле трябва да бъде с дължина между {2} и {1} символа.";
     }
 }

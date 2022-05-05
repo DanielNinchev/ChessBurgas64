@@ -84,7 +84,7 @@
 
             // Application services
             services.AddTransient<IAnnouncementsService, AnnouncementsService>();
-            services.AddTransient<IClubPlayersService, ClubPlayersService>();
+            services.AddTransient<INotableMembersService, NotableMembersService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IGroupsService, GroupsService>();
             services.AddTransient<IImagesService, ImagesService>();

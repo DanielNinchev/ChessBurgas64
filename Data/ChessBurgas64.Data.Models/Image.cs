@@ -19,17 +19,13 @@
 
         public string Extension { get; set; }
 
-        public string TrainerId { get; set; }
-
-        public virtual Trainer Trainer { get; set; }
-
         public int? AnnouncementId { get; set; }
 
         public virtual Announcement Announcement { get; set; }
 
-        public int? ClubPlayerId { get; set; }
+        public int? NotableMemberId { get; set; }
 
-        public virtual ClubPlayer ClubPlayer { get; set; }
+        public virtual NotableMember NotableMember { get; set; }
 
         public int? PuzzleId { get; set; }
 

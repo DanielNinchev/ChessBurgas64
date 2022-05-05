@@ -1,8 +1,8 @@
-﻿@model ChessBurgas64.Web.ViewModels.ClubPlayers.ClubPlayerInputModel
+﻿@model ChessBurgas64.Web.ViewModels.NotableMembers.NotableMemberInputModel
 @using ChessBurgas64.Common
 
 @{
-    this.ViewData["Title"] = @GlobalConstants.EditClubPlayer;
+    this.ViewData["Title"] = @GlobalConstants.EditNotableMember;
 }
 
 <link href="~/lib/Trumbowyg-main/dist/ui/trumbowyg.min.css" rel="stylesheet" />
@@ -11,7 +11,7 @@
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
 <form method="post" enctype="multipart/form-data" id="form-element">
-    <partial name="_ClubPlayerInputPartial" model=@Model />
+    <partial name="_NotablePlayerInputPartial" model=@Model />
 
     <div class="container-fluid text-center">
         <button type="submit" class="btn-primary px-2 py-2 fw-bold">@GlobalConstants.Save</button>

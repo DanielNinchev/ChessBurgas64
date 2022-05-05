@@ -160,8 +160,7 @@
 
             if (!string.IsNullOrEmpty(searchValue))
             {
-                membersData = membersData.Where(m => m.DateOfJoiningCurrentGroup.Equals(searchValue)
-                                      || m.DateOfLastAttendance.Equals(searchValue)
+                membersData = membersData.Where(m => m.DateOfLastAttendance.Equals(searchValue)
                                       || m.ClubRating.Equals(searchValue)
                                       || m.User.FirstName.Contains(searchValue)
                                       || m.User.MiddleName.Contains(searchValue)

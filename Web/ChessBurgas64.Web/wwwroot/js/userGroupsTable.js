@@ -1,14 +1,14 @@
 ﻿$(document).ready(function () {
-    $("#userLessonsTable").DataTable({
+    $("#userGroupsTable").DataTable({
         "processing": true,
         "responsive": true,
         "serverSide": true,
         "filter": true,
         "language": {
             "lengthMenu": "Показване на най-много _MENU_ реда на страница",
-            "zeroRecords": "Няма съвпадения",
+            "zeroRecords": "Няма данни.",
             "info": "Страница _PAGE_ от _PAGES_",
-            "infoEmpty": "Няма данни",
+            "infoEmpty": "Няма съвпадения.",
             "infoFiltered": "(претърсено от _MAX_ потребители общо)",
             "search": "Търсене:",
             "paginate": {
@@ -19,7 +19,7 @@
             },
         },
         "ajax": {
-            "url": "/Users/GetUserLessons",
+            "url": "/Users/GetUserGroups",
             "beforeSend": function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -35,38 +35,39 @@
                 "className": "dt-body-center",
             },
             {
-                "targets": 1,
+                "targets": 4,
                 "render": function (data, type, row) {
                     return (data)
-                        ? moment(data, "YYYY-MM-DD H:mm").format("DD/MM/YYYY H:mm")
+                        ? moment(data, "YYYY-MM-DD, H:mm").format("H:mm")
                         : null;
                 }
             },
             {
-                "targets": 4,
+                "targets": [7],
                 "orderable": false,
             },
         ],
         "columns": [
             { "data": "id", "name": "Id", "autoWidth": true },
-            { "data": "startingTime", "name": "StartingTime", "autoWidth": true },
-            { "data": "topic", "name": "Topic", "autoWidth": true },
-            { "data": "groupName", "name": "Group.Name", "autoWidth": true },
+            { "data": "name", "name": "Name", "autoWidth": true },
+            { "data": "membersCount", "name": "Members.Count", "autoWidth": true, },
+            { "data": "trainingDay", "name": "TrainingDay", "autoWidth": true },
+            { "data": "trainingHour", "name": "TrainingHour", "autoWidth": true },
+            { "data": "lowestRating", "name": "LowestRating", "autoWidth": true },
+            { "data": "highestRating", "name": "HighestRating", "autoWidth": true },
             {
-                "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteLessonData('" + full.id + "'); >Премахване</a>";
-                },
+                "render": function (data, type, full, meta) { return "<a class='btn btn-secondary border border-white' onclick=GoToGroup('" + full.id + "'); >Преглед</a> <a class='btn btn-danger border border-white' onclick=DeleteGroupData('" + full.id + "'); >Премахване</a>" }
             },
         ]
     });
 });
 
-function GoToByIdView(id) {
-    window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
+function GoToGroup(id) {
+    window.location.href = 'https://localhost:44319/Groups/ById/' + id;
 }
 
-function DeleteLessonData(id) {
-    if (confirm("Наистина ли желаете да премахнете това занятие от таблицата?")) {
+function DeleteGroupData(id) {
+    if (confirm("Наистина ли желаете да премахнете тази група от таблицата?")) {
         Delete(id);
     } else {
         return false;
@@ -76,7 +77,7 @@ function DeleteLessonData(id) {
 function Delete(id) {
     $.ajax({
         type: 'POST',
-        url: "/Lessons/DeleteUserLesson",
+        url: "/Groups/Delete",
         "beforeSend": function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());

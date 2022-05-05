@@ -61,17 +61,6 @@
             return trainers;
         }
 
-        public IEnumerable<T> GetAllTrainersForPublicView<T>(int page, int itemsPerPage)
-        {
-            var trainers = this.trainersRepository.AllAsNoTracking()
-                .OrderByDescending(x => x.User.FideRating)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
-                .To<T>()
-                .ToList();
-
-            return trainers;
-        }
-
         public T GetById<T>(string id)
         {
             var trainer = this.trainersRepository.AllAsNoTracking()
@@ -79,11 +68,6 @@
                 .To<T>().FirstOrDefault();
 
             return trainer;
-        }
-
-        public int GetCount()
-        {
-            return this.trainersRepository.AllAsNoTracking().Count();
         }
 
         public async Task<Trainer> UpdateAsync(string id, TrainerInputModel input, string imagePath)
@@ -99,7 +83,6 @@
                 user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.UserId == id);
             }
 
-            user.Trainer.DateOfLastAttendance = DateTime.Parse(input.DateOfLastAttendance);
             user.Description = input.UserDescription;
 
             await this.trainersRepository.SaveChangesAsync();

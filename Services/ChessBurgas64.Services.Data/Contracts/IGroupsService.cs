@@ -20,7 +20,9 @@
 
         IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
 
-        IQueryable<Group> GetUserGroupsTableData(string userId);
+        IEnumerable<T> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
+
+        IQueryable<Group> GetUserGroups(string userId);
 
         Task InitializeGroupProperties(string groupId);
 

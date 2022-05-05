@@ -13,11 +13,7 @@
 
         IEnumerable<SelectListItem> GetAllTrainersInSelectList();
 
-        IEnumerable<T> GetAllTrainersForPublicView<T>(int page, int itemsPerPage);
-
         T GetById<T>(string id);
-
-        int GetCount();
 
         Task<Trainer> UpdateAsync(string id, TrainerInputModel input, string imagePath);
     }

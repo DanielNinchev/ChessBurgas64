@@ -27,13 +27,9 @@
 
         public DateTime DateOfLastAttendance { get; set; }
 
-        public string LearnedOpenings { get; set; }
-
         public int ClubRating { get; set; }
 
         public int? LastPuzzleLevel { get; set; }
-
-        public DateTime DateOfJoiningCurrentGroup { get; set; }
 
         public string UserId { get; set; }
 
