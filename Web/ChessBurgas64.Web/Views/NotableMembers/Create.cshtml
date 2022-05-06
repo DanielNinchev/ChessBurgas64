@@ -11,7 +11,7 @@
 <h1 class="display-5 text-white text-center animated slideInDown">@this.ViewData["Title"]</h1>
 
 <form method="post" enctype="multipart/form-data" id="form-element">
-    <partial name="_NotablePlayerInputPartial" model=@Model />
+    <partial name="_NotableMemberInputPartial" model=@Model />
 
     <div class="container-fluid text-center">
         <button type="submit" class="btn-primary px-2 py-2 fw-bold">@GlobalConstants.Publish</button>

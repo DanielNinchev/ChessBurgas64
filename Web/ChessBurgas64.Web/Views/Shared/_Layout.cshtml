@@ -42,7 +42,7 @@
                                 <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Gallery" asp-action="Gallery">@GlobalConstants.GalleryNav</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="History" asp-action="History">@GlobalConstants.HistoryNav</a>
+                                <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Home" asp-action="History">@GlobalConstants.HistoryNav</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn btn-primary text-white mx-1" asp-area="" asp-controller="Home" asp-action="Contacts">@GlobalConstants.ContactsNav</a>
@@ -54,7 +54,7 @@
         </header>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @this.RenderBody()
@@ -62,7 +62,7 @@
     </div>
 
     <footer class="footer text-white border-top border-3 border-white">
-        <div class="container">
+        <div class="container-fluid">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName
         </div>
     </footer>

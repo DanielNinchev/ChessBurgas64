@@ -25,6 +25,7 @@
         public string Description { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+        [Display(Name = GlobalConstants.IsPartOfGovernance)]
         public bool IsPartOfGovernance { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]

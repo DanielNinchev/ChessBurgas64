@@ -16,6 +16,8 @@
 
         T GetById<T>(int id);
 
+        T GetClubHistory<T>();
+
         int GetCount();
 
         ICollection<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);

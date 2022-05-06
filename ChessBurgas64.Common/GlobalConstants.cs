@@ -27,7 +27,7 @@
         // NotableMembers
         public const string AddNotableMember = "Добавяне на изявен член";
         public const string EditNotableMember = "Промяна на данните за изявен член";
-        public const string IsPartOfGovernance = "Част от ръководството";
+        public const string IsPartOfGovernance = "Част от ръководството: ";
         public const string ListIndex = "Пореден номер";
         public const string NameAndSurname = "Име и фамилия";
         public const string NotableMembers = "Изявени настоящи и бивши състезатели";
@@ -304,6 +304,9 @@
         public const string StudentsCount = "Брой ученици";
         public const string TrainingDay = "Тренировъчен ден";
         public const string TrainingHour = "Тренировъчен час";
+
+        // History view
+        public const string HistoryOfChessInBurgas = "История на шахмата в Бургас и региона";
 
         // Index view
         public const string HomeTitle = "ШАХМАТЕН КЛУБ \"БУРГАС 64\"";

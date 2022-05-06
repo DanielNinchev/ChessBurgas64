@@ -50,39 +50,37 @@
         </div>
     </div>
     <!-- Personal and FIDE data info end -->
-    <!-- Club data info start -->
-    <div class="col-md-8 my-5 text-center">
-        <h4 class="display-6 text-white text-center">@GlobalConstants.ClubData</h4>
-        <hr class="border border-5 border-white text-white" />
 
-        <div class="bg-white border border-danger border-5 pt-2 text-left px-3">
-            @if (Model.Member != null)
-            {
+    @if(this.Model.Member != null)
+    {
+        <!-- Club data info start -->
+        <div class="col-md-8 my-5 text-center">
+            <h4 class="display-6 text-white text-center">@GlobalConstants.ClubData</h4>
+            <hr class="border border-5 border-white text-white" />
+
+            <div class="bg-white border border-danger border-5 pt-2 text-left px-3">
                 <p>@GlobalConstants.ClubRating: <i class="fa-solid fa-star"></i> @Model.Member.ClubRating</p>
                 <hr class="text-dark" />
                 <p>@GlobalConstants.DateOfJoiningTheClub: <i class="fa-solid fa-flag-checkered"></i> @Model.Member.DateOfJoiningTheClub.ToShortDateString()</p>
                 <hr class="text-dark" />
                 <p>@GlobalConstants.LastAttendance: <i class="fas fa-calendar-alt"></i> @Model.Member.DateOfLastAttendance.ToShortDateString()</p>
                 <hr class="text-dark" />
-            }
-            else
-            {
-                @GlobalConstants.UserClubDataNotAddedYet
-            }
 
-            <div class="container-fluid text-center my-3">
-                @if (Model.ClubStatus != ClubStatus.Треньор.ToString())
-                {
-                    <a class="btn btn-primary" asp-action="EditMemberInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
-                }
+                <div class="container-fluid text-center my-3">
+                    @if (Model.ClubStatus != ClubStatus.Треньор.ToString())
+                    {
+                        <a class="btn btn-primary" asp-action="EditMemberInfo" asp-route-id="@Model.Id">@GlobalConstants.Edit</a>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Club data info end -->
+        <!-- Club data info end -->
+    }
 
     <!-- Groups table start -->
     <div class="container-fluid">
-        <br />
+        <h4 class="display-6 text-white text-center mt-5">@GlobalConstants.GroupsNav</h4>
+        <hr class="border border-5 border-white text-white" />
         <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
             <table id="userGroupsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
                 <thead class="dt-head-center">
@@ -109,7 +107,7 @@
     @if (Model.Trainer != null || Model.Member != null)
     {
         <div class="container-fluid text-center">
-            <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.ConductedLessons</h4>
+            <h4 class="display-6 text-white text-center mt-5">@GlobalConstants.ConductedLessons</h4>
             <hr class="border border-5 border-white text-white" />
             <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
                 <table id="userLessonsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">
@@ -131,7 +129,7 @@
 
     <!-- Payments table start -->
     <div class="container-fluid text-center">
-        <h4 class="display-6 text-white text-center mt-3">@GlobalConstants.Payments</h4>
+        <h4 class="display-6 text-white text-center mt-5">@GlobalConstants.Payments</h4>
         <hr class="border border-5 border-white text-white" />
         <div class="text-white py-2 container-fluid" style="width:100%; margin:0 auto;">
             <table id="paymentsTable" class="bg-white table-bordered table-responsive text-dark compact border border-5 border-danger text-center" width="100%" cellspacing="0">

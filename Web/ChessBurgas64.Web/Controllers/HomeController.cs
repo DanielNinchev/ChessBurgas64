@@ -5,17 +5,21 @@
 
     using AspNetCore.ReCaptcha;
     using ChessBurgas64.Common;
+    using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels;
+    using ChessBurgas64.Web.ViewModels.Announcements;
     using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
         private readonly IEmailSender emailSender;
+        private readonly IAnnouncementsService announcementsService;
 
-        public HomeController(IEmailSender emailSender)
+        public HomeController(IEmailSender emailSender, IAnnouncementsService announcementsService)
         {
             this.emailSender = emailSender;
+            this.announcementsService = announcementsService;
         }
 
         public IActionResult Contacts(string statusMessage, SendEmailInputModel input)
@@ -34,7 +38,9 @@
 
         public IActionResult History()
         {
-            return this.View();
+            var viewModel = this.announcementsService.GetClubHistory<SingleAnnouncementViewModel>();
+
+            return this.View(viewModel);
         }
 
         public IActionResult Index()

@@ -75,6 +75,14 @@
             return this.announcementsRepository.AllAsNoTracking().Count();
         }
 
+        public T GetClubHistory<T>()
+        {
+            var announcement = this.announcementsRepository.AllAsNoTracking().Where(x => x.Title == GlobalConstants.HistoryOfChessInBurgas)
+                .To<T>().FirstOrDefault();
+
+            return announcement;
+        }
+
         public ICollection<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText)
         {
             var announcements = this.announcementsRepository.All()
