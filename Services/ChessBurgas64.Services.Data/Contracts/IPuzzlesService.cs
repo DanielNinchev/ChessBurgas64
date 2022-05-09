@@ -12,13 +12,13 @@
 
         Task DeleteAsync(int id);
 
-        IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
+        ICollection<T> GetAll<T>(int page, int itemsPerPage);
 
         T GetById<T>(int id);
 
         Puzzle GetById(int id);
 
-        IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);
+        ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
 
         int GetCount();
 

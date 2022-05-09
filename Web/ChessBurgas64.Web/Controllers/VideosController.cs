@@ -1,6 +1,8 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
@@ -118,18 +120,49 @@
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, int id = 1)
+        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
-            var viewModel = new VideosListViewModel
+            try
             {
-                ItemsPerPage = GlobalConstants.VideosPerPage,
-                PageNumber = id,
-                Count = this.videosService.GetCount(),
-                Videos = this.videosService.GetSearched<VideoViewModel>(
-                    id, GlobalConstants.VideosPerPage, input.Categories, input.SearchText),
-            };
+                // If we are coming from _PagingPartial, the input parameters will be null, so we will have to initialize them
+                if (input.Categories == null)
+                {
+                    this.categoriesService.InitializeSearchedParameters(input, parms);
+                }
 
-            return this.View(viewModel);
+                var viewModel = new VideosListViewModel
+                {
+                    IsSearched = true,
+                    ItemsPerPage = GlobalConstants.PuzzlesPerPage,
+                    PageNumber = id,
+                    Videos = this.videosService.GetSearched<VideoViewModel>(input.Categories, input.SearchText),
+                };
+
+                if (viewModel.Videos != null)
+                {
+                    viewModel.Count = viewModel.Videos.Count();
+                    viewModel.Videos = viewModel.Videos
+                        .ToList()
+                        .OrderByDescending(x => x.CreatedOn)
+                        .Skip((viewModel.PageNumber - 1) * viewModel.ItemsPerPage)
+                        .Take(viewModel.ItemsPerPage)
+                        .ToList();
+                }
+
+                viewModel.Search = new SearchViewModel()
+                {
+                    Categories = this.categoriesService.GetCategoriesByIds<VideoCategoryViewModel>(input.Categories, nameof(VideosController)),
+                    SearchText = input.SearchText,
+                };
+
+                return this.View(viewModel);
+            }
+            catch (Exception e)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
     }
 }

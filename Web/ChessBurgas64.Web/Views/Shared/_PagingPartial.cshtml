@@ -1,23 +1,40 @@
 ﻿@model EntityInListViewModel
-@using ChessBurgas64.Common 
+@using ChessBurgas64.Common
+@{
+    string actionName = this.Model.IsSearched ? "Searched" : "All";
+    var parms = new Dictionary<string, string>();
+
+    if(this.Model.Search != null)
+    {
+        foreach(var category in Model.Search.Categories)
+        {
+            parms.Add(category.Name, category.Id.ToString());
+        }
+
+        if(Model.Search.SearchText != null)
+        {  
+            parms.Add("SearchText", Model.Search.SearchText);
+        }
+    }
+}
 
 <nav aria-label="...">
     <ul class="pagination justify-content-center">
         <li class="page-item @if (!Model.HasPreviousPage) {<text>disabled</text>} ">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.PreviousPageNumber">@GlobalConstants.Previous</a>
+            <a class="page-link" asp-action="@actionName" asp-all-route-data="parms" asp-route-id="@Model.PreviousPageNumber">@GlobalConstants.Previous</a>
         </li>
 
         @for (int i = Model.PageNumber - 4; i < Model.PageNumber; i++)
         {
             if (i > 0)
             {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                <li class="page-item"><a class="page-link" asp-action="@actionName" asp-all-route-data="parms" asp-route-id="@i">@i</a></li>
             }
         }
 
         @if (Model.PageNumber - 3 > 0)
         {
-            <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@(Model.PageNumber - 1)">@(Model.PageNumber - 1)</a></li>
+            <li class="page-item"><a class="page-link" asp-action="@actionName" asp-all-route-data="parms" asp-route-id="@(Model.PageNumber - 1)">@(Model.PageNumber - 1)</a></li>
         }
 
         <li class="page-item active" aria-current="page">
@@ -31,12 +48,12 @@
         {
             if (i <= Model.PagesCount)
             {
-                <li class="page-item"><a class="page-link" asp-action="All" asp-route-id="@i">@i</a></li>
+                <li class="page-item"><a class="page-link" asp-action="@actionName" asp-all-route-data="parms" asp-route-id="@i">@i</a></li>
             }
         }
 
         <li class="page-item @if (!Model.HasNextPage) {<text>disabled</text>} ">
-            <a class="page-link" asp-action="All" asp-route-id="@Model.NextPageNumber">@GlobalConstants.Next</a>
+            <a class="page-link" asp-action="@actionName" asp-all-route-data="parms" asp-route-id="@Model.NextPageNumber">@GlobalConstants.Next</a>
         </li>
     </ul>
 </nav>

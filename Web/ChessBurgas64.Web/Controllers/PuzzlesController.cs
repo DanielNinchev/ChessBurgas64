@@ -1,6 +1,8 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
@@ -42,6 +44,7 @@
 
             var viewModel = new PuzzleListViewModel
             {
+                IsSearched = false,
                 ItemsPerPage = GlobalConstants.PuzzlesPerPage,
                 PageNumber = id,
                 Count = this.puzzlesService.GetCount(),
@@ -116,9 +119,16 @@
                 return this.View(input);
             }
 
-            var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.PuzzleImagesPath}";
-            var puzzle = await this.puzzlesService.UpdateAsync(id, input);
-            await this.imagesService.InitializePuzzleImage(input.PositionImage, puzzle, webRootImagePath);
+            try
+            {
+                var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.PuzzleImagesPath}";
+                var puzzle = await this.puzzlesService.UpdateAsync(id, input);
+                await this.imagesService.InitializePuzzleImage(input.PositionImage, puzzle, webRootImagePath);
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError(string.Empty, e.Message);
+            }
 
             return this.RedirectToAction(nameof(this.All));
         }
@@ -134,18 +144,49 @@
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, int id = 1)
+        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
-            var viewModel = new PuzzleListViewModel
+            try
             {
-                ItemsPerPage = GlobalConstants.PuzzlesPerPage,
-                PageNumber = id,
-                Count = this.puzzlesService.GetCount(),
-                Puzzles = this.puzzlesService.GetSearched<PuzzleViewModel>(
-                    id, GlobalConstants.PuzzlesPerPage, input.Categories, input.SearchText),
-            };
+                // If we are coming from _PagingPartial, the input parameters will be null, so we will have to initialize them
+                if (input.Categories == null)
+                {
+                    this.categoriesService.InitializeSearchedParameters(input, parms);
+                }
 
-            return this.View(viewModel);
+                var viewModel = new PuzzleListViewModel
+                {
+                    IsSearched = true,
+                    ItemsPerPage = GlobalConstants.PuzzlesPerPage,
+                    PageNumber = id,
+                    Puzzles = this.puzzlesService.GetSearched<PuzzleViewModel>(input.Categories, input.SearchText),
+                };
+
+                if (viewModel.Puzzles != null)
+                {
+                    viewModel.Count = viewModel.Puzzles.Count;
+                    viewModel.Puzzles = viewModel.Puzzles
+                        .ToList()
+                        .OrderBy(x => x.Number)
+                        .Skip((viewModel.PageNumber - 1) * viewModel.ItemsPerPage)
+                        .Take(viewModel.ItemsPerPage)
+                        .ToList();
+                }
+
+                viewModel.Search = new SearchViewModel()
+                {
+                    Categories = this.categoriesService.GetCategoriesByIds<PuzzleCategoryViewModel>(input.Categories, nameof(PuzzlesController)),
+                    SearchText = input.SearchText,
+                };
+
+                return this.View(viewModel);
+            }
+            catch (Exception e)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
     }
 }

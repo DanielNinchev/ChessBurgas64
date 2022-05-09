@@ -4,6 +4,6 @@
 
     public class PuzzleListViewModel : EntityInListViewModel
     {
-        public IEnumerable<PuzzleViewModel> Puzzles { get; set; }
+        public ICollection<PuzzleViewModel> Puzzles { get; set; }
     }
 }

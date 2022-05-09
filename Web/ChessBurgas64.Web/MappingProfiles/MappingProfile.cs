@@ -4,10 +4,10 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.Areas.Identity.Pages.Account;
     using ChessBurgas64.Web.ViewModels.Announcements;
-    using ChessBurgas64.Web.ViewModels.NotableMembers;
     using ChessBurgas64.Web.ViewModels.Groups;
     using ChessBurgas64.Web.ViewModels.Lessons;
     using ChessBurgas64.Web.ViewModels.Members;
+    using ChessBurgas64.Web.ViewModels.NotableMembers;
     using ChessBurgas64.Web.ViewModels.Payments;
     using ChessBurgas64.Web.ViewModels.Puzzles;
     using ChessBurgas64.Web.ViewModels.Trainers;

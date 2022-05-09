@@ -20,7 +20,7 @@
 
         int GetCount();
 
-        ICollection<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);
+        ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
 
         Task InitializeAnnouncementImages(AnnouncementInputModel input, Announcement announcement, string imagePath);
 

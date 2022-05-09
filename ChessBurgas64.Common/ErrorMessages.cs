@@ -11,6 +11,10 @@
 
         public const string InvalidLoginAttempt = "Грешно потребителско име или парола!";
 
+        // Error View
+        public const string Error = "Грешка!";
+        public const string AnErrorOccuredWhileProcessingRequest = "Възникна грешка при обработване на заявката Ви.";
+
         // Input errors ====================================================================================================
         public const string InvalidCaptcha = "Грешка! Моля, потвърдете, че не сте робот!";
         public const string InvalidInputData = "Грешка! Неправилно попълнени данни! Изписвайте новия си email правилно и потвърдете, че не сте робот.";

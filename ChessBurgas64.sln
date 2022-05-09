@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{E389DEB6-5F90-444B-A054-12A10D39C76F}"
 EndProject
@@ -32,6 +32,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessBurgas64.Services.Mapping", "Services\ChessBurgas64.Services.Mapping\ChessBurgas64.Services.Mapping.csproj", "{415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessBurgas64.Services.Data.Tests", "Tests\ChessBurgas64.Services.Data.Tests\ChessBurgas64.Services.Data.Tests.csproj", "{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D} = {415FD7FA-0453-4FE1-9A29-C6E1D8B45C3D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessBurgas64.Web.Tests", "Tests\ChessBurgas64.Web.Tests\ChessBurgas64.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject

@@ -61,13 +61,13 @@
             return this.videosRepository.AllAsNoTracking().Count();
         }
 
-        public IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText)
+        public IEnumerable<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText)
         {
             var videos = this.videosRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+                .AsQueryable();
 
-            if (categoryIds != null && searchText != null)
+            if (categoryIds.Any() && searchText != null)
             {
                 foreach (var categoryId in categoryIds)
                 {
@@ -81,7 +81,7 @@
                                                             || x.Description.ToLower().Contains(searchText.ToLower())));
                 }
             }
-            else if (categoryIds == null && searchText != null)
+            else if (!categoryIds.Any() && searchText != null)
             {
                 videos = videos.Where(x => x.Title.ToLower().Contains(searchText.ToLower())
                                                            || x.Category.Name.ToLower().Contains(searchText.ToLower())
@@ -91,7 +91,7 @@
                                                             || searchText.ToLower().Contains(x.Trainer.User.LastName.ToLower())
                                                            || x.Description.ToLower().Contains(searchText.ToLower()));
             }
-            else if (categoryIds != null && searchText == null)
+            else if (categoryIds.Any() && searchText == null)
             {
                 foreach (var categoryId in categoryIds)
                 {

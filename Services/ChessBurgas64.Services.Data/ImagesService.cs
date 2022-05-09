@@ -56,7 +56,7 @@
 
             if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.ToLower().EndsWith(x)))
             {
-                throw new Exception($"{ErrorMessages.InvalidImageExtension}{extension}");
+                throw new InvalidDataException($"{ErrorMessages.InvalidImageExtension}{extension}");
             }
 
             return extension;

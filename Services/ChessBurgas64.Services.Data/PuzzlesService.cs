@@ -48,7 +48,7 @@
             await this.puzzlesRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)
+        public ICollection<T> GetAll<T>(int page, int itemsPerPage)
         {
             var puzzles = this.puzzlesRepository.AllAsNoTracking()
                 .OrderBy(x => x.Number)
@@ -82,13 +82,13 @@
             return this.puzzlesRepository.AllAsNoTracking().Count();
         }
 
-        public IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText)
+        public ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText)
         {
             var puzzles = this.puzzlesRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+                .AsQueryable();
 
-            if (categoryIds != null && searchText != null)
+            if (categoryIds.Any() && searchText != null)
             {
                 foreach (var categoryId in categoryIds)
                 {
@@ -104,7 +104,7 @@
                                                             || x.Solution.ToLower().Contains(searchText.ToLower())));
                 }
             }
-            else if (categoryIds == null && searchText != null)
+            else if (!categoryIds.Any() && searchText != null)
             {
                 puzzles = puzzles.Where(x => x.Number.Equals(searchText)
                                                            || searchText.ToLower().Contains(x.Category.Name.ToLower())
@@ -116,7 +116,7 @@
                                                            || x.Objective.ToLower().Contains(searchText.ToLower())
                                                            || x.Solution.ToLower().Contains(searchText.ToLower()));
             }
-            else if (categoryIds != null && searchText == null)
+            else if (categoryIds.Any() && searchText == null)
             {
                 foreach (var categoryId in categoryIds)
                 {

@@ -1,6 +1,8 @@
 ﻿namespace ChessBurgas64.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
@@ -139,19 +141,49 @@
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, int id = 1)
+        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
-            var viewModel = new AnnouncementsListViewModel
+            try
             {
-                ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
-                PageNumber = id,
-                Announcements = this.announcementsService.GetSearched<AnnouncementInCardViewModel>(
-                    id, GlobalConstants.AnnouncementsPerPage, input.Categories, input.SearchText),
-            };
+                // If we are coming from _PagingPartial, the input parameters will be null, so we will have to initialize them
+                if (input.Categories == null)
+                {
+                    this.categoriesService.InitializeSearchedParameters(input, parms);
+                }
 
-            viewModel.Count = viewModel.Announcements.Count;
+                var viewModel = new AnnouncementsListViewModel
+                {
+                    IsSearched = true,
+                    ItemsPerPage = GlobalConstants.PuzzlesPerPage,
+                    PageNumber = id,
+                    Announcements = this.announcementsService.GetSearched<AnnouncementInCardViewModel>(input.Categories, input.SearchText),
+                };
 
-            return this.View(viewModel);
+                if (viewModel.Announcements != null)
+                {
+                    viewModel.Count = viewModel.Announcements.Count;
+                    viewModel.Announcements = viewModel.Announcements
+                        .ToList()
+                        .OrderByDescending(x => x.Date)
+                        .Skip((viewModel.PageNumber - 1) * viewModel.ItemsPerPage)
+                        .Take(viewModel.ItemsPerPage)
+                        .ToList();
+                }
+
+                viewModel.Search = new SearchViewModel()
+                {
+                    Categories = this.categoriesService.GetCategoriesByIds<AnnouncementCategoryViewModel>(input.Categories, nameof(AnnouncementsController)),
+                    SearchText = input.SearchText,
+                };
+
+                return this.View(viewModel);
+            }
+            catch (Exception e)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
     }
 }

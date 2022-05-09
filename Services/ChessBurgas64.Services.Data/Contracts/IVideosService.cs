@@ -17,7 +17,7 @@
 
         int GetCount();
 
-        IEnumerable<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText);
+        IEnumerable<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
 
         Task UpdateAsync(int id, VideoInputModel input);
     }

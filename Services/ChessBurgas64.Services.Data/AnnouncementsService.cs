@@ -45,9 +45,7 @@
         public async Task DeleteAsync(int id)
         {
             var announcement = this.announcementsRepository.All().FirstOrDefault(x => x.Id == id);
-
             this.announcementsRepository.Delete(announcement);
-
             await this.announcementsRepository.SaveChangesAsync();
         }
 
@@ -55,7 +53,8 @@
         {
             var announcements = this.announcementsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Date)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .To<T>()
                 .ToList();
 
@@ -83,29 +82,34 @@
             return announcement;
         }
 
-        public ICollection<T> GetSearched<T>(int page, int itemsPerPage, IEnumerable<int> categoryIds, string searchText)
+        public ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText)
         {
-            var announcements = this.announcementsRepository.All()
+            var announcements = this.announcementsRepository
+                .AllAsNoTracking()
                 .OrderByDescending(x => x.Date)
-                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage);
+                .AsQueryable();
 
-            if (categoryIds != null && searchText != null)
+            if (categoryIds.Any() && searchText != null)
             {
                 foreach (var categoryId in categoryIds)
                 {
                     announcements = announcements.Where(x => categoryIds.Any(id => id == x.CategoryId)
                                                         && (x.Title.ToLower().Contains(searchText.ToLower())
                                                             || x.Text.ToLower().Contains(searchText.ToLower())
-                                                            || x.Description.ToLower().Contains(searchText.ToLower())));
+                                                            || x.Description.ToLower().Contains(searchText.ToLower())
+                                                            || searchText.ToLower().Contains(x.Title.ToLower())
+                                                            || searchText.ToLower().Contains(x.Description.ToLower())));
                 }
             }
-            else if (categoryIds == null && searchText != null)
+            else if (!categoryIds.Any() && searchText != null)
             {
                 announcements = announcements.Where(x => x.Title.ToLower().Contains(searchText.ToLower())
                                                            || x.Text.ToLower().Contains(searchText.ToLower())
-                                                           || x.Description.ToLower().Contains(searchText.ToLower()));
+                                                           || x.Description.ToLower().Contains(searchText.ToLower())
+                                                           || searchText.ToLower().Contains(x.Title.ToLower())
+                                                           || searchText.ToLower().Contains(x.Description.ToLower()));
             }
-            else if (categoryIds != null && searchText == null)
+            else if (categoryIds.Any() && searchText == null)
             {
                 foreach (var categoryId in categoryIds)
                 {

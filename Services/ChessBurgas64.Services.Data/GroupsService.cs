@@ -63,7 +63,8 @@
         {
             var group = this.groupsRepository.AllAsNoTracking()
                 .Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
+                .To<T>()
+                .FirstOrDefault();
 
             return group;
         }
