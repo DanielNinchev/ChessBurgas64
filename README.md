@@ -80,5 +80,5 @@ Marking lesson attendances (Admin View)
 Governance (Admin View)
 ![image](https://user-images.githubusercontent.com/64807656/169151167-bcdf431d-bad4-4768-9b8e-48555c103822.png)
 
-##Credits
+## Credits
 * Using ASP.NET MVC Template (developed originally by Nikolay Kostov);
