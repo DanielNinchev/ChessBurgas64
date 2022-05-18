@@ -12,17 +12,17 @@
 
         Task DeleteAsync(int id);
 
-        ICollection<T> GetAll<T>(int page, int itemsPerPage);
+        Task<ICollection<T>> GetAllAsync<T>(int page, int itemsPerPage);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        T GetClubHistory<T>();
+        Task<T> GetClubHistoryAsync<T>();
 
-        int GetCount();
+        Task<int> GetCountAsync();
 
-        ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
+        Task<ICollection<T>> GetSearchedAsync<T>(IEnumerable<int> categoryIds, string searchText);
 
-        Task InitializeAnnouncementImages(AnnouncementInputModel input, Announcement announcement, string imagePath);
+        Task InitializeAnnouncementImagesAsync(AnnouncementInputModel input, Announcement announcement, string imagePath);
 
         Task UpdateAsync(int id, AnnouncementInputModel input, string imagePath);
     }

@@ -14,6 +14,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Puzzles;
+    using Microsoft.EntityFrameworkCore;
 
     public class PuzzlesService : IPuzzlesService
     {
@@ -43,48 +44,56 @@
 
         public async Task DeleteAsync(int id)
         {
-            var puzzle = this.puzzlesRepository.All().FirstOrDefault(x => x.Id == id);
+            var puzzle = await this.puzzlesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             this.puzzlesRepository.Delete(puzzle);
             await this.puzzlesRepository.SaveChangesAsync();
         }
 
-        public ICollection<T> GetAll<T>(int page, int itemsPerPage)
+        public async Task<ICollection<T>> GetAllAsync<T>(int page, int itemsPerPage)
         {
-            var puzzles = this.puzzlesRepository.AllAsNoTracking()
+            var puzzles = await this.puzzlesRepository
+                .AllAsNoTracking()
                 .OrderBy(x => x.Number)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return puzzles;
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var puzzle = this.puzzlesRepository.AllAsNoTracking().Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
-
-            return puzzle;
-        }
-
-        public Puzzle GetById(int id)
-        {
-            var puzzle = this.puzzlesRepository
+            var puzzle = await this.puzzlesRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return puzzle;
         }
 
-        public int GetCount()
+        public async Task<Puzzle> GetByIdAsync(int id)
         {
-            return this.puzzlesRepository.AllAsNoTracking().Count();
+            var puzzle = await this.puzzlesRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            return puzzle;
         }
 
-        public ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText)
+        public async Task<int> GetCountAsync()
         {
-            var puzzles = this.puzzlesRepository.All()
+            return await this.puzzlesRepository.AllAsNoTracking().CountAsync();
+        }
+
+        public async Task<ICollection<T>> GetSearchedAsync<T>(IEnumerable<int> categoryIds, string searchText)
+        {
+            var puzzles = this.puzzlesRepository
+                .All()
                 .OrderByDescending(x => x.CreatedOn)
                 .AsQueryable();
 
@@ -128,18 +137,15 @@
                 return null;
             }
 
-            return puzzles.To<T>().ToList();
-        }
-
-        public void InitializePuzzlePoints(Puzzle puzzle)
-        {
-            var puzzlePoints = (PuzzleDifficulty)Enum.Parse(typeof(PuzzleDifficulty), puzzle.Difficulty);
-            puzzle.Points = (int)puzzlePoints * GlobalConstants.PuzzlePointsMultiplier;
+            return await puzzles.To<T>().ToListAsync();
         }
 
         public async Task<Puzzle> UpdateAsync(int id, PuzzleInputModel input)
         {
-            var puzzle = this.puzzlesRepository.All().FirstOrDefault(x => x.Id == id);
+            var puzzle = await this.puzzlesRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             puzzle.CategoryId = input.CategoryId;
             puzzle.Difficulty = input.Difficulty.ToString();
             puzzle.Number = input.Number;
@@ -151,6 +157,12 @@
             await this.puzzlesRepository.SaveChangesAsync();
 
             return puzzle;
+        }
+
+        private void InitializePuzzlePoints(Puzzle puzzle)
+        {
+            var puzzlePoints = (PuzzleDifficulty)Enum.Parse(typeof(PuzzleDifficulty), puzzle.Difficulty);
+            puzzle.Points = (int)puzzlePoints * GlobalConstants.PuzzlePointsMultiplier;
         }
     }
 }

@@ -30,9 +30,9 @@
             this.membersService = membersService;
         }
 
-        public IActionResult ById(string id)
+        public async Task<IActionResult> ById(string id)
         {
-            var viewModel = this.groupsService.GetById<GroupViewModel>(id);
+            var viewModel = await this.groupsService.GetByIdAsync<GroupViewModel>(id);
 
             this.HttpContext.Session.SetString("groupId", id);
             this.HttpContext.Session.SetString("trainerId", viewModel.Trainer.Id);
@@ -63,7 +63,7 @@
                 return this.View(input);
             }
 
-            return this.Redirect("/Groups/ShowGroups");
+            return this.RedirectToAction(nameof(this.ShowGroups));
         }
 
         [HttpPost]
@@ -73,9 +73,9 @@
             return this.Redirect("/Groups");
         }
 
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var viewModel = this.groupsService.GetById<GroupInputModel>(id);
+            var viewModel = await this.groupsService.GetByIdAsync<GroupInputModel>(id);
             return this.View(viewModel);
         }
 
@@ -87,7 +87,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetGroups()
+        public async Task<IActionResult> GetGroups()
         {
             try
             {
@@ -101,7 +101,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var groupData = this.groupsService.GetTableData<GroupTableViewModel>(sortColumn, sortColumnDirection, searchValue);
+                var groupData = await this.groupsService.GetTableDataAsync<GroupTableViewModel>(sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = groupData.Count();
 
@@ -117,7 +117,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetGroupLessons()
+        public async Task<IActionResult> GetGroupLessons()
         {
             try
             {
@@ -132,7 +132,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var lessonData = this.lessonsService.GetGroupLessonsTableData<LessonViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
+                var lessonData = await this.lessonsService.GetGroupLessonsTableDataAsync<LessonViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = lessonData.Count();
 
@@ -148,7 +148,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetGroupMembers()
+        public async Task<IActionResult> GetGroupMembers()
         {
             try
             {
@@ -163,7 +163,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var membersData = this.membersService.GetTableData<MemberViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
+                var membersData = await this.membersService.GetTableData<MemberViewModel>(groupId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = membersData.Count();
 

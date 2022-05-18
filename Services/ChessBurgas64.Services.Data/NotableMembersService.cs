@@ -11,6 +11,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.NotableMembers;
+    using Microsoft.EntityFrameworkCore;
 
     public class NotableMembersService : INotableMembersService
     {
@@ -37,64 +38,69 @@
 
         public async Task DeleteAsync(int id)
         {
-            var notableMember = this.notableMembersRepository.All().FirstOrDefault(x => x.Id == id);
+            var notableMember = await this.notableMembersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             this.notableMembersRepository.Delete(notableMember);
             await this.notableMembersRepository.SaveChangesAsync();
         }
 
-        public ICollection<T> GetAllInGovernance<T>()
+        public async Task<ICollection<T>> GetAllInGovernanceAsync<T>()
         {
-            var notableMembers = this.notableMembersRepository
+            var notableMembers = await this.notableMembersRepository
                 .AllAsNoTracking()
                 .Where(x => x.IsPartOfGovernance)
                 .OrderBy(x => x.ListIndex)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return notableMembers;
         }
 
-        public ICollection<T> GetAllPlayers<T>()
+        public async Task<ICollection<T>> GetAllPlayersAsync<T>()
         {
-            var notableMembers = this.notableMembersRepository
+            var notableMembers = await this.notableMembersRepository
                 .AllAsNoTracking()
                 .Where(x => !x.IsPartOfGovernance)
                 .OrderBy(x => x.ListIndex)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return notableMembers;
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var notableMember = this.notableMembersRepository
+            var notableMember = await this.notableMembersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return notableMember;
         }
 
-        public NotableMember GetById(int id)
+        public async Task<NotableMember> GetByIdAsync(int id)
         {
-            var notableMember = this.notableMembersRepository
+            var notableMember = await this.notableMembersRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return notableMember;
         }
 
-        public int GetCount()
+        public async Task<int> GetCountAsync()
         {
-            return this.notableMembersRepository.AllAsNoTracking().Count();
+            return await this.notableMembersRepository.AllAsNoTracking().CountAsync();
         }
 
         public async Task<NotableMember> UpdateAsync(int id, NotableMemberInputModel input)
         {
-            var notableMember = this.notableMembersRepository.All().FirstOrDefault(x => x.Id == id);
+            var notableMember = await this.notableMembersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             notableMember.Description = input.Description;
             notableMember.FideTitle = input.FideTitle.ToString();

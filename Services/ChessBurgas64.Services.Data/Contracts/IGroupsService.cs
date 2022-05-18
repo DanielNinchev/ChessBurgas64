@@ -16,11 +16,11 @@
 
         IEnumerable<SelectListItem> GetAllTrainerGroups(string trainerId);
 
-        T GetById<T>(string id);
+        Task<T> GetByIdAsync<T>(string id);
 
-        IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue);
 
-        IEnumerable<T> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
 
         IQueryable<Group> GetUserGroups(string userId);
 

@@ -12,17 +12,15 @@
 
         Task DeleteAsync(int id);
 
-        ICollection<T> GetAll<T>(int page, int itemsPerPage);
+        Task<ICollection<T>> GetAllAsync<T>(int page, int itemsPerPage);
 
-        T GetById<T>(int id);
+        Task<Puzzle> GetByIdAsync(int id);
 
-        Puzzle GetById(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        ICollection<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
+        Task<int> GetCountAsync();
 
-        int GetCount();
-
-        void InitializePuzzlePoints(Puzzle puzzle);
+        Task<ICollection<T>> GetSearchedAsync<T>(IEnumerable<int> categoryIds, string searchText);
 
         Task<Puzzle> UpdateAsync(int id, PuzzleInputModel input);
     }

@@ -14,19 +14,19 @@
 
         Task DeleteAsync(int id);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        IEnumerable<T> GetAllLessonsTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetAllLessonsTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue);
 
-        IEnumerable<T> GetGroupLessonsTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetGroupLessonsTableDataAsync<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
 
-        List<T> GetLessonGroupMembers<T>(int id);
+        Task<IEnumerable<T>> GetLessonGroupMembersAsync<T>(int id);
 
-        IEnumerable<T> GetTrainerLessonsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetUserLessonsTableDataAsync<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
 
         IQueryable<Lesson> GetUserLessonsTableData(string userId);
 
-        Task MarkLessonMemberAttendance(int id, GroupMemberCheckboxModel model);
+        Task MarkLessonMemberAttendanceAsync(int id, GroupMemberCheckboxModel model);
 
         Task UpdateAsync(int id, LessonInputModel input);
     }

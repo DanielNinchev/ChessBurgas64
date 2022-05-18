@@ -1,19 +1,20 @@
 ﻿namespace ChessBurgas64.Services.Data.Contracts
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using ChessBurgas64.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface ICategoriesService
     {
-        IEnumerable<T> GetAllAnnouncementCategories<T>();
+        Task<IEnumerable<T>> GetAllAnnouncementCategoriesAsync<T>();
 
-        IEnumerable<T> GetAllPuzzleCategories<T>();
+        Task<IEnumerable<T>> GetAllPuzzleCategoriesAsync<T>();
 
-        IEnumerable<T> GetAllVideoCategories<T>();
+        Task<IEnumerable<T>> GetAllVideoCategoriesAsync<T>();
 
-        IEnumerable<T> GetCategoriesByIds<T>(IEnumerable<int> ids, string controllerName);
+        Task<IEnumerable<T>> GetCategoriesByIdsAsync<T>(IEnumerable<int> ids, string controllerName);
 
         IEnumerable<SelectListItem> GetAnnouncementCategoriesInSelectList();
 

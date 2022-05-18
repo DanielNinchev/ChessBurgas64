@@ -14,6 +14,7 @@
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.GroupMembers;
     using ChessBurgas64.Web.ViewModels.Lessons;
+    using Microsoft.EntityFrameworkCore;
 
     public class LessonsService : ILessonsService
     {
@@ -51,22 +52,23 @@
             var lesson = this.mapper.Map<Lesson>(input);
             await this.lessonsRepository.AddAsync(lesson);
 
-            var trainer = this.trainersRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId);
+            var trainer = await this.trainersRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            var group = await this.groupsRepository
+                .AllAsNoTracking()
+                .Include(x => x.Members)
+                .FirstOrDefaultAsync(x => x.Id == input.GroupId);
+
             trainer.Lessons.Add(lesson);
-
-            var group = this.groupsRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == input.GroupId);
             group.Lessons.Add(lesson);
-
             lesson.TrainerId = trainer.Id;
             lesson.GroupId = group.Id;
 
-            var groupMembers = this.groupMembersRepository.AllAsNoTracking()
-                .Where(x => x.GroupId == group.Id)
-                .ToList();
-
-            if (groupMembers != null)
+            if (group.Members != null)
             {
-                foreach (var groupMember in groupMembers)
+                foreach (var groupMember in group.Members)
                 {
                     var lessonMember = new LessonMember()
                     {
@@ -84,44 +86,35 @@
 
         public async Task DeleteAsync(int id)
         {
-            var lesson = this.lessonsRepository.All().FirstOrDefault(x => x.Id == id);
+            var lesson = await this.lessonsRepository.All().FirstOrDefaultAsync(x => x.Id == id);
             this.lessonsRepository.Delete(lesson);
             await this.lessonsRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteLessonMembersAsync(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var lessonMember = this.lessonMembersRepository.AllAsNoTracking().First(x => x.LessonId == id);
-            this.lessonMembersRepository.HardDelete(lessonMember);
-            await this.lessonMembersRepository.SaveChangesAsync();
-            await this.lessonsRepository.SaveChangesAsync();
-        }
-
-        public T GetById<T>(int id)
-        {
-            var lesson = this.lessonsRepository.AllAsNoTracking().Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
+            var lesson = await this.lessonsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return lesson;
         }
 
-        public List<T> GetLessonGroupMembers<T>(int id)
+        public async Task<IEnumerable<T>> GetLessonGroupMembersAsync<T>(int id)
         {
-            var lessonGroup = this.groupsRepository.AllAsNoTracking()
-                .FirstOrDefault(x => x.Lessons.Any(l => l.Id == id));
-
-            var lessonGroupMembers = this.groupMembersRepository.AllAsNoTracking()
-                .Where(x => x.GroupId == lessonGroup.Id)
+            return await this.groupMembersRepository
+                .AllAsNoTracking()
+                .Where(x => x.Group.Lessons.Any(x => x.Id == id))
                 .OrderBy(x => x.Member.User.FirstName)
                 .ThenBy(x => x.Member.User.MiddleName)
                 .ThenBy(x => x.Member.User.LastName)
                 .To<T>()
-                .ToList();
-
-            return lessonGroupMembers;
+                .ToListAsync();
         }
 
-        public IEnumerable<T> GetAllLessonsTableData<T>(string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetAllLessonsTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue)
         {
             var lessons = this.lessonsRepository.AllAsNoTracking();
             var lessonData = from lesson in lessons select lesson;
@@ -140,10 +133,10 @@
                                     || l.Trainer.User.LastName.Contains(searchValue));
             }
 
-            return lessonData.To<T>().ToList();
+            return await lessonData.To<T>().ToListAsync();
         }
 
-        public IEnumerable<T> GetGroupLessonsTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetGroupLessonsTableDataAsync<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
         {
             var lessons = this.lessonsRepository.AllAsNoTracking().Where(x => x.GroupId == groupId);
             var lessonData = from lesson in lessons select lesson;
@@ -161,23 +154,14 @@
                                     || l.Trainer.User.LastName.Contains(searchValue));
             }
 
-            return lessonData.To<T>().ToList();
+            return await lessonData.To<T>().ToListAsync();
         }
 
-        public IEnumerable<T> GetTrainerLessonsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetUserLessonsTableDataAsync<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
         {
-            var user = this.usersRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == userId);
-            IQueryable<Lesson> lessons;
-
-            if (user.ClubStatus == ClubStatus.Треньор.ToString())
-            {
-                var trainer = this.trainersRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId);
-                lessons = this.lessonsRepository.AllAsNoTracking().Where(l => l.TrainerId == trainer.Id);
-            }
-            else
-            {
-                lessons = this.lessonsRepository.AllAsNoTracking().Where(l => l.Members.Any(x => x.MemberId == user.MemberId));
-            }
+            var lessons = this.lessonsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Trainer.UserId == userId || x.Members.Any(m => m.Member.UserId == userId));
 
             var lessonData = from lesson in lessons select lesson;
 
@@ -195,7 +179,7 @@
                                     || l.Trainer.User.LastName.Contains(searchValue));
             }
 
-            return lessonData.To<T>().ToList();
+            return await lessonData.To<T>().ToListAsync();
         }
 
         public IQueryable<Lesson> GetUserLessonsTableData(string userId)
@@ -207,22 +191,32 @@
             return lesson;
         }
 
-        public async Task MarkLessonMemberAttendance(int id, GroupMemberCheckboxModel model)
+        public async Task MarkLessonMemberAttendanceAsync(int id, GroupMemberCheckboxModel model)
         {
-            var lesson = this.lessonsRepository.All().FirstOrDefault(x => x.Id == id);
-            var lessonMembers = this.lessonMembersRepository.AllAsNoTracking()
-                .Where(x => x.LessonId == id)
-                .ToList();
+            var lesson = await this.lessonsRepository
+                .All()
+                .Include(x => x.Members
+                    .OrderBy(x => x.Member.User.FirstName)
+                    .ThenBy(x => x.Member.User.MiddleName)
+                    .ThenByDescending(x => x.Member.User.LastName))
+                .ThenInclude(l => l.Member)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (lessonMembers.Count > 0)
+            if (lesson.Members.Count > 0)
             {
-                for (int i = 0; i < lessonMembers.Count; i++)
+                foreach (var lessonMember in lesson.Members)
                 {
-                    await this.DeleteLessonMembersAsync(id);
+                    await this.DeleteLessonMembersAsync(lessonMember);
                 }
             }
 
-            foreach (var groupMember in model.GroupMembers.Where(x => x.Selected))
+            var groupMembers = model.GroupMembers
+                .Where(x => x.Selected)
+                .OrderBy(x => x.Member.UserFirstName)
+                .ThenBy(x => x.Member.UserMiddleName)
+                .ThenBy(x => x.Member.UserLastName);
+
+            foreach (var groupMember in groupMembers)
             {
                 var lessonMember = new LessonMember
                 {
@@ -230,7 +224,7 @@
                     MemberId = groupMember.MemberId,
                 };
 
-                var member = this.membersRepository.All().FirstOrDefault(x => x.Id == groupMember.MemberId);
+                var member = await this.membersRepository.All().FirstOrDefaultAsync(x => x.Id == groupMember.MemberId);
 
                 member.Lessons.Add(lessonMember);
                 lesson.Members.Add(lessonMember);
@@ -240,30 +234,14 @@
             await this.lessonsRepository.SaveChangesAsync();
             await this.membersRepository.SaveChangesAsync();
 
-            await this.MarkLastAttendances(id);
-        }
-
-        public async Task MarkLastAttendances(int lessonId)
-        {
-            var members = this.membersRepository.All().Where(x => x.Lessons.Any(l => l.LessonId == lessonId));
-
-            foreach (var member in members)
-            {
-                var lessons = this.lessonMembersRepository.AllAsNoTracking()
-                    .Where(x => x.MemberId == member.Id)
-                    .OrderByDescending(x => x.Lesson.StartingTime);
-
-                var memberLessonId = lessons.FirstOrDefault(x => x.MemberId == member.Id).LessonId;
-                var memberLesson = this.GetById<LessonViewModel>(memberLessonId);
-                member.DateOfLastAttendance = memberLesson.StartingTime;
-            }
-
-            await this.membersRepository.SaveChangesAsync();
+            await this.MarkLastAttendancesAsync(lesson);
         }
 
         public async Task UpdateAsync(int id, LessonInputModel input)
         {
-            var lesson = this.lessonsRepository.All().FirstOrDefault(x => x.Id == id);
+            var lesson = await this.lessonsRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             lesson.Topic = input.Topic;
             lesson.StartingTime = DateTime.Parse(input.StartingTime);
@@ -272,6 +250,23 @@
             lesson.TrainerId = input.TrainerId;
 
             await this.lessonsRepository.SaveChangesAsync();
+        }
+
+        private async Task DeleteLessonMembersAsync(LessonMember lessonMember)
+        {
+            this.lessonMembersRepository.HardDelete(lessonMember);
+            await this.lessonMembersRepository.SaveChangesAsync();
+            await this.lessonsRepository.SaveChangesAsync();
+        }
+
+        private async Task MarkLastAttendancesAsync(Lesson lesson)
+        {
+            foreach (var member in lesson.Members)
+            {
+                member.Member.DateOfLastAttendance = lesson.StartingTime;
+            }
+
+            await this.membersRepository.SaveChangesAsync();
         }
     }
 }

@@ -1,6 +1,108 @@
-@{
-    this.ViewData["Title"] = "Privacy Policy";
-}
-<h1>@this.ViewData["Title"]</h1>
+@using ChessBurgas64.Common
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    this.ViewData["Title"] = @GlobalConstants.PersonalDataPolicyTitle;
+}
+<h4 class="display-6 text-white text-center">@this.ViewData["Title"]</h4>
+<hr class="text-white"/>
+
+<div class="background-dragon-red border border-3 border-white my-3 p-xl-3">
+    <p class="text-white text-justify fw-bold">@GlobalConstants.CookiesInfo</p>
+</div>
+<p class="text-white text-justify">- @GlobalConstants.NecessaryCookies</p>
+<p class="text-white text-justify">- @GlobalConstants.FunctionalCookies</p>
+
+<h5 class="text-white text-center fw-bold text-decoration-underline mt-5">@GlobalConstants.CookiesManagement</h5>
+<p class="text-white text-justify">@GlobalConstants.CookiesManagementInfo</p>
+
+<div class="row justify-content-center">
+    <h5 class="text-white text-center fw-bold text-decoration-underline mt-5">@GlobalConstants.ForWhatDoWeUseYourData</h5>
+    <p class="text-white text-justify my-3">@GlobalConstants.PersonalDataUsageAfterRegistrationInfo</p>
+    <div id="accordion" class="col-md-10">
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingOne">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link collapsed btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        @GlobalConstants.Address
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                   @GlobalConstants.AddressDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingTwo">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        @GlobalConstants.BirthDate
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.BirthDateDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingThree">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        @GlobalConstants.DateOfJoiningTheClub
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.DateOfJoiningTheClubInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingFour">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        @GlobalConstants.Email
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.EmailDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingFive">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        @GlobalConstants.PhoneNumber
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.PhoneDataUsageInfo
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header background-dragon-red border border-1 border-white" id="headingSix">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link btn-primary" id="accordionBtn" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        @GlobalConstants.School
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                <div class="card-body">
+                    @GlobalConstants.SchoolDataUsageInfo
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

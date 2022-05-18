@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
     public class LessonsController : Controller
@@ -23,9 +24,9 @@
             this.lessonsService = lessonsService;
         }
 
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
-            var viewModel = this.lessonsService.GetById<LessonViewModel>(id);
+            var viewModel = await this.lessonsService.GetByIdAsync<LessonViewModel>(id);
             return this.View(viewModel);
         }
 
@@ -79,10 +80,9 @@
             return this.RedirectToAction("/Users/ById/" + userId);
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = this.lessonsService.GetById<LessonInputModel>(id);
-
+            var inputModel = await this.lessonsService.GetByIdAsync<LessonInputModel>(id);
             return this.View(inputModel);
         }
 
@@ -95,16 +95,15 @@
             }
 
             await this.lessonsService.UpdateAsync(id, input);
-
             return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
         }
 
-        public IActionResult EditAttendants(int id)
+        public async Task<IActionResult> EditAttendants(int id)
         {
-            var lessonGroupMembers = this.lessonsService.GetLessonGroupMembers<GroupMemberViewModel>(id);
+            var lessonGroupMembers = await this.lessonsService.GetLessonGroupMembersAsync<GroupMemberViewModel>(id);
             var checkboxModel = new GroupMemberCheckboxModel
             {
-                GroupMembers = lessonGroupMembers,
+                GroupMembers = lessonGroupMembers.ToList(),
             };
 
             return this.View(checkboxModel);
@@ -118,13 +117,12 @@
                 return this.View(model);
             }
 
-            await this.lessonsService.MarkLessonMemberAttendance(id, model);
-
+            await this.lessonsService.MarkLessonMemberAttendanceAsync(id, model);
             return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
         }
 
         [HttpPost]
-        public IActionResult GetLessons()
+        public async Task<IActionResult> GetLessons()
         {
             try
             {
@@ -140,7 +138,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var lessonData = this.lessonsService.GetAllLessonsTableData<LessonViewModel>(sortColumn, sortColumnDirection, searchValue);
+                var lessonData = await this.lessonsService.GetAllLessonsTableDataAsync<LessonViewModel>(sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = lessonData.Count();
 

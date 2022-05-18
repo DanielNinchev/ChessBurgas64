@@ -44,14 +44,6 @@
             },
             {
                 "targets": 6,
-                "render": function (data, type, row) {
-                    return (data)
-                        ? moment(data, "YYYY-MM-DD").format("DD/MM/YYYY")
-                        : null;
-                }
-            },
-            {
-                "targets": 7,
                 "orderable": false,
             },
         ],
@@ -61,14 +53,14 @@
             { "data": "userMiddleName", "name": "User.MiddleName", "autoWidth": true },
             { "data": "userLastName", "name": "User.LastName", "autoWidth": true },
             { "data": "clubRating", "name": "ClubRating", "autoWidth": true },
-            { "data": "dateOfJoiningCurrentGroup", "name": "DateOfJoiningCurrentGroup", "autoWidth": true },
             { "data": "dateOfLastAttendance", "name": "DateOfLastAttendance", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
                     return "<a class='btn btn-secondary' id='memberViewBtn' onclick=GoToMemberByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' id='memberDeleteBtn' onclick=DeleteMemberData('" + full.id + "'); >Премахване</a>";
                 },
             },
-        ]
+        ],
+        "order": [[1, "asc"], [2, "asc"], [3, "asc"]],
     });
 });
 

@@ -14,6 +14,7 @@
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Trainers;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
 
     public class TrainersService : ITrainersService
     {
@@ -61,26 +62,27 @@
             return trainers;
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var trainer = this.trainersRepository.AllAsNoTracking()
+            var trainer = await this.trainersRepository
+                .AllAsNoTracking()
                 .Where(x => x.UserId == id)
-                .To<T>().FirstOrDefault();
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return trainer;
         }
 
         public async Task<Trainer> UpdateAsync(string id, TrainerInputModel input, string imagePath)
         {
-            var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
+            var user = await this.usersRepository
+                .All()
+                .Include(x => x.Trainer)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (user.TrainerId == null && !this.trainersRepository.AllAsNoTracking().Any(x => x.UserId == id))
+            if (user.TrainerId == null && !await this.trainersRepository.AllAsNoTracking().AnyAsync(x => x.UserId == id))
             {
                 user.Trainer = await this.CreateAsync(input, id, imagePath);
-            }
-            else
-            {
-                user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.UserId == id);
             }
 
             user.Description = input.UserDescription;

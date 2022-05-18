@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http.Features
+@using ChessBurgas64.Common
 
 @{
     var consentFeature = this.Context.Features.Get<ITrackingConsentFeature>();
@@ -9,9 +10,9 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        We use cookies to understand how you use our site and to improve your experience. <a asp-area="" asp-controller="Home" asp-action="Privacy">Learn More</a>.
+        @GlobalConstants.WeUseCookies<a asp-area="" asp-controller="Home" asp-action="Privacy">@GlobalConstants.LearnMore</a>.
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
+            <span aria-hidden="true">@GlobalConstants.Accept</span>
         </button>
     </div>
     <script>

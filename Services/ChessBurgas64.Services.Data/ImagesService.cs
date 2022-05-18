@@ -10,6 +10,7 @@
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
 
     public class ImagesService : IImagesService
     {
@@ -27,7 +28,7 @@
             this.puzzlesRepository = puzzlesRepository;
         }
 
-        public async Task<Image> CreateImage(IFormFile image, string webRootImagePath, Image dbImage, string extension, string imagePath)
+        public async Task<Image> CreateImageAsync(IFormFile image, string webRootImagePath, Image dbImage, string extension, string imagePath)
         {
             var physicalPath = $"{webRootImagePath}{dbImage.Id}{extension}";
 
@@ -50,19 +51,7 @@
             await this.puzzlesRepository.SaveChangesAsync();
         }
 
-        public string GetImageExtension(IFormFile image)
-        {
-            var extension = Path.GetExtension(image.FileName);
-
-            if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.ToLower().EndsWith(x)))
-            {
-                throw new InvalidDataException($"{ErrorMessages.InvalidImageExtension}{extension}");
-            }
-
-            return extension;
-        }
-
-        public async Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string webRootImagePath)
+        public async Task<Image> InitializeAnnouncementImageAsync(IFormFile image, Announcement announcement, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
             var dbImage = new Image
@@ -72,12 +61,12 @@
                 Extension = extension,
             };
 
-            var newImage = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.AnnouncementImagesPath);
+            var newImage = await this.CreateImageAsync(image, webRootImagePath, dbImage, extension, GlobalConstants.AnnouncementImagesPath);
 
             return newImage;
         }
 
-        public async Task<Image> InitializeNotableMemberImage(IFormFile image, NotableMember notableMember, string webRootImagePath)
+        public async Task<Image> InitializeNotableMemberImageAsync(IFormFile image, NotableMember notableMember, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
             var dbImage = new Image
@@ -87,14 +76,16 @@
                 Extension = extension,
             };
 
-            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.NotableMemberId == notableMember.Id);
+            var oldImage = await this.imagesRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.NotableMemberId == notableMember.Id);
 
             if (oldImage != null)
             {
                 this.imagesRepository.HardDelete(oldImage);
             }
 
-            notableMember.Image = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.NotableMembersImagesPath);
+            notableMember.Image = await this.CreateImageAsync(image, webRootImagePath, dbImage, extension, GlobalConstants.NotableMembersImagesPath);
             notableMember.ImageId = dbImage.Id;
 
             await this.notableMembersRepository.SaveChangesAsync();
@@ -102,7 +93,7 @@
             return notableMember.Image;
         }
 
-        public async Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath)
+        public async Task<Image> InitializePuzzleImageAsync(IFormFile image, Puzzle puzzle, string webRootImagePath)
         {
             var extension = this.GetImageExtension(image);
             var dbImage = new Image
@@ -112,19 +103,33 @@
                 Extension = extension,
             };
 
-            var oldImage = this.imagesRepository.AllAsNoTracking().FirstOrDefault(x => x.PuzzleId == puzzle.Id);
+            var oldImage = await this.imagesRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.PuzzleId == puzzle.Id);
 
             if (oldImage != null)
             {
                 this.imagesRepository.HardDelete(oldImage);
             }
 
-            puzzle.Image = await this.CreateImage(image, webRootImagePath, dbImage, extension, GlobalConstants.PuzzleImagesPath);
+            puzzle.Image = await this.CreateImageAsync(image, webRootImagePath, dbImage, extension, GlobalConstants.PuzzleImagesPath);
             puzzle.ImageId = dbImage.Id;
 
             await this.puzzlesRepository.SaveChangesAsync();
 
             return puzzle.Image;
+        }
+
+        private string GetImageExtension(IFormFile image)
+        {
+            var extension = Path.GetExtension(image.FileName);
+
+            if (!GlobalConstants.AllowedImageExtensions.Any(x => extension.ToLower().EndsWith(x)))
+            {
+                throw new InvalidDataException($"{ErrorMessages.InvalidImageExtension}{extension}");
+            }
+
+            return extension;
         }
     }
 }

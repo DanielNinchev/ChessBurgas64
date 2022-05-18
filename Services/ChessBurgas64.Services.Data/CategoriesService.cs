@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
@@ -10,6 +11,7 @@
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
 
     public class CategoriesService : ICategoriesService
     {
@@ -27,55 +29,61 @@
             this.videoCategoriesRepository = videoCategoriesRepository;
         }
 
-        public IEnumerable<T> GetAllAnnouncementCategories<T>()
+        public async Task<IEnumerable<T>> GetAllAnnouncementCategoriesAsync<T>()
         {
-            return this.announcementCategoriesRepository.AllAsNoTracking()
+            return await this.announcementCategoriesRepository
+                .AllAsNoTracking()
                 .OrderBy(x => x.Name)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<T> GetAllPuzzleCategories<T>()
+        public async Task<IEnumerable<T>> GetAllPuzzleCategoriesAsync<T>()
         {
-            return this.puzzleCategoriesRepository.AllAsNoTracking()
+            return await this.puzzleCategoriesRepository
+                .AllAsNoTracking()
                 .OrderBy(x => x.Name)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<T> GetAllVideoCategories<T>()
+        public async Task<IEnumerable<T>> GetAllVideoCategoriesAsync<T>()
         {
-            return this.videoCategoriesRepository.AllAsNoTracking()
+            return await this.videoCategoriesRepository
+                .AllAsNoTracking()
                 .OrderBy(x => x.Name)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<T> GetCategoriesByIds<T>(IEnumerable<int> ids, string controllerName)
+        public async Task<IEnumerable<T>> GetCategoriesByIdsAsync<T>(IEnumerable<int> ids, string controllerName)
         {
             if (controllerName.StartsWith(nameof(Announcement)))
             {
-                return this.announcementCategoriesRepository.AllAsNoTracking()
+                return await this.announcementCategoriesRepository
+                    .AllAsNoTracking()
                     .Where(x => ids.Contains(x.Id))
                     .OrderBy(x => x.Name)
                     .To<T>()
-                    .ToList();
+                    .ToListAsync();
             }
             else if (controllerName.StartsWith(nameof(Puzzle)))
             {
-                return this.puzzleCategoriesRepository.AllAsNoTracking()
+                return await this.puzzleCategoriesRepository
+                    .AllAsNoTracking()
                     .Where(x => ids.Contains(x.Id))
                     .OrderBy(x => x.Name)
                     .To<T>()
-                    .ToList();
+                    .ToListAsync();
             }
             else if (controllerName.StartsWith(nameof(Video)))
             {
-                return this.videoCategoriesRepository.AllAsNoTracking()
+                return await this.videoCategoriesRepository
+                    .AllAsNoTracking()
                     .Where(x => ids.Contains(x.Id))
                     .OrderBy(x => x.Name)
                     .To<T>()
-                    .ToList();
+                    .ToListAsync();
             }
             else
             {

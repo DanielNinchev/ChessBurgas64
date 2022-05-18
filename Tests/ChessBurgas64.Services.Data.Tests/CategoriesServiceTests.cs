@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
+    using System.Threading.Tasks;
     using AutoMapper;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
@@ -19,12 +19,17 @@
         private readonly IMapper mapper;
 
         [Fact]
-        public void WhenUserSearchesByCategoriesAllCheckedCategoriesShouldBeInitialized()
+        public void InitializeSearchedParameteresShouldAssignCategoriesToInputWhenUserSearchesByCategories()
         {
+            var puzzleCategoryMateIn1 = "Мат в 1 ход";
+            var puzzleCategoryMateIn2 = "Мат в 2 хода";
+            var puzzleCategoryMateIn1Id = "1";
+            var puzzleCategoryMateIn2Id = "2";
+
             IDictionary<string, string> parms = new Dictionary<string, string>
             {
-                { "Мат в 1 ход", "1" },
-                { "Мат в 2 хода", "2" },
+                { puzzleCategoryMateIn1, puzzleCategoryMateIn1Id },
+                { puzzleCategoryMateIn2, puzzleCategoryMateIn2Id },
             };
 
             var input = new SearchInputModel();
@@ -35,22 +40,27 @@
                 categoryIds.Add(int.Parse(id));
             }
 
-            var exception = Record.Exception(() => new Exception());
             var categoriesService = this.InitializeService();
             categoriesService.InitializeSearchedParameters(input, parms);
 
             Assert.Equal(categoryIds, input.Categories);
-            Assert.Null(exception);
         }
 
         [Fact]
-        public void WhenUserSearchesByTextAndCategoriesAllParametersShouldBeInitialized()
+        public void InitializeSearchedParameteresShouldAssignCategoriesAndSearchTextToInputWhenUserSearchesByBothTextAndCategories()
         {
+            var puzzleCategoryMateIn1 = "Мат в 1 ход";
+            var puzzleCategoryMateIn2 = "Мат в 2 хода";
+            var puzzleCategoryMateIn1Id = "1";
+            var puzzleCategoryMateIn2Id = "2";
+            var someSearchTextKey = "SearchText";
+            var someSearchTextValue = "Реми";
+
             IDictionary<string, string> parms = new Dictionary<string, string>
             {
-                { "Мат в 1 ход", "1" },
-                { "Мат в 2 хода", "2" },
-                { "SearchText", "Реми" },
+                { puzzleCategoryMateIn1, puzzleCategoryMateIn1Id },
+                { puzzleCategoryMateIn2, puzzleCategoryMateIn2Id },
+                { someSearchTextKey, someSearchTextValue },
             };
 
             var input = new SearchInputModel();
@@ -61,17 +71,15 @@
                 categoryIds.Add(int.Parse(id));
             }
 
-            var exception = Record.Exception(() => new Exception());
             var categoriesService = this.InitializeService();
             categoriesService.InitializeSearchedParameters(input, parms);
 
             Assert.Equal(categoryIds, input.Categories);
-            Assert.Equal(parms["SearchText"], input.SearchText);
-            Assert.Null(exception);
+            Assert.Equal(someSearchTextValue, input.SearchText);
         }
 
         [Fact]
-        public void WhenUserSearchesByTextItShouldBeInitializedAndCategoriesShouldBeEmpty()
+        public void InitializeSearchedParameteresShouldAssignSearchTextToInputWhenUserSearchesByText()
         {
             IDictionary<string, string> parms = new Dictionary<string, string>
             {
@@ -79,20 +87,30 @@
             };
 
             var input = new SearchInputModel();
-
-            var exception = Record.Exception(() => new Exception());
             var categoriesService = this.InitializeService();
-            categoriesService.InitializeSearchedParameters(input, parms);
 
+            categoriesService.InitializeSearchedParameters(input, parms);
             Assert.Equal(parms["SearchText"], input.SearchText);
-            Assert.Empty(input.Categories);
-            Assert.Null(exception);
         }
 
         [Fact]
-        public void ShouldReturnEmptyCollectionIfGetCategoriesByIdIsGivenNoIds()
+        public void InitializeSearchedParameteresShouldNotAssignCategoriesWhenUserSearchesByTextOnly()
         {
-            var exception = Record.Exception(() => new Exception());
+            IDictionary<string, string> parms = new Dictionary<string, string>
+            {
+                { "SearchText", "Реми" },
+            };
+
+            var input = new SearchInputModel();
+            var categoriesService = this.InitializeService();
+
+            categoriesService.InitializeSearchedParameters(input, parms);
+            Assert.Empty(input.Categories);
+        }
+
+        [Fact]
+        public async Task GetCategoriesByIdShouldReturnEmptyCollectionWhenGivenNoIds()
+        {
             var categoriesService = this.InitializeService();
 
             var model = new PuzzleCategoryViewModel();
@@ -100,11 +118,10 @@
 
             var viewModel = new SearchViewModel()
             {
-                Categories = categoriesService.GetCategoriesByIds<PuzzleCategoryViewModel>(givenIds, nameof(Puzzle)),
+                Categories = await categoriesService.GetCategoriesByIdsAsync<PuzzleCategoryViewModel>(givenIds, nameof(Puzzle)),
             };
 
             Assert.Empty(viewModel.Categories);
-            Assert.Null(exception);
         }
 
         private CategoriesService InitializeService()

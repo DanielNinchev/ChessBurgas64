@@ -44,20 +44,30 @@
                 return this.View(input);
             }
 
-            return this.Redirect("/Users/ById/" + id);
+            string controllerName = nameof(UsersController)[..^nameof(Controller).Length];
+            return this.RedirectToAction(nameof(UsersController.ById), controllerName, new { id });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await this.paymentsService.DeleteAsync(id);
-            var userId = this.HttpContext.Session.GetString("userId");
-            return this.RedirectToAction("/Users/ById/" + userId);
+            try
+            {
+                await this.paymentsService.DeleteAsync(id);
+                var userId = this.HttpContext.Session.GetString("userId");
+                string controllerName = nameof(UsersController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(UsersController.ById), controllerName, new { id });
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var inputModel = this.paymentsService.GetById<PaymentInputModel>(id);
+            var inputModel = await this.paymentsService.GetByIdAsync<PaymentInputModel>(id);
 
             return this.View(inputModel);
         }
@@ -70,11 +80,19 @@
                 return this.View(input);
             }
 
-            await this.paymentsService.UpdateAsync(id, input);
+            try
+            {
+                await this.paymentsService.UpdateAsync(id, input);
+                id = input.UserId;
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.View(input);
+            }
 
-            id = input.UserId;
-
-            return this.RedirectToAction(nameof(UsersController.ById), "Users", new { id });
+            string controllerName = nameof(UsersController)[..^nameof(Controller).Length];
+            return this.RedirectToAction(nameof(UsersController.ById), controllerName, new { id });
         }
     }
 }

@@ -14,6 +14,7 @@
     using ChessBurgas64.Web.ViewModels.GroupMembers;
     using ChessBurgas64.Web.ViewModels.Members;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
 
     public class MembersService : IMembersService
     {
@@ -39,18 +40,13 @@
 
         public async Task AddMemberToGroupAsync(string groupId, GroupMemberInputModel input)
         {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
-            var member = this.membersRepository.All().FirstOrDefault(x => x.Id == input.MemberId);
-
             var groupMember = new GroupMember()
             {
                 GroupId = groupId,
-                MemberId = member.Id,
+                MemberId = input.MemberId,
             };
 
-            group.Members.Add(groupMember);
-            member.Groups.Add(groupMember);
-
+            await this.groupMembersRepository.AddAsync(groupMember);
             await this.groupsRepository.SaveChangesAsync();
             await this.groupMembersRepository.SaveChangesAsync();
             await this.membersRepository.SaveChangesAsync();
@@ -58,66 +54,18 @@
 
         public async Task DeleteGroupMemberAsync(string groupId, string memberId)
         {
-            var groupMember = this.groupMembersRepository.All()
-                .FirstOrDefault(x => x.GroupId == groupId && x.MemberId == memberId);
+            var groupMember = await this.groupMembersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.GroupId == groupId && x.MemberId == memberId);
 
             this.groupMembersRepository.Delete(groupMember);
-
             await this.groupMembersRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<SelectListItem> GetAllMembers()
+        public IEnumerable<SelectListItem> GetAllGroupMembersInSelectList(string groupId)
         {
-            var members = this.membersRepository.All()
-                .Select(m => new
-                {
-                    m.Id,
-                    Name = $"{m.User.FirstName} {m.User.MiddleName} {m.User.LastName}",
-                })
-                .ToList()
-                .OrderBy(x => x.Name)
-                .Select(x => new SelectListItem(x.Name, x.Id));
-
-            return members;
-        }
-
-        public IEnumerable<SelectListItem> GetNecessaryMembers(string groupId)
-        {
-            var groupMembersExist = this.groupMembersRepository.AllAsNoTracking().Any();
-
-            if (groupMembersExist)
-            {
-                var members = this.GetAllMembersWhichAreNotInCurrentGroup(groupId);
-                return members;
-            }
-            else
-            {
-                var members = this.GetAllMembers();
-                return members;
-            }
-        }
-
-        public IEnumerable<SelectListItem> GetAllMembersWhichAreNotInCurrentGroup(string groupId)
-        {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
-            var members = this.membersRepository.All()
-                .Where(x => !x.Groups.Any(g => g.GroupId == groupId))
-                .Select(m => new
-                {
-                    m.Id,
-                    Name = $"{m.User.FirstName} {m.User.MiddleName} {m.User.LastName}",
-                })
-                .ToList()
-                .OrderBy(x => x.Name)
-                .Select(x => new SelectListItem(x.Name, x.Id));
-
-            return members;
-        }
-
-        public IEnumerable<SelectListItem> GetAllGroupMembers(string groupId)
-        {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
-            var groupMembers = group.Members
+            var groupMembers = this.groupMembersRepository
+                .AllAsNoTracking()
                 .Where(x => x.GroupId == groupId)
                 .Select(grm => new
                 {
@@ -130,26 +78,62 @@
             return groupMembers;
         }
 
-        public Member GetMemberById(string memberId)
+        public IEnumerable<SelectListItem> GetAllMembersInSelectList()
         {
-            var member = this.membersRepository.AllAsNoTracking()
-                .FirstOrDefault(x => x.Id == memberId);
+            var members = this.membersRepository
+                .AllAsNoTracking()
+                .Select(m => new
+                {
+                    m.Id,
+                    Name = $"{m.User.FirstName} {m.User.MiddleName} {m.User.LastName}",
+                })
+                .ToList()
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem(x.Name, x.Id));
+
+            return members;
+        }
+
+        public async Task<Member> GetMemberByIdAsync(string memberId)
+        {
+            var member = await this.membersRepository
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == memberId);
 
             return member;
         }
 
-        public T GetByUserId<T>(string userId)
+        public IEnumerable<SelectListItem> GetNecessaryMembersInSelectList(string groupId)
         {
-            var member = this.membersRepository.AllAsNoTracking()
+            var groupMembersExist = this.groupMembersRepository.AllAsNoTracking().Any();
+
+            if (groupMembersExist)
+            {
+                var members = this.GetAllMembersWhichAreNotInCurrentGroupInSelectList(groupId);
+                return members;
+            }
+            else
+            {
+                var members = this.GetAllMembersInSelectList();
+                return members;
+            }
+        }
+
+        public async Task<T> GetByUserIdAsync<T>(string userId)
+        {
+            var member = await this.membersRepository
+                .AllAsNoTracking()
                 .Where(x => x.UserId == userId)
-                .To<T>().FirstOrDefault();
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return member;
         }
 
-        public IEnumerable<T> GetTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue)
         {
-            var membersData = this.membersRepository.All()
+            var membersData = this.membersRepository
+                .All()
                 .Where(x => x.Groups
                 .Any(grm => grm.GroupId == groupId));
 
@@ -167,7 +151,7 @@
                                       || m.User.LastName.Contains(searchValue));
             }
 
-            return membersData.To<T>().ToList();
+            return await membersData.To<T>().ToListAsync();
         }
 
         public async Task SaveMemberChangesAsync(Member member)
@@ -179,7 +163,9 @@
 
         public async Task UpdateAsync(string userId, MemberInputModel input)
         {
-            var user = this.usersRepository.All().FirstOrDefault(x => x.Id == userId);
+            var user = await this.usersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == userId);
 
             var member = this.mapper.Map<Member>(input);
             member.User = user;
@@ -189,11 +175,26 @@
 
             user.Member = member;
             user.MemberId = member.Id;
-
             user.Member.DateOfJoiningTheClub = DateTime.Parse(input.DateOfJoiningTheClub);
 
             await this.membersRepository.SaveChangesAsync();
             await this.usersRepository.SaveChangesAsync();
+        }
+
+        private IEnumerable<SelectListItem> GetAllMembersWhichAreNotInCurrentGroupInSelectList(string groupId)
+        {
+            var members = this.membersRepository.All()
+                .Where(x => !x.Groups.Any(g => g.GroupId == groupId))
+                .Select(m => new
+                {
+                    m.Id,
+                    Name = $"{m.User.FirstName} {m.User.MiddleName} {m.User.LastName}",
+                })
+                .ToList()
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem(x.Name, x.Id));
+
+            return members;
         }
     }
 }

@@ -13,9 +13,9 @@
 
         Task DeleteAsync(string id);
 
-        T GetById<T>(string id);
+        Task<T> GetByIdAsync<T>(string id);
 
-        IEnumerable<T> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue);
 
         IQueryable<Payment> GetUserPaymentsTableData(string userId);
 

@@ -11,6 +11,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Users;
+    using Microsoft.EntityFrameworkCore;
 
     public class UsersService : IUsersService
     {
@@ -68,16 +69,18 @@
         {
             if (user.MemberId != null)
             {
-                user.Member = this.membersRepository.All().FirstOrDefault(x => x.Id == user.MemberId);
+                user.Member = await this.membersRepository
+                    .All()
+                    .Include(x => x.Groups)
+                    .Include(x => x.Lessons)
+                    .FirstOrDefaultAsync(x => x.Id == user.MemberId);
 
-                var userGroups = this.groupMembersRepository.All().Where(x => x.MemberId == user.MemberId);
-                foreach (var groupMember in userGroups)
+                foreach (var groupMember in user.Member.Groups)
                 {
                     this.groupMembersRepository.HardDelete(groupMember);
                 }
 
-                var userLessons = this.lessonMembersRepository.All().Where(x => x.MemberId == user.MemberId);
-                foreach (var lessonMember in userLessons)
+                foreach (var lessonMember in user.Member.Lessons)
                 {
                     this.lessonMembersRepository.HardDelete(lessonMember);
                 }
@@ -96,22 +99,24 @@
         {
             if (user.TrainerId != null)
             {
-                user.Trainer = this.trainersRepository.All().FirstOrDefault(x => x.Id == user.TrainerId);
+                user.Trainer = await this.trainersRepository
+                    .All()
+                    .Include(x => x.Groups)
+                    .Include(x => x.Lessons)
+                    .Include(x => x.Videos)
+                    .FirstOrDefaultAsync(x => x.Id == user.TrainerId);
 
-                var userGroups = this.groupsRepository.All().Where(x => x.TrainerId == user.TrainerId);
-                foreach (var group in userGroups)
+                foreach (var group in user.Trainer.Groups)
                 {
                     group.TrainerId = null;
                 }
 
-                var userLessons = this.lessonsRepository.All().Where(x => x.TrainerId == user.TrainerId);
-                foreach (var lesson in userLessons)
+                foreach (var lesson in user.Trainer.Lessons)
                 {
                     lesson.TrainerId = null;
                 }
 
-                var userVideos = this.videosRepository.All().Where(x => x.TrainerId == user.TrainerId);
-                foreach (var userVideo in userVideos)
+                foreach (var userVideo in user.Trainer.Videos)
                 {
                     userVideo.TrainerId = null;
                     this.videosRepository.HardDelete(userVideo);
@@ -128,17 +133,18 @@
             }
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var user = this.usersRepository.AllAsNoTracking()
+            var user = await this.usersRepository
+                .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return user;
         }
 
-        public IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue)
         {
             var users = this.usersRepository.All();
             var userData = from user in users select user;
@@ -157,12 +163,15 @@
                                     || s.Email.Contains(searchValue));
             }
 
-            return userData.To<T>().ToList();
+            return await userData.To<T>().ToListAsync();
         }
 
         public async Task UpdateAsync(string id, UserInputModel input)
         {
-            var user = this.usersRepository.All().FirstOrDefault(x => x.Id == id);
+            var user = await this.usersRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             user.ClubStatus = input.ClubStatus.ToString();
             user.FideTitle = input.FideTitle.ToString();
             user.FideRating = input.FideRating;

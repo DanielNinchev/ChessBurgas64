@@ -6,14 +6,12 @@
     using System.Threading.Tasks;
 
     using ChessBurgas64.Common;
-    using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Web.ViewModels;
     using ChessBurgas64.Web.ViewModels.Categories;
     using ChessBurgas64.Web.ViewModels.Puzzles;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class PuzzlesController : Controller
@@ -35,7 +33,7 @@
             this.environment = environment;
         }
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -47,8 +45,8 @@
                 IsSearched = false,
                 ItemsPerPage = GlobalConstants.PuzzlesPerPage,
                 PageNumber = id,
-                Count = this.puzzlesService.GetCount(),
-                Puzzles = this.puzzlesService.GetAll<PuzzleViewModel>(id, GlobalConstants.PuzzlesPerPage),
+                Count = await this.puzzlesService.GetCountAsync(),
+                Puzzles = await this.puzzlesService.GetAllAsync<PuzzleViewModel>(id, GlobalConstants.PuzzlesPerPage),
             };
 
             return this.View(viewModel);
@@ -73,7 +71,7 @@
             {
                 var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.PuzzleImagesPath}";
                 var puzzle = await this.puzzlesService.CreateAsync(input, webRootImagePath);
-                await this.imagesService.InitializePuzzleImage(input.PositionImage, puzzle, webRootImagePath);
+                await this.imagesService.InitializePuzzleImageAsync(input.PositionImage, puzzle, webRootImagePath);
             }
             catch (Exception e)
             {
@@ -90,7 +88,7 @@
         {
             try
             {
-                var puzzle = this.puzzlesService.GetById(id);
+                var puzzle = await this.puzzlesService.GetByIdAsync(id);
                 await this.puzzlesService.DeleteAsync(id);
                 await this.imagesService.DeleteAsync(puzzle.ImageId);
             }
@@ -103,9 +101,9 @@
         }
 
         [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = this.puzzlesService.GetById<PuzzleInputModel>(id);
+            var inputModel = await this.puzzlesService.GetByIdAsync<PuzzleInputModel>(id);
 
             return this.View(inputModel);
         }
@@ -123,7 +121,7 @@
             {
                 var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.PuzzleImagesPath}";
                 var puzzle = await this.puzzlesService.UpdateAsync(id, input);
-                await this.imagesService.InitializePuzzleImage(input.PositionImage, puzzle, webRootImagePath);
+                await this.imagesService.InitializePuzzleImageAsync(input.PositionImage, puzzle, webRootImagePath);
             }
             catch (Exception e)
             {
@@ -133,18 +131,18 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Search()
+        public async Task<IActionResult> Search()
         {
             var viewModel = new SearchViewModel
             {
-                Categories = this.categoriesService.GetAllPuzzleCategories<PuzzleCategoryViewModel>(),
+                Categories = await this.categoriesService.GetAllPuzzleCategoriesAsync<PuzzleCategoryViewModel>(),
             };
 
             return this.View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
+        public async Task<IActionResult> Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
             try
             {
@@ -159,7 +157,7 @@
                     IsSearched = true,
                     ItemsPerPage = GlobalConstants.PuzzlesPerPage,
                     PageNumber = id,
-                    Puzzles = this.puzzlesService.GetSearched<PuzzleViewModel>(input.Categories, input.SearchText),
+                    Puzzles = await this.puzzlesService.GetSearchedAsync<PuzzleViewModel>(input.Categories, input.SearchText),
                 };
 
                 if (viewModel.Puzzles != null)
@@ -175,7 +173,7 @@
 
                 viewModel.Search = new SearchViewModel()
                 {
-                    Categories = this.categoriesService.GetCategoriesByIds<PuzzleCategoryViewModel>(input.Categories, nameof(PuzzlesController)),
+                    Categories = await this.categoriesService.GetCategoriesByIdsAsync<PuzzleCategoryViewModel>(input.Categories, nameof(PuzzlesController)),
                     SearchText = input.SearchText,
                 };
 

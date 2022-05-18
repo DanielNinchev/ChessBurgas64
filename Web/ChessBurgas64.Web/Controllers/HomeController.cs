@@ -36,9 +36,9 @@
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
 
-        public IActionResult History()
+        public async Task<IActionResult> History()
         {
-            var viewModel = this.announcementsService.GetClubHistory<SingleAnnouncementViewModel>();
+            var viewModel = await this.announcementsService.GetClubHistoryAsync<SingleAnnouncementViewModel>();
 
             return this.View(viewModel);
         }

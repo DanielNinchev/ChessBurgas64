@@ -17,7 +17,7 @@
         public IViewComponentResult Invoke(string title)
         {
             var groupId = this.HttpContext.Session.GetString("groupId");
-            var members = this.membersService.GetNecessaryMembers(groupId);
+            var members = this.membersService.GetNecessaryMembersInSelectList(groupId);
             var viewModel = new GroupMemberInputModel
             {
                 Members = members,

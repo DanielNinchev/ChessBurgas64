@@ -14,19 +14,17 @@
 
         Task DeleteGroupMemberAsync(string groupId, string memberId);
 
-        IEnumerable<SelectListItem> GetAllGroupMembers(string groupId);
+        IEnumerable<SelectListItem> GetAllGroupMembersInSelectList(string groupId);
 
-        IEnumerable<SelectListItem> GetAllMembers();
+        IEnumerable<SelectListItem> GetAllMembersInSelectList();
 
-        IEnumerable<SelectListItem> GetAllMembersWhichAreNotInCurrentGroup(string groupId);
+        Task<Member> GetMemberByIdAsync(string memberId);
 
-        Member GetMemberById(string memberId);
+        IEnumerable<SelectListItem> GetNecessaryMembersInSelectList(string groupId);
 
-        IEnumerable<SelectListItem> GetNecessaryMembers(string groupId);
+        Task<T> GetByUserIdAsync<T>(string userId);
 
-        T GetByUserId<T>(string userId);
-
-        IEnumerable<T> GetTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetTableData<T>(string groupId, string sortColumn, string sortColumnDirection, string searchValue);
 
         Task SaveMemberChangesAsync(Member member);
 

@@ -14,6 +14,7 @@
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Groups;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
 
     public class GroupsService : IGroupsService
     {
@@ -43,14 +44,15 @@
 
         public async Task DeleteAsync(string id)
         {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == id);
+            var group = await this.groupsRepository.All().FirstOrDefaultAsync(x => x.Id == id);
             this.groupsRepository.Delete(group);
             await this.groupsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<SelectListItem> GetAllTrainerGroups(string trainerId)
         {
-            var trainerGroups = this.groupsRepository.AllAsNoTracking()
+            var trainerGroups = this.groupsRepository
+                .AllAsNoTracking()
                 .Where(x => x.TrainerId == trainerId)
                 .OrderBy(x => x.Name)
                 .ToList()
@@ -59,19 +61,20 @@
             return trainerGroups;
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var group = this.groupsRepository.AllAsNoTracking()
+            var group = await this.groupsRepository
+                .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return group;
         }
 
-        public IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue)
         {
-            var groups = this.groupsRepository.All();
+            var groups = this.groupsRepository.AllAsNoTracking();
             var groupData = from studentGroup in groups select studentGroup;
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
@@ -87,7 +90,7 @@
                                     || g.Members.Count.Equals(searchValue));
             }
 
-            return groupData.To<T>().ToList();
+            return await groupData.To<T>().ToListAsync();
         }
 
         public IQueryable<Group> GetUserGroups(string userId)
@@ -99,7 +102,7 @@
             return groups;
         }
 
-        public IEnumerable<T> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetUserGroupsTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
         {
             var groups = this.GetUserGroups(userId);
             var groupData = from studentGroup in groups select studentGroup;
@@ -118,17 +121,26 @@
                                     || g.Members.Count.Equals(searchValue));
             }
 
-            return groupData.To<T>().ToList();
+            return await groupData.To<T>().ToListAsync();
         }
 
         public async Task InitializeGroupProperties(string groupId)
         {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
-            var groupMembers = this.groupMembersRepository.All().Where(x => x.GroupId == groupId && x.MemberId != null).ToList();
+            var group = await this.groupsRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == groupId);
+
+            var groupMembers = await this.groupMembersRepository
+                .All()
+                .Where(x => x.GroupId == groupId && x.MemberId != null)
+                .ToListAsync();
 
             foreach (var groupMember in groupMembers)
             {
-                var member = this.membersRepository.All().FirstOrDefault(x => x.Id == groupMember.MemberId);
+                var member = await this.membersRepository
+                    .All()
+                    .FirstOrDefaultAsync(x => x.Id == groupMember.MemberId);
+
                 groupMember.Member = member;
             }
 
@@ -173,7 +185,8 @@
 
         public async Task UpdateAsync(string groupId, GroupInputModel input)
         {
-            var group = this.groupsRepository.All().FirstOrDefault(x => x.Id == groupId);
+            var group = await this.groupsRepository.All().FirstOrDefaultAsync(x => x.Id == groupId);
+
             group.TrainingDay = (WeekDay)Enum.Parse(typeof(WeekDay), input.TrainingDay);
             group.TrainingHour = DateTime.Parse(input.TrainingHour);
             group.TrainerId = input.TrainerId;

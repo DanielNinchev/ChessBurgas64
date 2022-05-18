@@ -20,7 +20,7 @@
         private readonly IMapper mapper;
 
         [Fact]
-        public async Task ShouldThrowExceptionWhenImageWithInvalidExtensionIsAddedToTheAnnouncement()
+        public async Task InitializeAnnouncementImagesShouldThrowExceptionWhenInvalidImageIsAdded()
         {
             var announcementsList = new List<Announcement>();
             var imagesList = new List<Image>();
@@ -33,11 +33,11 @@
             var mockInvalidMainImage = new Mock<IFormFile>();
             var mockAdditionalImages = new Mock<List<IFormFile>>();
 
-            var content = "Hello World from a Fake File";
+            var fileContent = "Hello World from a Fake File";
             var invalidImageFileName = "test.pdf";
             var ms = new MemoryStream();
             var writer = new StreamWriter(ms);
-            writer.Write(content);
+            writer.Write(fileContent);
             writer.Flush();
             ms.Position = 0;
             mockInvalidMainImage.Setup(x => x.OpenReadStream()).Returns(ms);
@@ -68,11 +68,11 @@
             var expectedImagesCount = mockAdditionalImages.Object.Count + 1;
             var mockAnnouncement = new Mock<Announcement>();
 
-            await Assert.ThrowsAsync<InvalidDataException>(async () => await announcementsService.InitializeAnnouncementImages(input, mockAnnouncement.Object, GlobalConstants.AnnouncementImagesPath));
+            await Assert.ThrowsAsync<InvalidDataException>(async () => await announcementsService.InitializeAnnouncementImagesAsync(input, mockAnnouncement.Object, GlobalConstants.AnnouncementImagesPath));
         }
 
         [Fact]
-        public async Task ShouldAddInputAnnouncementImagesToDatabase()
+        public async Task InitializeAnnouncementImagesShouldAddValidInputImagesToDatabase()
         {
             var announcementsList = new List<Announcement>();
             var imagesList = new List<Image>();
@@ -127,7 +127,7 @@
             var mockAnnouncement = new Mock<Announcement>();
             mockAnnouncement.Setup(x => x.Images).Returns(imagesList.ToHashSet());
 
-            await announcementsService.InitializeAnnouncementImages(input, mockAnnouncement.Object, GlobalConstants.AnnouncementImagesPath);
+            await announcementsService.InitializeAnnouncementImagesAsync(input, mockAnnouncement.Object, GlobalConstants.AnnouncementImagesPath);
 
             Assert.Equal(expectedImagesCount, imagesList.Count);
         }

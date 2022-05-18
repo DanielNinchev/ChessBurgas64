@@ -10,6 +10,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Videos;
+    using Microsoft.EntityFrameworkCore;
 
     public class VideosService : IVideosService
     {
@@ -32,38 +33,46 @@
 
         public async Task DeleteAsync(int id)
         {
-            var video = this.videosRepository.All().FirstOrDefault(x => x.Id == id);
+            var video = await this.videosRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             this.videosRepository.Delete(video);
             await this.videosRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage)
         {
-            var videos = this.videosRepository.AllAsNoTracking()
+            var videos = await this.videosRepository
+                .AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return videos;
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var video = this.videosRepository.AllAsNoTracking().Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
+            var video = await this.videosRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return video;
         }
 
-        public int GetCount()
+        public async Task<int> GetCountAsync()
         {
-            return this.videosRepository.AllAsNoTracking().Count();
+            return await this.videosRepository.AllAsNoTracking().CountAsync();
         }
 
-        public IEnumerable<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText)
+        public async Task<IEnumerable<T>> GetSearchedAsync<T>(IEnumerable<int> categoryIds, string searchText)
         {
-            var videos = this.videosRepository.All()
+            var videos = this.videosRepository
+                .All()
                 .OrderByDescending(x => x.CreatedOn)
                 .AsQueryable();
 
@@ -103,12 +112,14 @@
                 return null;
             }
 
-            return videos.To<T>().ToList();
+            return await videos.To<T>().ToListAsync();
         }
 
         public async Task UpdateAsync(int id, VideoInputModel input)
         {
-            var video = this.videosRepository.All().FirstOrDefault(x => x.Id == id);
+            var video = await this.videosRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             video.Description = input.Description;
             video.CategoryId = input.CategoryId;

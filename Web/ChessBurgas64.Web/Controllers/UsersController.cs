@@ -49,24 +49,24 @@
             this.environment = environment;
         }
 
-        public IActionResult ById(string id)
+        public async Task<IActionResult> ById(string id)
         {
             this.HttpContext.Session.SetString("userId", id);
-            var viewModel = this.usersService.GetById<UserProfileViewModel>(id);
+            var viewModel = await this.usersService.GetByIdAsync<UserProfileViewModel>(id);
             return this.View(viewModel);
         }
 
-        public IActionResult ByMemberId(string id)
+        public async Task<IActionResult> ByMemberId(string id)
         {
-            var member = this.membersService.GetMemberById(id);
+            var member = await this.membersService.GetMemberByIdAsync(id);
             id = member.UserId;
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public IActionResult EditUserInfo(string id)
+        public async Task<IActionResult> EditUserInfo(string id)
         {
-            var viewModel = this.usersService.GetById<UserInputModel>(id);
+            var viewModel = await this.usersService.GetByIdAsync<UserInputModel>(id);
             return this.View(viewModel);
         }
 
@@ -78,9 +78,9 @@
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        public IActionResult EditMemberInfo(string id)
+        public async Task<IActionResult> EditMemberInfo(string id)
         {
-            var viewModel = this.membersService.GetByUserId<MemberInputModel>(id);
+            var viewModel = await this.membersService.GetByUserIdAsync<MemberInputModel>(id);
             return this.View(viewModel);
         }
 
@@ -92,7 +92,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             try
             {
@@ -106,7 +106,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var userData = this.usersService.GetTableData<UserTableViewModel>(sortColumn, sortColumnDirection, searchValue);
+                var userData = await this.usersService.GetTableDataAsync<UserTableViewModel>(sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = userData.Count();
 
@@ -122,7 +122,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetUserGroups()
+        public async Task<IActionResult> GetUserGroups()
         {
             try
             {
@@ -137,7 +137,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var groupData = this.groupsService.GetUserGroupsTableData<GroupTableViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
+                var groupData = await this.groupsService.GetUserGroupsTableData<GroupTableViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = groupData.Count();
 
@@ -153,7 +153,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetUserLessons()
+        public async Task<IActionResult> GetUserLessons()
         {
             try
             {
@@ -168,7 +168,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var lessonData = this.lessonsService.GetTrainerLessonsTableData<LessonViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
+                var lessonData = await this.lessonsService.GetUserLessonsTableDataAsync<LessonViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = lessonData.Count();
 
@@ -184,7 +184,7 @@
         }
 
         [HttpPost]
-        public IActionResult GetUserPayments()
+        public async Task<IActionResult> GetUserPayments()
         {
             try
             {
@@ -199,7 +199,7 @@
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var paymentData = this.paymentsService.GetTableData<PaymentViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
+                var paymentData = await this.paymentsService.GetTableData<PaymentViewModel>(userId, sortColumn, sortColumnDirection, searchValue);
 
                 recordsTotal = paymentData.Count();
 

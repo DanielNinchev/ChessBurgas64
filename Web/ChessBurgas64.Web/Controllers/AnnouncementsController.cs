@@ -39,7 +39,7 @@
             this.environment = environment;
         }
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -50,18 +50,17 @@
             {
                 ItemsPerPage = GlobalConstants.AnnouncementsPerPage,
                 PageNumber = id,
-                Count = this.announcementsService.GetCount(),
-                Announcements = this.announcementsService.GetAll<AnnouncementInCardViewModel>(id, GlobalConstants.AnnouncementsPerPage),
+                Count = await this.announcementsService.GetCountAsync(),
+                Announcements = await this.announcementsService.GetAllAsync<AnnouncementInCardViewModel>(id, GlobalConstants.AnnouncementsPerPage),
             };
 
             return this.View(viewModel);
         }
 
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
-            var announcement = this.announcementsService.GetById<SingleAnnouncementViewModel>(id);
+            var announcement = await this.announcementsService.GetByIdAsync<SingleAnnouncementViewModel>(id);
             announcement.Text = this.sanitizer.Sanitize(announcement.Text);
-
             return this.View(announcement);
         }
 
@@ -100,17 +99,14 @@
         public async Task<IActionResult> Delete(int id)
         {
             await this.announcementsService.DeleteAsync(id);
-
             return this.RedirectToAction(nameof(this.All));
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = this.announcementsService.GetById<AnnouncementInputModel>(id);
-
+            var inputModel = await this.announcementsService.GetByIdAsync<AnnouncementInputModel>(id);
             inputModel.Categories = this.categoriesService.GetAnnouncementCategoriesInSelectList();
-
             return this.View(inputModel);
         }
 
@@ -121,27 +117,25 @@
             if (!this.ModelState.IsValid)
             {
                 input.Categories = this.categoriesService.GetAnnouncementCategoriesInSelectList();
-
                 return this.View(input);
             }
 
             await this.announcementsService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.AnnouncementImagesPath}");
-
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        public IActionResult Search()
+        public async Task<IActionResult> Search()
         {
             var viewModel = new SearchViewModel
             {
-                Categories = this.categoriesService.GetAllAnnouncementCategories<AnnouncementCategoryViewModel>(),
+                Categories = await this.categoriesService.GetAllAnnouncementCategoriesAsync<AnnouncementCategoryViewModel>(),
             };
 
             return this.View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
+        public async Task<IActionResult> Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
             try
             {
@@ -156,7 +150,7 @@
                     IsSearched = true,
                     ItemsPerPage = GlobalConstants.PuzzlesPerPage,
                     PageNumber = id,
-                    Announcements = this.announcementsService.GetSearched<AnnouncementInCardViewModel>(input.Categories, input.SearchText),
+                    Announcements = await this.announcementsService.GetSearchedAsync<AnnouncementInCardViewModel>(input.Categories, input.SearchText),
                 };
 
                 if (viewModel.Announcements != null)
@@ -172,7 +166,7 @@
 
                 viewModel.Search = new SearchViewModel()
                 {
-                    Categories = this.categoriesService.GetCategoriesByIds<AnnouncementCategoryViewModel>(input.Categories, nameof(AnnouncementsController)),
+                    Categories = await this.categoriesService.GetCategoriesByIdsAsync<AnnouncementCategoryViewModel>(input.Categories, nameof(AnnouncementsController)),
                     SearchText = input.SearchText,
                 };
 
@@ -181,7 +175,6 @@
             catch (Exception e)
             {
                 string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
-                this.ModelState.AddModelError(string.Empty, e.Message);
                 return this.RedirectToAction(nameof(HomeController.Error), controllerName);
             }
         }

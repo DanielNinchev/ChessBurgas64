@@ -26,7 +26,7 @@
             this.videosService = videosService;
         }
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -37,16 +37,16 @@
             {
                 ItemsPerPage = GlobalConstants.VideosPerPage,
                 PageNumber = id,
-                Count = this.videosService.GetCount(),
-                Videos = this.videosService.GetAll<VideoViewModel>(id, GlobalConstants.VideosPerPage),
+                Count = await this.videosService.GetCountAsync(),
+                Videos = await this.videosService.GetAllAsync<VideoViewModel>(id, GlobalConstants.VideosPerPage),
             };
 
             return this.View(viewModel);
         }
 
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
-            var video = this.videosService.GetById<VideoViewModel>(id);
+            var video = await this.videosService.GetByIdAsync<VideoViewModel>(id);
 
             return this.View(video);
         }
@@ -88,9 +88,9 @@
         }
 
         [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = this.videosService.GetById<VideoInputModel>(id);
+            var inputModel = await this.videosService.GetByIdAsync<VideoInputModel>(id);
 
             return this.View(inputModel);
         }
@@ -109,18 +109,18 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
-        public IActionResult Search()
+        public async Task<IActionResult> Search()
         {
             var viewModel = new SearchViewModel
             {
-                Categories = this.categoriesService.GetAllVideoCategories<VideoCategoryViewModel>(),
+                Categories = await this.categoriesService.GetAllVideoCategoriesAsync<VideoCategoryViewModel>(),
             };
 
             return this.View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
+        public async Task<IActionResult> Searched(SearchInputModel input, IDictionary<string, string> parms, int id = 1)
         {
             try
             {
@@ -135,7 +135,7 @@
                     IsSearched = true,
                     ItemsPerPage = GlobalConstants.PuzzlesPerPage,
                     PageNumber = id,
-                    Videos = this.videosService.GetSearched<VideoViewModel>(input.Categories, input.SearchText),
+                    Videos = await this.videosService.GetSearchedAsync<VideoViewModel>(input.Categories, input.SearchText),
                 };
 
                 if (viewModel.Videos != null)
@@ -151,7 +151,7 @@
 
                 viewModel.Search = new SearchViewModel()
                 {
-                    Categories = this.categoriesService.GetCategoriesByIds<VideoCategoryViewModel>(input.Categories, nameof(VideosController)),
+                    Categories = await this.categoriesService.GetCategoriesByIdsAsync<VideoCategoryViewModel>(input.Categories, nameof(VideosController)),
                     SearchText = input.SearchText,
                 };
 

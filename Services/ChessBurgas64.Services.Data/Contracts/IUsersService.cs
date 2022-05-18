@@ -14,9 +14,9 @@
 
         Task DeleteUserTrainerAsync(ApplicationUser user);
 
-        T GetById<T>(string id);
+        Task<T> GetByIdAsync<T>(string id);
 
-        IEnumerable<T> GetTableData<T>(string sortColumn, string sortColumnDirection, string searchValue);
+        Task<IEnumerable<T>> GetTableDataAsync<T>(string sortColumn, string sortColumnDirection, string searchValue);
 
         Task UpdateAsync(string id, UserInputModel input);
     }

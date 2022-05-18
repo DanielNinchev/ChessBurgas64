@@ -43,7 +43,7 @@
                 var user = this.userManager.GetUserAsync(this.User).Result;
 
                 var groupsQuery = this.groupsService.GetUserGroups(user.Id);
-                var recordsTotal = groupsQuery.Count();
+                var recordsTotal = await groupsQuery.CountAsync();
 
                 var searchText = this.DataTablesRequest.Search.Value?.ToUpper();
 
@@ -55,7 +55,7 @@
                                         || g.Members.Count.Equals(searchText));
                 }
 
-                var recordsFiltered = groupsQuery.Count();
+                var recordsFiltered = groupsQuery.CountAsync();
                 var sortColumnName = this.DataTablesRequest.Columns.ElementAt(this.DataTablesRequest.Order.ElementAt(0).Column).Name;
                 var sortDirection = this.DataTablesRequest.Order.ElementAt(0).Dir.ToLower();
 

@@ -88,7 +88,7 @@
                 Gender = user.Gender,
             };
 
-            this.Input.Member = this.membersService.GetByUserId<MemberProfileModel>(user.Id);
+            this.Input.Member = await this.membersService.GetByUserIdAsync<MemberProfileModel>(user.Id);
 
             if (this.Input.Member != null)
             {
@@ -171,7 +171,7 @@
 
             if (user.MemberId != null)
             {
-                var member = this.membersService.GetMemberById(user.MemberId);
+                var member = await this.membersService.GetMemberByIdAsync(user.MemberId);
 
                 if (member.Address != this.Input.Address)
                 {

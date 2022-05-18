@@ -30,11 +30,11 @@
             this.environment = environment;
         }
 
-        public IActionResult Competitors()
+        public async Task<IActionResult> Competitors()
         {
             var viewModel = new NotableMembersListViewModel
             {
-                NotableMembers = this.notableMembersService.GetAllPlayers<NotableMemberViewModel>(),
+                NotableMembers = await this.notableMembersService.GetAllPlayersAsync<NotableMemberViewModel>(),
             };
 
             foreach (var notableMember in viewModel.NotableMembers)
@@ -65,7 +65,7 @@
                 var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.NotableMembersImagesPath}";
                 var notableMember = await this.notableMembersService.CreateAsync(input, webRootImagePath);
 
-                await this.imagesService.InitializeNotableMemberImage(input.ProfileImage, notableMember, webRootImagePath);
+                await this.imagesService.InitializeNotableMemberImageAsync(input.ProfileImage, notableMember, webRootImagePath);
             }
             catch (Exception e)
             {
@@ -84,7 +84,7 @@
 
             try
             {
-                var notableMember = this.notableMembersService.GetById(id);
+                var notableMember = await this.notableMembersService.GetByIdAsync(id);
                 actionName = notableMember.IsPartOfGovernance ? nameof(this.Governance) : nameof(this.Competitors);
 
                 await this.notableMembersService.DeleteAsync(id);
@@ -99,9 +99,9 @@
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var inputModel = this.notableMembersService.GetById<NotableMemberInputModel>(id);
+            var inputModel = await this.notableMembersService.GetByIdAsync<NotableMemberInputModel>(id);
 
             return this.View(inputModel);
         }
@@ -119,7 +119,7 @@
             {
                 var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.NotableMembersImagesPath}";
                 var notableMember = await this.notableMembersService.UpdateAsync(id, input);
-                await this.imagesService.InitializeNotableMemberImage(input.ProfileImage, notableMember, webRootImagePath);
+                await this.imagesService.InitializeNotableMemberImageAsync(input.ProfileImage, notableMember, webRootImagePath);
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@
             return this.RedirectToAction(nameof(this.Governance));
         }
 
-        public IActionResult Governance()
+        public async Task<IActionResult> Governance()
         {
             var viewModel = new NotableMembersListViewModel
             {
-                NotableMembers = this.notableMembersService.GetAllInGovernance<NotableMemberViewModel>(),
+                NotableMembers = await this.notableMembersService.GetAllInGovernanceAsync<NotableMemberViewModel>(),
             };
 
             foreach (var notableMember in viewModel.NotableMembers)

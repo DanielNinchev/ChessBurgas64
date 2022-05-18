@@ -59,7 +59,7 @@ namespace ChessBurgas64.Web.Areas.Identity.Pages.Account.Manage
                 personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
             }
 
-            var member = this.membersService.GetMemberById(user.MemberId);
+            var member = await this.membersService.GetMemberByIdAsync(user.MemberId);
             if (member != null)
             {
                 var personalDataMemberProps = typeof(Member).GetProperties().Where(

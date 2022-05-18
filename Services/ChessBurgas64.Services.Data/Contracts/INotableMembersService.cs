@@ -12,15 +12,15 @@
 
         Task DeleteAsync(int id);
 
-        ICollection<T> GetAllInGovernance<T>();
+        Task<ICollection<T>> GetAllInGovernanceAsync<T>();
 
-        ICollection<T> GetAllPlayers<T>();
+        Task<ICollection<T>> GetAllPlayersAsync<T>();
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        NotableMember GetById(int id);
+        Task<NotableMember> GetByIdAsync(int id);
 
-        int GetCount();
+        Task<int> GetCountAsync();
 
         Task<NotableMember> UpdateAsync(int id, NotableMemberInputModel input);
     }

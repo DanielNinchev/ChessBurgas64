@@ -11,13 +11,13 @@
 
         Task DeleteAsync(int id);
 
-        IEnumerable<T> GetAll<T>(int page, int itemsPerPage);
+        Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage);
 
-        T GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
-        int GetCount();
+        Task<int> GetCountAsync();
 
-        IEnumerable<T> GetSearched<T>(IEnumerable<int> categoryIds, string searchText);
+        Task<IEnumerable<T>> GetSearchedAsync<T>(IEnumerable<int> categoryIds, string searchText);
 
         Task UpdateAsync(int id, VideoInputModel input);
     }

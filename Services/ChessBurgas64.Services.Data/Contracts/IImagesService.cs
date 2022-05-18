@@ -7,16 +7,14 @@
 
     public interface IImagesService
     {
-        Task<Image> CreateImage(IFormFile image, string webRootImagePath, Image dbImage, string extension, string imagePath);
-
-        string GetImageExtension(IFormFile image);
+        Task<Image> CreateImageAsync(IFormFile image, string webRootImagePath, Image dbImage, string extension, string imagePath);
 
         Task DeleteAsync(string id);
 
-        Task<Image> InitializeAnnouncementImage(IFormFile image, Announcement announcement, string webRootImagePath);
+        Task<Image> InitializeAnnouncementImageAsync(IFormFile image, Announcement announcement, string webRootImagePath);
 
-        Task<Image> InitializeNotableMemberImage(IFormFile image, NotableMember notableMember, string webRootImagePath);
+        Task<Image> InitializeNotableMemberImageAsync(IFormFile image, NotableMember notableMember, string webRootImagePath);
 
-        Task<Image> InitializePuzzleImage(IFormFile image, Puzzle puzzle, string webRootImagePath);
+        Task<Image> InitializePuzzleImageAsync(IFormFile image, Puzzle puzzle, string webRootImagePath);
     }
 }

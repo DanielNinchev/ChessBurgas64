@@ -12,6 +12,7 @@
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Payments;
+    using Microsoft.EntityFrameworkCore;
 
     public class PaymentsService : IPaymentsService
     {
@@ -36,22 +37,28 @@
 
         public async Task DeleteAsync(string id)
         {
-            var payment = this.paymentsRepository.All().FirstOrDefault(x => x.Id == id);
+            var payment = await this.paymentsRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
             this.paymentsRepository.Delete(payment);
             await this.paymentsRepository.SaveChangesAsync();
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetByIdAsync<T>(string id)
         {
-            var payment = this.paymentsRepository.AllAsNoTracking().Where(x => x.Id == id)
-                .To<T>().FirstOrDefault();
+            var payment = await this.paymentsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
 
             return payment;
         }
 
-        public IEnumerable<T> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
+        public async Task<IEnumerable<T>> GetTableData<T>(string userId, string sortColumn, string sortColumnDirection, string searchValue)
         {
-            var payments = this.paymentsRepository.All().Where(p => p.UserId == userId);
+            var payments = this.paymentsRepository.AllAsNoTracking().Where(p => p.UserId == userId);
             var paymentData = from payment in payments select payment;
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
@@ -65,7 +72,7 @@
                 paymentData = paymentData.Where(p => p.Description.Contains(searchValue));
             }
 
-            return paymentData.To<T>().ToList();
+            return await paymentData.To<T>().ToListAsync();
         }
 
         public IQueryable<Payment> GetUserPaymentsTableData(string userId)
@@ -79,7 +86,9 @@
 
         public async Task UpdateAsync(string id, PaymentInputModel input)
         {
-            var payment = this.paymentsRepository.All().FirstOrDefault(x => x.Id == id);
+            var payment = await this.paymentsRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             payment.Amount = input.Amount;
             payment.DateOfPayment = DateTime.Parse(input.DateOfPayment);
