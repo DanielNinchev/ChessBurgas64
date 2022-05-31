@@ -2,6 +2,8 @@
  
 Web application with ASP.NET Core designed for chess club "Burgas 64". This is my first ASP.NET Core project and it corresponds to the 2020 September SoftUni ASP.NET Core course final defense project task.
 
+https://chessburgas64.azurewebsites.net/
+
 ## Functionalities:
 * Register / Login;
 * Download, edit and delete personal data for each user;
@@ -28,6 +30,7 @@ Web application with ASP.NET Core designed for chess club "Burgas 64". This is m
 * HTML Sanitizer;
 * JavaScript;
 * jQuery Datatables;
+* Microsoft Azure;
 * Moment.js;
 * Moq;
 * MSSQL;
