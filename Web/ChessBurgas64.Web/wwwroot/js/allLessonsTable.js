@@ -64,7 +64,7 @@
 });
 
 function GoToByIdView(id) {
-    window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
+    window.location.href = '/Lessons/ById/' + id;
 }
 
 function DeleteData(id) {

@@ -1,0 +1,10 @@
+﻿@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementInputModel
+@using ChessBurgas64.Common
+
+<div class="form-group">
+    <label class="text-white" asp-for="AuthorId">@GlobalConstants.AdministratorRoleName*</label>
+    <select asp-for="AuthorId" class="form-control" asp-items="@Model.Authors">
+        <option selected="selected" hidden value="">@GlobalConstants.ChooseAuthor</option>
+    </select>
+    <span asp-validation-for="AuthorId" class="text-danger"></span>
+</div>

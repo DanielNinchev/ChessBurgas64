@@ -102,7 +102,8 @@
                 foreach (var categoryId in categoryIds)
                 {
                     puzzles = puzzles.Where(x => categoryIds.Any(id => id == x.CategoryId)
-                                                        && (x.Number.Equals(searchText)
+                                                        && (x.Number.Contains(searchText.ToLower())
+                                                            || searchText.ToLower().Contains(x.Number.ToLower())
                                                             || searchText.ToLower().Contains(x.Category.Name.ToLower())
                                                             || searchText.ToLower().Contains(x.Difficulty.ToLower())
                                                             || searchText.ToLower().Contains(x.Objective.ToLower())
@@ -115,7 +116,8 @@
             }
             else if (!categoryIds.Any() && searchText != null)
             {
-                puzzles = puzzles.Where(x => x.Number.Equals(searchText)
+                puzzles = puzzles.Where(x => x.Number.Contains(searchText.ToLower())
+                                                           || searchText.ToLower().Contains(x.Number.ToLower())
                                                            || searchText.ToLower().Contains(x.Category.Name.ToLower())
                                                            || searchText.ToLower().Contains(x.Difficulty.ToLower())
                                                            || searchText.ToLower().Contains(x.Objective.ToLower())

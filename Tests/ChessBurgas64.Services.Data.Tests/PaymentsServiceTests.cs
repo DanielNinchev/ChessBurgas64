@@ -1,5 +1,6 @@
 ﻿namespace ChessBurgas64.Services.Data.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -156,7 +157,7 @@
             var input = new PaymentInputModel
             {
                 Amount = 100,
-                DateOfPayment = "10.3.2021",
+                DateOfPayment = DateTime.Parse("10.3.2021"),
                 Description = "Седмично заплащане",
                 UserId = testUserId,
             };
@@ -165,7 +166,7 @@
             var formattedData = mockPayment.Object.DateOfPayment.ToString(format: "dd/M/yyyy");
 
             Assert.Equal(input.Amount, mockPayment.Object.Amount);
-            Assert.Equal(input.DateOfPayment, formattedData);
+            Assert.Equal(input.DateOfPayment.ToString(format: "dd/M/yyyy"), formattedData);
             Assert.Equal(input.Description, mockPayment.Object.Description);
             Assert.Equal(input.UserId, mockPayment.Object.UserId);
         }

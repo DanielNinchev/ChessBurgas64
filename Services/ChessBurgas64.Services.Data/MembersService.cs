@@ -175,7 +175,7 @@
 
             user.Member = member;
             user.MemberId = member.Id;
-            user.Member.DateOfJoiningTheClub = DateTime.Parse(input.DateOfJoiningTheClub);
+            user.Member.DateOfJoiningTheClub = input.DateOfJoiningTheClub;
 
             await this.membersRepository.SaveChangesAsync();
             await this.usersRepository.SaveChangesAsync();

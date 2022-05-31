@@ -62,7 +62,7 @@
 });
 
 function GoToPaymentEditView(id) {
-    window.location.href = 'https://localhost:44319/Payments/Edit/' + id;
+    window.location.href = '/Payments/Edit/' + id;
 }
 
 function DeletePaymentData(id) {

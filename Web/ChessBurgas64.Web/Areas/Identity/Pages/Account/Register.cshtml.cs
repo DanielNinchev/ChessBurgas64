@@ -92,9 +92,10 @@
             [Compare("Password", ErrorMessage = ErrorMessages.PasswordsDoNotMatch)]
             public string ConfirmPassword { get; set; }
 
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = GlobalConstants.PhoneNumberModel)]
             [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
-            [Phone]
-            [Display(Name = GlobalConstants.PhoneNumber)]
+            [RegularExpression(@"0[89][789]\d{7}", ErrorMessage = ErrorMessages.InvalidPhoneNumber)]
             public string PhoneNumber { get; set; }
 
             [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]

@@ -188,7 +188,7 @@
             var group = await this.groupsRepository.All().FirstOrDefaultAsync(x => x.Id == groupId);
 
             group.TrainingDay = (WeekDay)Enum.Parse(typeof(WeekDay), input.TrainingDay);
-            group.TrainingHour = DateTime.Parse(input.TrainingHour);
+            group.TrainingHour = input.TrainingHour;
             group.TrainerId = input.TrainerId;
 
             await this.InitializeGroupProperties(groupId);

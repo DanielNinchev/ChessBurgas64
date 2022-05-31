@@ -1,6 +1,7 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Announcements
 {
     using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Services.Mapping;
@@ -20,5 +21,12 @@
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }
+
+        public string AuthorFirstName { get; set; }
+
+        public string AuthorLastName { get; set; }
+
+        [NotMapped]
+        public string AuthorName => $"{this.AuthorFirstName} {this.AuthorLastName}";
     }
 }

@@ -17,7 +17,7 @@
 
         [Display(Name = GlobalConstants.DateOfJoiningTheClub)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public string DateOfJoiningTheClub { get; set; }
+        public DateTime DateOfJoiningTheClub { get; set; }
 
         public string LearnedOpenings { get; set; }
     }

@@ -1,0 +1,36 @@
+﻿@using ChessBurgas64.Common
+@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementInputModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="Title">@GlobalConstants.Title*</label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<vc:admins title="Author"></vc:admins>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="Date">@GlobalConstants.Date*</label>
+    <input asp-for="Date" class="form-control" />
+    <span asp-validation-for="Date" class="text-danger"></span>
+</div>
+<vc:categories title="AnnouncementCategory"></vc:categories>
+<div class="form-group my-3">
+    <label class="text-white" asp-for="MainImage">@GlobalConstants.AddMainPhoto*</label>
+    <input asp-for="MainImage" class="form-control" />
+    <span asp-validation-for="MainImage" class="text-danger"></span>
+</div>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="AdditionalImages">@GlobalConstants.AddAdditionalPhotos</label>
+    <input asp-for="AdditionalImages" class="form-control" />
+    <span asp-validation-for="AdditionalImages" class="text-danger"></span>
+</div>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="Description">@GlobalConstants.AnnouncementDescription*</label>
+    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group mb-3">
+    <label class="text-white" asp-for="Text">@GlobalConstants.Text*</label>
+    <textarea id="editor" asp-for="Text" class="form-control"></textarea>
+    <span asp-validation-for="Text" class="text-danger"></span>
+</div>

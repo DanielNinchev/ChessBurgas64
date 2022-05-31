@@ -65,5 +65,5 @@
 });
 
 function GoToProfile(id) {
-    window.location.href = 'https://localhost:44319/Users/ById/' + id;
+    window.location.href = '/Users/ById/' + id;
 }

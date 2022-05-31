@@ -19,17 +19,20 @@
     {
         private readonly IDeletableEntityRepository<Announcement> announcementsRepository;
         private readonly IDeletableEntityRepository<Image> imagesRepository;
+        private readonly IDeletableEntityRepository<ApplicationUser> usersRepository;
         private readonly IImagesService imagesService;
         private readonly IMapper mapper;
 
         public AnnouncementsService(
             IDeletableEntityRepository<Announcement> announcementsRepository,
             IDeletableEntityRepository<Image> imagesRepository,
+            IDeletableEntityRepository<ApplicationUser> usersRepository,
             IImagesService imagesService,
             IMapper mapper)
         {
             this.announcementsRepository = announcementsRepository;
             this.imagesRepository = imagesRepository;
+            this.usersRepository = usersRepository;
             this.imagesService = imagesService;
             this.mapper = mapper;
         }
@@ -166,6 +169,7 @@
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            announcement.AuthorId = input.AuthorId;
             announcement.CategoryId = input.CategoryId;
             announcement.Date = DateTime.Parse(input.Date.ToShortDateString());
             announcement.Description = input.Description;

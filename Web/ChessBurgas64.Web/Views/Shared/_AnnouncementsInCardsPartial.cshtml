@@ -1,5 +1,6 @@
 ﻿@model ChessBurgas64.Web.ViewModels.Announcements.AnnouncementsListViewModel
 @using ChessBurgas64.Common 
+@using System.Globalization
 
 @for (int i = 0; i < this.Model.Announcements.Count; i++)
 {
@@ -10,7 +11,11 @@
             <img class="image-announcement-card img-fluid border border-dark border-5 my-1 rounded-3" src="@announcements[i].MainImageUrl" alt="">
             <div class="card-body text-center">
                 <h6 class="announcement-card-title text title-container rounded-pill border-bottom border-white px-2 py-2 mb-2">@announcements[i].Title</h6>
-                <small>@announcements[i].Date.ToShortDateString()</small>
+                <small>
+                    <i class="fa-solid fa-calendar-days"></i> @announcements[i].Date.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture) |
+                    <i class="fa-solid fa-user-pen"></i> @announcements[i].AuthorName |
+                    <i class="fa-solid fa-list"></i> @announcements[i].CategoryName
+                </small>
                 <hr />
                 <div class="announcement-card-text text-white-50 bg-dark text-justify"><small>@announcements[i].Description</small></div>
             </div>

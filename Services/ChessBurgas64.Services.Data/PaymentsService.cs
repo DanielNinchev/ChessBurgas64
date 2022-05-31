@@ -91,7 +91,7 @@
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             payment.Amount = input.Amount;
-            payment.DateOfPayment = DateTime.Parse(input.DateOfPayment);
+            payment.DateOfPayment = input.DateOfPayment;
             payment.Description = input.Description;
             payment.UserId = input.UserId;
 

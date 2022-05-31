@@ -54,7 +54,7 @@
             { "data": "groupName", "name": "Group.Name", "autoWidth": true },
             {
                 "render": function (data, type, full, meta) {
-                    return "<a class='btn btn-info' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteLessonData('" + full.id + "'); >Премахване</a>";
+                    return "<a class='btn btn-secondary' onclick=GoToByIdView('" + full.id + "'); >Преглед</a> <a class='btn btn-danger' onclick=DeleteLessonData('" + full.id + "'); >Премахване</a>";
                 },
             },
         ]
@@ -62,7 +62,7 @@
 });
 
 function GoToByIdView(id) {
-    window.location.href = 'https://localhost:44319/Lessons/ById/' + id;
+    window.location.href = '/Lessons/ById/' + id;
 }
 
 function DeleteLessonData(id) {

@@ -8,8 +8,6 @@
     {
         public int Views { get; set; }
 
-        public string AuthorName { get; set; }
-
         public virtual ICollection<Image> Images { get; set; }
     }
 }

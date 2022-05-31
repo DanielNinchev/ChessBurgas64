@@ -21,6 +21,7 @@
         public const int AnnouncementsInRow = 3;
         public const int AnnouncementsPerPage = 12;
         public const string Author = "Автор";
+        public const string ChooseAuthor = "*изберете автор";
         public const string ChooseCategory = "*изберете категория";
         public const string PublishedOn = "Публикувано на";
         public const string Photos = "Снимки";
@@ -143,6 +144,7 @@
         public const int PasswordMaxLength = 20;
         public const int PasswordMinLength = 6;
         public const string PhoneNumber = "Телефон за връзка";
+        public const string PhoneNumberModel = "Телефон за връзка (0*********)";
         public const string RepeatPass = "Повторете паролата";
         public const string School = "Училище";
         public const int SchoolMaxLength = 100;
@@ -379,11 +381,11 @@
 
         // Status view
         public const string ChampionStatus = "Шампион";
-        public const string ChampionStatusInfo = "Шампионите са състезатели, отличили се с високи постижения в държавни шахматни първенства. Те получават стипендии от клуба.";
+        public const string ChampionStatusInfo = "Този статут се дава по преценка ръководството на клуба на състезатели, отличили се с високи постижения в държавни шахматни първенства и международни турнири. Те получават стипендии от клуба.";
         public const string ClubStatusConfirmed = "Клубният Ви статут е потвърден!";
-        public const string ClubStatusInfo = "Моля, прочетете всяка една от опциите и изберете Вашия клубен статут. След завършване на регистрацията ние ще разгледаме заявения от Вас статут и при съответствие до 1 ден ще го одобрим. Необходимо е след това да попълните допълнителни данни от менюто \"Клубни настройки\" в профила Ви.";
+        public const string ClubStatusInfo = "Моля, прочетете всяка една от опциите и изберете Вашия клубен статут. След завършване на регистрацията ние ще разгледаме заявения от Вас статут и при съответствие до 1 ден ще го одобрим. Необходимо е след това да попълните допълнителни данни от менюто \"Лични данни\" в профила Ви.";
         public const string CompetitorStatus = "Състезател";
-        public const string CompetitorStatusInfo = "Учениците, които са картотекирани в клуба и се отличават с голямо желание, редовно участие и добри постижения в шахматни турнири из страната, могат да получат статут на състезатели по преценка на ръководството. Състезателите са с предимство при сформирането на графика.";
+        public const string CompetitorStatusInfo = "Този статут се дава по преценка на ръководството на клуба на учениците, които са картотекирани към нашия отбор и се отличават с голямо желание, редовно участие и добри постижения в шахматни турнири из страната. Състезателите са с предимство при сформирането на графика на посещенията.";
         public const string PendingApproval = "Новопостъпващ";
         public const string PendingApprovalInfo = "Отбележете тази опция, ако не сте включени в присъствения график към момента и не посещавате занятия.";
         public const string StudentStatus = "Ученик";

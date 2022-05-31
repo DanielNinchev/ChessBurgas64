@@ -48,8 +48,10 @@
             [StringLength(GlobalConstants.NameMaxLength, ErrorMessage = "Моля, въвеждайте истинските си имена! Имената не могат да съдържат по-малко от {2} или повече от {1} символа.", MinimumLength = GlobalConstants.NameMinLength)]
             public string LastName { get; set; }
 
-            [Phone]
-            [Display(Name = GlobalConstants.PhoneNumber)]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = GlobalConstants.PhoneNumberModel)]
+            [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
+            [RegularExpression(@"0[89][789]\d{7}", ErrorMessage = ErrorMessages.InvalidPhoneNumber)]
             public string PhoneNumber { get; set; }
 
             [Display(Name = GlobalConstants.BirthDate)]

@@ -1,5 +1,6 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Payments
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using ChessBurgas64.Common;
@@ -13,8 +14,7 @@
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.DateOfPayment)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public string DateOfPayment { get; set; }
+        public DateTime DateOfPayment { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.PaidFor)]

@@ -14,8 +14,7 @@
     public class PuzzleInputModel : CategoryInputModel, IMapFrom<Puzzle>, IHaveCustomMappings
     {
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
-        [Range(1, int.MaxValue)]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [MinLength(GlobalConstants.PuzzleObjectiveMinLength)]

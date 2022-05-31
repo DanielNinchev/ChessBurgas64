@@ -5,12 +5,14 @@
     using System.Linq.Dynamic.Core;
     using System.Threading.Tasks;
 
+    using ChessBurgas64.Common;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.Users;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     public class UsersService : IUsersService
@@ -133,6 +135,23 @@
             }
         }
 
+        public IEnumerable<SelectListItem> GetAllAdminsInSelectList()
+        {
+            var admins = this.usersRepository.AllAsNoTracking()
+                .Where(u => u.ClubStatus.Equals(ClubStatus.Треньор.ToString()) && u.TrainerId != null)
+                .ToList()
+                .Select(a => new
+                {
+                    a.Id,
+                    Name = $"{a.FirstName} {a.LastName}",
+                })
+                .OrderBy(x => x.Name)
+                .ToList()
+                .Select(x => new SelectListItem(x.Name, x.Id));
+
+            return admins;
+        }
+
         public async Task<T> GetByIdAsync<T>(string id)
         {
             var user = await this.usersRepository
@@ -179,6 +198,7 @@
             if (input.ClubStatus == ClubStatus.Треньор)
             {
                 user.Trainer = new Trainer();
+                user.Trainer.UserId = user.Id;
 
                 await this.trainersRepository.SaveChangesAsync();
             }

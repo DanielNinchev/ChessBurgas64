@@ -63,7 +63,7 @@
 });
 
 function GoToGroup(id) {
-    window.location.href = 'https://localhost:44319/Groups/ById/' + id;
+    window.location.href = '/Groups/ById/' + id;
 }
 
 function DeleteGroupData(id) {

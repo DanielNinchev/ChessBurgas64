@@ -48,6 +48,11 @@
       "provider": "cdnjs",
       "library": "datatables@1.10.1",
       "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "jquery-resizable@1.0.6",
+      "destination": "wwwroot/lib/jquery-resizable/"
     }
   ]
 }

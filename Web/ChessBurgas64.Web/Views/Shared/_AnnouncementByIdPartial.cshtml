@@ -1,4 +1,5 @@
 ﻿@using ChessBurgas64.Common
+@using System.Globalization
 @model ChessBurgas64.Web.ViewModels.Announcements.SingleAnnouncementViewModel
 @{ 
     this.ViewData["Title"] = Model.Title;
@@ -6,11 +7,6 @@
 
 <div class="bg-dark text-center">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block carousel-image rounded mx-auto" src="@Model.MainImageUrl" alt="@GlobalConstants.Photos">
@@ -25,26 +21,26 @@
                 }
             }
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">@GlobalConstants.Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="false"></span>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">@GlobalConstants.Next</span>
         </a>
     </div>
 </div>
-<h3 class="text-white text-center title-container px-1 py-3">@Model.Title</h3>
+<h3 class="text-white text-center title-container fw-bold px-1 py-3">@Model.Title</h3>
 <div class="container-fluid text-white text-center my-3">
-    <div class="btn btn-primary disabled border border-white mx-3"><i class="fa-solid fa-calendar-days"></i> @Model.Date.ToShortDateString()</div>
+    <div class="btn btn-primary disabled border border-white mx-3"><i class="fa-solid fa-calendar-days"></i> @Model.Date.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture)</div>
     <div class="btn btn-primary disabled border border-white mx-3"><i class="fa-solid fa-user-pen"></i> @Model.AuthorName</div>
     <div class="btn btn-primary disabled border border-white mx-3"><i class="fa-solid fa-list"></i> @Model.CategoryName</div>
 </div>
 <hr class="border border-white border-3" />
 <div class="my-3 text-white">
     <p class="text-justify">
-        @Html.Raw(Model.Text);
+        @Html.Raw(Model.Text)
     </p>
 </div>
 

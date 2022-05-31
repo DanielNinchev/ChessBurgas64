@@ -1,5 +1,6 @@
 ﻿namespace ChessBurgas64.Web
 {
+    using System;
     using System.Reflection;
 
     using AspNetCore.ReCaptcha;

@@ -65,7 +65,7 @@
 });
 
 function GoToMemberByIdView(id) {
-    window.location.href = 'https://localhost:44319/Users/ByMemberId/' + id;
+    window.location.href = '/Users/ByMemberId/' + id;
 }
 
 function DeleteMemberData(id) {

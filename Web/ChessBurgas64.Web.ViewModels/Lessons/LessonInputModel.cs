@@ -1,5 +1,6 @@
 ﻿namespace ChessBurgas64.Web.ViewModels.Lessons
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -17,8 +18,7 @@
 
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         [Display(Name = GlobalConstants.DateAndTime)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-        public string StartingTime { get; set; }
+        public DateTime StartingTime { get; set; }
 
         public string Notes { get; set; }
 

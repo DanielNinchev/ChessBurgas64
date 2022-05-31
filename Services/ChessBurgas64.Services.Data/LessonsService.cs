@@ -1,6 +1,5 @@
 ﻿namespace ChessBurgas64.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Dynamic.Core;
@@ -9,7 +8,6 @@
     using AutoMapper;
     using ChessBurgas64.Data.Common.Repositories;
     using ChessBurgas64.Data.Models;
-    using ChessBurgas64.Data.Models.Enums;
     using ChessBurgas64.Services.Data.Contracts;
     using ChessBurgas64.Services.Mapping;
     using ChessBurgas64.Web.ViewModels.GroupMembers;
@@ -244,7 +242,7 @@
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             lesson.Topic = input.Topic;
-            lesson.StartingTime = DateTime.Parse(input.StartingTime);
+            lesson.StartingTime = input.StartingTime;
             lesson.Notes = input.Notes;
             lesson.GroupId = input.GroupId;
             lesson.TrainerId = input.TrainerId;

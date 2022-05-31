@@ -12,8 +12,6 @@
 
     public class TrainerInputModel : IMapFrom<Trainer>, IHaveCustomMappings
     {
-        public string DateOfLastAttendance { get; set; }
-
         [Required(ErrorMessage = ErrorMessages.ThatFieldIsRequired)]
         public string UserDescription { get; set; }
 

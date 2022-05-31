@@ -5,6 +5,7 @@
 
     using ChessBurgas64.Data.Models;
     using ChessBurgas64.Web.ViewModels.Users;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface IUsersService
     {
@@ -13,6 +14,8 @@
         Task DeleteUserMemberAsync(ApplicationUser user);
 
         Task DeleteUserTrainerAsync(ApplicationUser user);
+
+        IEnumerable<SelectListItem> GetAllAdminsInSelectList();
 
         Task<T> GetByIdAsync<T>(string id);
 
