@@ -46,38 +46,65 @@
             try
             {
                 await this.lessonsService.CreateAsync(input, id);
+                string controllerName = nameof(UsersController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(UsersController.ById), controllerName, new { id });
             }
             catch (Exception e)
             {
                 this.ModelState.AddModelError(string.Empty, e.Message);
                 return this.View(input);
             }
-
-            return this.Redirect("/Users/ById/" + id);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.lessonsService.DeleteAsync(id);
-            var groupId = this.HttpContext.Session.GetString("groupId");
-            return this.RedirectToAction("/Groups/ById/" + groupId);
+            try
+            {
+                await this.lessonsService.DeleteAsync(id);
+                var groupId = this.HttpContext.Session.GetString("groupId");
+                string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(GroupsController.ById)}/{groupId}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteGroupLesson(int id)
         {
-            await this.lessonsService.DeleteAsync(id);
-            var groupId = this.HttpContext.Session.GetString("groupId");
-            return this.RedirectToAction("/Groups/ById/" + groupId);
+            try
+            {
+                await this.lessonsService.DeleteAsync(id);
+                var groupId = this.HttpContext.Session.GetString("groupId");
+                string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(GroupsController.ById)}/{groupId}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteUserLesson(int id)
         {
-            await this.lessonsService.DeleteAsync(id);
-            var userId = this.HttpContext.Session.GetString("userId");
-            return this.RedirectToAction("/Users/ById/" + userId);
+            try
+            {
+                await this.lessonsService.DeleteAsync(id);
+                var userId = this.HttpContext.Session.GetString("userId");
+                string controllerName = nameof(UsersController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(UsersController.ById)}/{userId}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -94,8 +121,17 @@
                 return this.View(input);
             }
 
-            await this.lessonsService.UpdateAsync(id, input);
-            return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
+            try
+            {
+                await this.lessonsService.UpdateAsync(id, input);
+                string controllerName = nameof(LessonsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(LessonsController.ById)}/{id}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> EditAttendants(int id)
@@ -117,8 +153,17 @@
                 return this.View(model);
             }
 
-            await this.lessonsService.MarkLessonMemberAttendanceAsync(id, model);
-            return this.RedirectToAction(nameof(LessonsController.ById), "Lessons", new { id });
+            try
+            {
+                await this.lessonsService.MarkLessonMemberAttendanceAsync(id, model);
+                string controllerName = nameof(LessonsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(LessonsController.ById)}/{id}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [HttpPost]

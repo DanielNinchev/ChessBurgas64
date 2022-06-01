@@ -83,8 +83,16 @@
         [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.videosService.DeleteAsync(id);
-            return this.RedirectToAction(nameof(this.All));
+            try
+            {
+                await this.videosService.DeleteAsync(id);
+                return this.RedirectToAction(nameof(this.All));
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
@@ -104,9 +112,16 @@
                 return this.View(input);
             }
 
-            await this.videosService.UpdateAsync(id, input);
-
-            return this.RedirectToAction(nameof(this.All));
+            try
+            {
+                await this.videosService.UpdateAsync(id, input);
+                return this.RedirectToAction(nameof(this.All));
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> Search()
@@ -160,7 +175,6 @@
             catch (Exception e)
             {
                 string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
-                this.ModelState.AddModelError(string.Empty, e.Message);
                 return this.RedirectToAction(nameof(HomeController.Error), controllerName);
             }
         }

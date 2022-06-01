@@ -41,23 +41,32 @@
             {
                 await this.membersService.AddMemberToGroupAsync(id, input);
                 await this.groupsService.InitializeGroupProperties(id);
+                string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(GroupsController.ById)}/{id}");
             }
             catch (Exception e)
             {
                 this.ModelState.AddModelError(string.Empty, e.Message);
                 return this.View(input);
             }
-
-            return this.Redirect("/Groups/ById/" + id);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var groupId = this.HttpContext.Session.GetString("groupId");
-            await this.membersService.DeleteGroupMemberAsync(groupId, id);
-            await this.groupsService.InitializeGroupProperties(groupId);
-            return this.Redirect("/Groups/ById/" + groupId);
+            try
+            {
+                var groupId = this.HttpContext.Session.GetString("groupId");
+                await this.membersService.DeleteGroupMemberAsync(groupId, id);
+                await this.groupsService.InitializeGroupProperties(groupId);
+                string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+                return this.Redirect($"/{controllerName}/{nameof(GroupsController.ById)}/{groupId}");
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public IActionResult MarkMemberAttendanceToLesson()
@@ -84,7 +93,8 @@
                 return this.View(input);
             }
 
-            return this.Redirect("/Groups/ById/" + id);
+            string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+            return this.Redirect($"/{controllerName}/{nameof(GroupsController.ById)}/{id}");
         }
     }
 }

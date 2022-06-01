@@ -32,17 +32,25 @@
 
         public async Task<IActionResult> Competitors()
         {
-            var viewModel = new NotableMembersListViewModel
+            try
             {
-                NotableMembers = await this.notableMembersService.GetAllPlayersAsync<NotableMemberViewModel>(),
-            };
+                var viewModel = new NotableMembersListViewModel
+                {
+                    NotableMembers = await this.notableMembersService.GetAllPlayersAsync<NotableMemberViewModel>(),
+                };
 
-            foreach (var notableMember in viewModel.NotableMembers)
-            {
-                notableMember.Description = this.sanitizer.Sanitize(notableMember.Description);
+                foreach (var notableMember in viewModel.NotableMembers)
+                {
+                    notableMember.Description = this.sanitizer.Sanitize(notableMember.Description);
+                }
+
+                return this.View(viewModel);
             }
-
-            return this.View(viewModel);
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -92,7 +100,8 @@
             }
             catch (Exception e)
             {
-                this.ModelState.AddModelError(string.Empty, e.Message);
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
             }
 
             return this.RedirectToAction(actionName);
@@ -124,6 +133,7 @@
             catch (Exception e)
             {
                 this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.View(input);
             }
 
             return this.RedirectToAction(nameof(this.Governance));
@@ -131,17 +141,25 @@
 
         public async Task<IActionResult> Governance()
         {
-            var viewModel = new NotableMembersListViewModel
+            try
             {
-                NotableMembers = await this.notableMembersService.GetAllInGovernanceAsync<NotableMemberViewModel>(),
-            };
+                var viewModel = new NotableMembersListViewModel
+                {
+                    NotableMembers = await this.notableMembersService.GetAllInGovernanceAsync<NotableMemberViewModel>(),
+                };
 
-            foreach (var notableMember in viewModel.NotableMembers)
-            {
-                notableMember.Description = this.sanitizer.Sanitize(notableMember.Description);
+                foreach (var notableMember in viewModel.NotableMembers)
+                {
+                    notableMember.Description = this.sanitizer.Sanitize(notableMember.Description);
+                }
+
+                return this.View(viewModel);
             }
-
-            return this.View(viewModel);
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
     }
 }

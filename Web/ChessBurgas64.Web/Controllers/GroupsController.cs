@@ -69,8 +69,17 @@
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            await this.groupsService.DeleteAsync(id);
-            return this.Redirect("/Groups");
+            try
+            {
+                await this.groupsService.DeleteAsync(id);
+                string controllerName = nameof(GroupsController)[..^nameof(Controller).Length];
+                return this.Redirect(controllerName);
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -82,8 +91,16 @@
         [HttpPost]
         public async Task<IActionResult> Edit(string id, GroupInputModel input)
         {
-            await this.groupsService.UpdateAsync(id, input);
-            return this.RedirectToAction(nameof(this.ById), new { id });
+            try
+            {
+                await this.groupsService.UpdateAsync(id, input);
+                return this.RedirectToAction(nameof(this.ById), new { id });
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [HttpPost]

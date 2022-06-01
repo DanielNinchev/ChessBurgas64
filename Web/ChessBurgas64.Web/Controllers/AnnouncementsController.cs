@@ -98,8 +98,16 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
-            await this.announcementsService.DeleteAsync(id);
-            return this.RedirectToAction(nameof(this.All));
+            try
+            {
+                await this.announcementsService.DeleteAsync(id);
+                return this.RedirectToAction(nameof(this.All));
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -120,8 +128,16 @@
                 return this.View(input);
             }
 
-            await this.announcementsService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.AnnouncementImagesPath}");
-            return this.RedirectToAction(nameof(this.ById), new { id });
+            try
+            {
+                await this.announcementsService.UpdateAsync(id, input, $"{this.environment.WebRootPath}{GlobalConstants.AnnouncementImagesPath}");
+                return this.RedirectToAction(nameof(this.ById), new { id });
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> Search()

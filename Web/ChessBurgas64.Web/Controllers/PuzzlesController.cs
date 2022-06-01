@@ -91,13 +91,13 @@
                 var puzzle = await this.puzzlesService.GetByIdAsync(id);
                 await this.puzzlesService.DeleteAsync(id);
                 await this.imagesService.DeleteAsync(puzzle.ImageId);
+                return this.RedirectToAction(nameof(this.All));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                this.ModelState.AddModelError(string.Empty, e.Message);
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
             }
-
-            return this.RedirectToAction(nameof(this.All));
         }
 
         [Authorize(Roles = $"{GlobalConstants.AdministratorRoleName}, {GlobalConstants.TrainerRoleName}")]
@@ -122,13 +122,13 @@
                 var webRootImagePath = $"{this.environment.WebRootPath}{GlobalConstants.PuzzleImagesPath}";
                 var puzzle = await this.puzzlesService.UpdateAsync(id, input);
                 await this.imagesService.InitializePuzzleImageAsync(input.PositionImage, puzzle, webRootImagePath);
+                return this.RedirectToAction(nameof(this.All));
             }
             catch (Exception e)
             {
                 this.ModelState.AddModelError(string.Empty, e.Message);
+                return this.View(input);
             }
-
-            return this.RedirectToAction(nameof(this.All));
         }
 
         public async Task<IActionResult> Search()
@@ -182,7 +182,6 @@
             catch (Exception e)
             {
                 string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
-                this.ModelState.AddModelError(string.Empty, e.Message);
                 return this.RedirectToAction(nameof(HomeController.Error), controllerName);
             }
         }

@@ -74,8 +74,16 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> EditUserInfo(string id, UserInputModel input)
         {
-            await this.usersService.UpdateAsync(id, input);
-            return this.RedirectToAction(nameof(this.ById), new { id });
+            try
+            {
+                await this.usersService.UpdateAsync(id, input);
+                return this.RedirectToAction(nameof(this.ById), new { id });
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         public async Task<IActionResult> EditMemberInfo(string id)
@@ -87,8 +95,16 @@
         [HttpPost]
         public async Task<IActionResult> EditMemberInfo(string id, MemberInputModel input)
         {
-            await this.membersService.UpdateAsync(id, input);
-            return this.RedirectToAction(nameof(this.ById), new { id });
+            try
+            {
+                await this.membersService.UpdateAsync(id, input);
+                return this.RedirectToAction(nameof(this.ById), new { id });
+            }
+            catch (Exception)
+            {
+                string controllerName = nameof(HomeController)[..^nameof(Controller).Length];
+                return this.RedirectToAction(nameof(HomeController.Error), controllerName);
+            }
         }
 
         [HttpPost]

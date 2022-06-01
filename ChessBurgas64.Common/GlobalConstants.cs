@@ -186,7 +186,7 @@
 
         // =========== HTML ELEMENTS ================================================================================================
         // Buttons
-        public const string Accept = "Потвърди";
+        public const string Accept = "Приемане";
         public const string Add = "Добавяне";
         public const string Close = "Затваряне";
         public const string Create = "Създай";
@@ -195,7 +195,7 @@
         public const string DeleteAccount = "Изтриване на потребителя";
         public const string DownloadPersonalData = "Изтегляне на личните данни";
         public const string Edit = "Промяна";
-        public const string LearnMore = "Научете повече.";
+        public const string LearnMore = " Научете повече";
         public const string Next = "Следваща";
         public const string No = "Не";
         public const string Previous = "Предишна";
