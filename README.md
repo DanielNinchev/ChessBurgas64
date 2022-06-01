@@ -25,6 +25,7 @@ https://chessburgas64.azurewebsites.net/
 ## Used technologies
 * ASP.NET Core 6.0;
 * AutoMapper;
+* Azure Key Vault (for production environment);
 * Bootstrap 5.0.2;
 * Entity Framework Core;
 * HTML Sanitizer;
@@ -36,6 +37,7 @@ https://chessburgas64.azurewebsites.net/
 * MSSQL;
 * Open Street Maps;
 * reCAPTCHA;
+* Secret Manager (for development environment);
 * SendGrid;
 * Trumbowyg WYSIWYG editor;
 * XUnit;
